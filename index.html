@@ -3,119 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>بيع بروتين وكرياتين للجيم</title>
+  <title>بيع بروتين وكرياتين - مصطفى</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    /* Reset */
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
     body {
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #eee;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 30px 15px;
     }
     header {
+      max-width: 1200px;
+      width: 100%;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
     header h1 {
       font-size: 3rem;
+      font-weight: 700;
+      color: #f9a825;
+      text-shadow: 0 0 10px #f9a825aa;
       margin-bottom: 10px;
-      text-shadow: 0 0 10px #ff8c00;
     }
     header p {
       font-size: 1.2rem;
-      color: #ffd580;
-      font-weight: 600;
+      color: #c7c7c7;
+      letter-spacing: 0.05em;
     }
+
+    /* Products Grid */
     .products {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 1000px;
+      max-width: 1200px;
       width: 100%;
     }
+
     .product-card {
-      background: #0d1b2a;
+      background: #121212dd;
       border-radius: 15px;
-      padding: 25px;
-      width: 300px;
-      box-shadow: 0 0 20px #ff8c00aa;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
     }
     .product-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 0 30px #ff8c00;
+      box-shadow: 0 15px 40px #f9a825aa;
     }
-    .product-card img {
-      max-width: 180px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #ff8c00aa;
+    .product-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      filter: brightness(1.1);
+      transition: filter 0.3s ease;
     }
-    .product-card h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      color: #ff8c00;
+    .product-card:hover .product-image {
+      filter: brightness(1.3);
     }
-    .product-card p {
-      font-size: 1rem;
+
+    .product-info {
+      padding: 25px 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-info h2 {
+      color: #f9a825;
+      font-size: 1.7rem;
       margin-bottom: 15px;
-      color: #fff;
-      min-height: 70px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .product-info p {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: #ccc;
+      line-height: 1.5;
+      margin-bottom: 25px;
     }
     .price {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ffa500;
-      margin-bottom: 20px;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: #ffca28;
+      margin-bottom: 15px;
     }
+
     .btn-buy {
-      background: #ff8c00;
-      color: #000;
-      font-weight: 700;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      text-transform: uppercase;
-      box-shadow: 0 0 10px #ff8c00;
-      transition: background 0.3s ease;
-      text-decoration: none;
       display: inline-block;
+      background: #f9a825;
+      color: #121212;
+      font-weight: 700;
+      text-align: center;
+      padding: 15px 0;
+      border-radius: 50px;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px #f9a825bb;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
     }
     .btn-buy:hover {
-      background: #ffaa33;
-      box-shadow: 0 0 15px #ffaa33;
+      background: #ffd54f;
+      box-shadow: 0 0 30px #ffd54fcc;
     }
+
     footer {
-      margin-top: 50px;
-      color: #ccc;
+      margin-top: 60px;
       font-size: 0.9rem;
+      color: #bbb;
       text-align: center;
+      max-width: 1200px;
+      width: 100%;
     }
-    /* Responsive */
-    @media (max-width: 700px) {
-      .products {
-        flex-direction: column;
-        gap: 30px;
-        align-items: center;
+
+    /* Responsive text */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2.2rem;
       }
-      .product-card {
-        width: 90%;
+      .product-info h2 {
+        font-size: 1.4rem;
       }
     }
   </style>
@@ -123,32 +142,46 @@
 <body>
 
   <header>
-    <h1>منتجات بروتين وكرياتين للجيم</h1>
-    <p>أفضل المكملات لزيادة قوتك وبناء عضلاتك بسرعة</p>
+    <h1>أفضل مكملات بروتين وكرياتين للجيم</h1>
+    <p>منتجات مختارة بعناية لتعزيز أداء عضلاتك وزيادة قوتك بسرعة وأمان</p>
   </header>
 
-  <section class="products">
+  <main class="products">
 
-    <div class="product-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/2919/2919609.png" alt="بروتين" />
-      <h2>بروتين مصل الحليب 100%</h2>
-      <p>مكمل عالي الجودة لبناء العضلات، سريع الامتصاص، يدعم تعافي الجسم بعد التمرين.</p>
-      <div class="price">350 جنيه</div>
-      <a href="https://wa.me/201092150243?text=أريد+شراء+بروتين" class="btn-buy" target="_blank">اشتري الآن</a>
-    </div>
+    <article class="product-card">
+      <img class="product-image" src="https://cdn.shopify.com/s/files/1/0271/2557/0404/products/optimum-nutrition-gold-standard-100-whey-protein-5lb_900x.jpg?v=1687983540" alt="Optimum Nutrition Whey Protein" />
+      <div class="product-info">
+        <h2>Optimum Nutrition Whey Protein</h2>
+        <p>بروتين مصل الحليب عالي الجودة مع نسبة 24 جم بروتين لكل حصة، يساعد في بناء العضلات وتعزيز التعافي بعد التمرين.</p>
+        <div class="price">550 جنيه</div>
+        <a href="https://wa.me/201092150243?text=أريد+شراء+Optimum+Nutrition+Whey+Protein" target="_blank" class="btn-buy">اشتري الآن</a>
+      </div>
+    </article>
 
-    <div class="product-card">
-      <img src="https://cdn-icons-png.flaticon.com/512/3250/3250501.png" alt="كرياتين" />
-      <h2>كرياتين مونوهيدرات</h2>
-      <p>يدعم زيادة القوة والتحمل، يعزز أداء التمارين المكثفة، معتمد وفعال.</p>
-      <div class="price">250 جنيه</div>
-      <a href="https://wa.me/201092150243?text=أريد+شراء+كرياتين" class="btn-buy" target="_blank">اشتري الآن</a>
-    </div>
+    <article class="product-card">
+      <img class="product-image" src="https://m.media-amazon.com/images/I/81t6k6YVgDL._AC_SL1500_.jpg" alt="MuscleTech Creatine Monohydrate" />
+      <div class="product-info">
+        <h2>MuscleTech Creatine Monohydrate</h2>
+        <p>كرياتين مونوهيدرات نقي 100% لزيادة القوة والتحمل ودعم الأداء الرياضي خلال التمارين المكثفة.</p>
+        <div class="price">400 جنيه</div>
+        <a href="https://wa.me/201092150243?text=أريد+شراء+MuscleTech+Creatine" target="_blank" class="btn-buy">اشتري الآن</a>
+      </div>
+    </article>
 
-  </section>
+    <article class="product-card">
+      <img class="product-image" src="https://cdn.shopify.com/s/files/1/0271/2557/0404/products/BSN-Syntha-6-Protein-Powder-2lb-Chocolate-Milkshake-Front_900x.jpg?v=1605167580" alt="BSN Syntha-6 Protein" />
+      <div class="product-info">
+        <h2>BSN Syntha-6 Protein</h2>
+        <p>مزيج بروتين متعدد المصادر مع نكهات لذيذة، يساعد في تغذية العضلات لفترات طويلة.</p>
+        <div class="price">600 جنيه</div>
+        <a href="https://wa.me/201092150243?text=أريد+شراء+BSN+Syntha-6+Protein" target="_blank" class="btn-buy">اشتري الآن</a>
+      </div>
+    </article>
+
+  </main>
 
   <footer>
-    <p>للطلب أو الاستفسار: <a href="https://wa.me/201092150243" style="color:#ff8c00; text-decoration:none;">01092150243 (واتساب)</a></p>
+    <p>للطلب والاستفسار: <a href="https://wa.me/201092150243" style="color:#f9a825; text-decoration:none;">01092150243 (واتساب)</a></p>
     <p>© 2025 مصطفى. جميع الحقوق محفوظة.</p>
   </footer>
 
