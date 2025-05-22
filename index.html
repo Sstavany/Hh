@@ -2,197 +2,193 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <title>نظام بلايستيشن - حساب وقت اللعب وفاتورة</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>بيع بروتين وكرياتين - مصطفى</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-      min-height: 100vh;
-      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
     }
-    header {
-      max-width: 1100px;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 60px;
-    }
-    header h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #e53935; /* أحمر ناري */
-      text-shadow: 0 0 10px #e53935aa;
-      margin-bottom: 10px;
-      letter-spacing: 2px;
-    }
-    header p {
-      font-size: 1.3rem;
-      color: #bbb;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-    }
-
-    /* Grid */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      max-width: 1100px;
-      width: 100%;
-    }
-    .product-card {
-      background: #1e1e1e;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(229,57,53,0.5);
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product-card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 15px 40px rgba(229,57,53,0.8);
-    }
-    .product-image {
-      width: 100%;
-      height: 240px;
-      object-fit: contain;
-      background: #121212;
-      transition: transform 0.3s ease;
-      padding: 20px 0;
-    }
-    .product-card:hover .product-image {
-      transform: scale(1.08);
-    }
-
-    .product-info {
-      padding: 25px 30px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .product-info h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
+    h1 {
       color: #e53935;
-      margin-bottom: 15px;
-      letter-spacing: 1px;
-    }
-    .product-info p {
-      font-size: 1rem;
-      color: #ccc;
-      line-height: 1.5;
-      margin-bottom: 30px;
-      min-height: 70px;
-    }
-    .price {
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: #ef5350;
       margin-bottom: 20px;
-      letter-spacing: 1px;
     }
-    .btn-buy {
-      background-color: #e53935;
-      color: #fff;
-      text-align: center;
-      padding: 15px 0;
-      border-radius: 50px;
-      font-weight: 700;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px #e53935cc;
-      text-decoration: none;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    label, select, button {
+      font-size: 1.2rem;
     }
-    .btn-buy:hover {
-      background-color: #f44336;
-      box-shadow: 0 0 30px #f44336cc;
-    }
-
-    footer {
-      margin-top: 70px;
-      max-width: 1100px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #888;
-    }
-    footer a {
-      color: #e53935;
-      text-decoration: none;
+    select, button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      margin: 10px 0;
+      cursor: pointer;
+      outline: none;
       font-weight: 600;
+      transition: background-color 0.3s ease;
     }
-    footer a:hover {
-      text-decoration: underline;
+    select {
+      background: #1f1f1f;
+      color: #eee;
     }
-
-    /* Responsive */
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 2.4rem;
-      }
-      .product-info h2 {
-        font-size: 1.5rem;
-      }
+    button.start {
+      background-color: #e53935;
+      color: white;
+    }
+    button.start:hover {
+      background-color: #f44336;
+    }
+    button.stop {
+      background-color: #388e3c;
+      color: white;
+    }
+    button.stop:hover {
+      background-color: #4caf50;
+    }
+    .timer {
+      margin-top: 30px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #f44336;
+    }
+    .invoice {
+      margin-top: 40px;
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 0 15px #e53935aa;
+      display: none;
+    }
+    .invoice h2 {
+      margin-bottom: 15px;
+      color: #e53935;
+      text-align: center;
+    }
+    .invoice p {
+      font-size: 1.1rem;
+      margin: 6px 0;
+    }
+    .print-btn {
+      background-color: #e53935;
+      border: none;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      margin-top: 20px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+    .print-btn:hover {
+      background-color: #f44336;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>مكملات بروتين وكرياتين أصلية</h1>
-    <p>منتجات مختارة لتعزيز بناء العضلات وزيادة القوة بأفضل جودة</p>
-  </header>
+  <h1>نظام بلايستيشن - حساب وقت اللعب وفاتورة</h1>
 
-  <main class="products">
+  <label for="room">اختر الغرفة:</label>
+  <select id="room">
+    <option value="غرفة 1">غرفة 1</option>
+    <option value="غرفة 2">غرفة 2</option>
+    <option value="غرفة 3">غرفة 3</option>
+    <option value="غرفة 4">غرفة 4</option>
+  </select>
 
-    <article class="product-card">
-      <img class="product-image" src="https://cdn.shopify.com/s/files/1/0271/2557/0404/products/optimum-nutrition-gold-standard-100-whey-protein-5lb_900x.jpg?v=1687983540" alt="Optimum Nutrition Whey Protein" />
-      <div class="product-info">
-        <h2>Optimum Nutrition Whey Protein</h2>
-        <p>بروتين مصل الحليب عالي الجودة 24 جم بروتين لكل حصة، يساعد في بناء العضلات بسرعة.</p>
-        <div class="price">550 جنيه</div>
-        <a href="https://wa.me/201092150243?text=أريد+شراء+Optimum+Nutrition+Whey+Protein" target="_blank" class="btn-buy">اشتري الآن</a>
-      </div>
-    </article>
+  <div>
+    <button id="startBtn" class="start">بدء اللعب</button>
+    <button id="stopBtn" class="stop" disabled>إيقاف اللعب</button>
+  </div>
 
-    <article class="product-card">
-      <img class="product-image" src="https://m.media-amazon.com/images/I/81t6k6YVgDL._AC_SL1500_.jpg" alt="MuscleTech Creatine Monohydrate" />
-      <div class="product-info">
-        <h2>MuscleTech Creatine Monohydrate</h2>
-        <p>كرياتين نقي 100% لزيادة القوة والتحمل ودعم الأداء في التمارين المكثفة.</p>
-        <div class="price">400 جنيه</div>
-        <a href="https://wa.me/201092150243?text=أريد+شراء+MuscleTech+Creatine" target="_blank" class="btn-buy">اشتري الآن</a>
-      </div>
-    </article>
+  <div class="timer" id="timerDisplay">00:00:00</div>
 
-    <article class="product-card">
-      <img class="product-image" src="https://cdn.shopify.com/s/files/1/0271/2557/0404/products/BSN-Syntha-6-Protein-Powder-2lb-Chocolate-Milkshake-Front_900x.jpg?v=1605167580" alt="BSN Syntha-6 Protein" />
-      <div class="product-info">
-        <h2>BSN Syntha-6 Protein</h2>
-        <p>مزيج بروتين متعدد المصادر مع نكهات لذيذة، يغذي عضلاتك لفترات طويلة.</p>
-        <div class="price">600 جنيه</div>
-        <a href="https://wa.me/201092150243?text=أريد+شراء+BSN+Syntha-6+Protein" target="_blank" class="btn-buy">اشتري الآن</a>
-      </div>
-    </article>
+  <div class="invoice" id="invoice">
+    <h2>فاتورة الدفع</h2>
+    <p><strong>الغرفة:</strong> <span id="invRoom"></span></p>
+    <p><strong>مدة اللعب:</strong> <span id="invDuration"></span></p>
+    <p><strong>السعر لكل ساعة:</strong> 50 جنيه</p>
+    <p><strong>السعر الإجمالي:</strong> <span id="invTotal"></span> جنيه</p>
+    <button class="print-btn" onclick="window.print()">طباعة الفاتورة</button>
+  </div>
 
-  </main>
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const invoice = document.getElementById('invoice');
+    const invRoom = document.getElementById('invRoom');
+    const invDuration = document.getElementById('invDuration');
+    const invTotal = document.getElementById('invTotal');
+    const roomSelect = document.getElementById('room');
 
-  <footer>
-    <p>للطلب والاستفسار: <a href="https://wa.me/201092150243" target="_blank">01092150243 (واتساب)</a></p>
-    <p>© 2025 مصطفى. جميع الحقوق محفوظة.</p>
-  </footer>
+    let startTime = null;
+    let timerInterval = null;
+
+    // ثمن الساعة
+    const pricePerHour = 50;
+
+    function formatTime(ms) {
+      let totalSeconds = Math.floor(ms / 1000);
+      let hours = Math.floor(totalSeconds / 3600);
+      let minutes = Math.floor((totalSeconds % 3600) / 60);
+      let seconds = totalSeconds % 60;
+
+      return [
+        hours.toString().padStart(2,'0'),
+        minutes.toString().padStart(2,'0'),
+        seconds.toString().padStart(2,'0')
+      ].join(':');
+    }
+
+    function startTimer() {
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        timerDisplay.textContent = formatTime(elapsed);
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      const elapsedMs = Date.now() - startTime;
+      timerDisplay.textContent = formatTime(elapsedMs);
+
+      // حساب السعر بناءً على الوقت بالساعات العشرية تقريبًا
+      const hoursDecimal = elapsedMs / (1000 * 3600);
+      const totalPrice = (hoursDecimal * pricePerHour).toFixed(2);
+
+      // عرض الفاتورة
+      invRoom.textContent = roomSelect.value;
+      invDuration.textContent = formatTime(elapsedMs);
+      invTotal.textContent = totalPrice;
+
+      invoice.style.display = 'block';
+    }
+
+    startBtn.addEventListener('click', () => {
+      invoice.style.display = 'none';
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      timerDisplay.textContent = "00:00:00";
+      startTimer();
+    });
+
+    stopBtn.addEventListener('click', () => {
+      stopBtn.disabled = true;
+      startBtn.disabled = false;
+      stopTimer();
+    });
+  </script>
 
 </body>
 </html>
