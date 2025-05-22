@@ -1,194 +1,237 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>نظام بلايستيشن - حساب وقت اللعب وفاتورة</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #eee;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    h1 {
-      color: #e53935;
-      margin-bottom: 20px;
-    }
-    label, select, button {
-      font-size: 1.2rem;
-    }
-    select, button {
-      padding: 10px 15px;
-      border-radius: 8px;
-      border: none;
-      margin: 10px 0;
-      cursor: pointer;
-      outline: none;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-    }
-    select {
-      background: #1f1f1f;
-      color: #eee;
-    }
-    button.start {
-      background-color: #e53935;
-      color: white;
-    }
-    button.start:hover {
-      background-color: #f44336;
-    }
-    button.stop {
-      background-color: #388e3c;
-      color: white;
-    }
-    button.stop:hover {
-      background-color: #4caf50;
-    }
-    .timer {
-      margin-top: 30px;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #f44336;
-    }
-    .invoice {
-      margin-top: 40px;
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      box-shadow: 0 0 15px #e53935aa;
-      display: none;
-    }
-    .invoice h2 {
-      margin-bottom: 15px;
-      color: #e53935;
-      text-align: center;
-    }
-    .invoice p {
-      font-size: 1.1rem;
-      margin: 6px 0;
-    }
-    .print-btn {
-      background-color: #e53935;
-      border: none;
-      color: white;
-      padding: 12px;
-      width: 100%;
-      margin-top: 20px;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: background-color 0.3s ease;
-    }
-    .print-btn:hover {
-      background-color: #f44336;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>نظام بلايستيشن متعدد الغرف - احترافي</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+  h1 {
+    width: 100%;
+    text-align: center;
+    color: #e53935;
+    margin-bottom: 40px;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px #e53935bb;
+  }
+
+  .room {
+    background: #1f1f1f;
+    width: 320px;
+    border-radius: 18px;
+    box-shadow: 0 0 25px #e5393555;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .room h2 {
+    color: #e53935;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    text-shadow: 0 0 8px #e53935cc;
+  }
+  .timer {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #f44336;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ef5350;
+    margin-bottom: 25px;
+    text-shadow: 0 0 6px #ef5350aa;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 15px;
+  }
+  button {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  button.start {
+    background-color: #e53935;
+    box-shadow: 0 0 15px #e53935aa;
+  }
+  button.start:hover {
+    background-color: #f44336;
+  }
+  button.stop {
+    background-color: #388e3c;
+    box-shadow: 0 0 15px #4caf5088;
+  }
+  button.stop:hover {
+    background-color: #4caf50;
+  }
+  button.print {
+    margin-top: 25px;
+    background-color: #616161;
+    color: #ddd;
+    font-weight: 600;
+    box-shadow: 0 0 8px #616161aa;
+  }
+  button.print:hover {
+    background-color: #757575;
+  }
+
+  /* Invoice modal */
+  .invoice-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1f1f1f;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 40px #e5393555;
+    color: #e0e0e0;
+    width: 350px;
+    max-width: 90vw;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+  }
+  .invoice-modal h2 {
+    margin-bottom: 25px;
+    color: #e53935;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #e5393555;
+  }
+  .invoice-modal p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  .invoice-modal button {
+    margin-top: 25px;
+    background-color: #e53935;
+    padding: 12px 0;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  .invoice-modal button:hover {
+    background-color: #f44336;
+  }
+  .overlay {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9998;
+    display: none;
+  }
+</style>
 </head>
 <body>
 
-  <h1>نظام بلايستيشن - حساب وقت اللعب وفاتورة</h1>
+<h1>نظام بلايستيشن متعدد الغرف - احترافي</h1>
 
-  <label for="room">اختر الغرفة:</label>
-  <select id="room">
-    <option value="غرفة 1">غرفة 1</option>
-    <option value="غرفة 2">غرفة 2</option>
-    <option value="غرفة 3">غرفة 3</option>
-    <option value="غرفة 4">غرفة 4</option>
-  </select>
-
-  <div>
-    <button id="startBtn" class="start">بدء اللعب</button>
-    <button id="stopBtn" class="stop" disabled>إيقاف اللعب</button>
+<div class="room" id="room1">
+  <h2>غرفة 1</h2>
+  <div class="timer" id="timer1">00:00:00</div>
+  <div class="price" id="price1">السعر: 0.00 جنيه</div>
+  <div class="buttons">
+    <button class="start" onclick="startTimer(1)">ابدأ</button>
+    <button class="stop" onclick="stopTimer(1)" disabled>إيقاف</button>
   </div>
+  <button class="print" onclick="printInvoice(1)">طباعة الفاتورة</button>
+</div>
 
-  <div class="timer" id="timerDisplay">00:00:00</div>
-
-  <div class="invoice" id="invoice">
-    <h2>فاتورة الدفع</h2>
-    <p><strong>الغرفة:</strong> <span id="invRoom"></span></p>
-    <p><strong>مدة اللعب:</strong> <span id="invDuration"></span></p>
-    <p><strong>السعر لكل ساعة:</strong> 50 جنيه</p>
-    <p><strong>السعر الإجمالي:</strong> <span id="invTotal"></span> جنيه</p>
-    <button class="print-btn" onclick="window.print()">طباعة الفاتورة</button>
+<div class="room" id="room2">
+  <h2>غرفة 2</h2>
+  <div class="timer" id="timer2">00:00:00</div>
+  <div class="price" id="price2">السعر: 0.00 جنيه</div>
+  <div class="buttons">
+    <button class="start" onclick="startTimer(2)">ابدأ</button>
+    <button class="stop" onclick="stopTimer(2)" disabled>إيقاف</button>
   </div>
+  <button class="print" onclick="printInvoice(2)">طباعة الفاتورة</button>
+</div>
 
-  <script>
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const timerDisplay = document.getElementById('timerDisplay');
-    const invoice = document.getElementById('invoice');
-    const invRoom = document.getElementById('invRoom');
-    const invDuration = document.getElementById('invDuration');
-    const invTotal = document.getElementById('invTotal');
-    const roomSelect = document.getElementById('room');
+<div class="room" id="room3">
+  <h2>غرفة 3</h2>
+  <div class="timer" id="timer3">00:00:00</div>
+  <div class="price" id="price3">السعر: 0.00 جنيه</div>
+  <div class="buttons">
+    <button class="start" onclick="startTimer(3)">ابدأ</button>
+    <button class="stop" onclick="stopTimer(3)" disabled>إيقاف</button>
+  </div>
+  <button class="print" onclick="printInvoice(3)">طباعة الفاتورة</button>
+</div>
 
-    let startTime = null;
-    let timerInterval = null;
+<div class="room" id="room4">
+  <h2>غرفة 4</h2>
+  <div class="timer" id="timer4">00:00:00</div>
+  <div class="price" id="price4">السعر: 0.00 جنيه</div>
+  <div class="buttons">
+    <button class="start" onclick="startTimer(4)">ابدأ</button>
+    <button class="stop" onclick="stopTimer(4)" disabled>إيقاف</button>
+  </div>
+  <button class="print" onclick="printInvoice(4)">طباعة الفاتورة</button>
+</div>
 
-    // ثمن الساعة
-    const pricePerHour = 50;
+<!-- نافذة الفاتورة -->
+<div class="overlay" id="overlay"></div>
+<div class="invoice-modal" id="invoiceModal">
+  <h2>فاتورة الدفع</h2>
+  <p><strong>الغرفة:</strong> <span id="modalRoom"></span></p>
+  <p><strong>مدة اللعب:</strong> <span id="modalDuration"></span></p>
+  <p><strong>السعر لكل ساعة:</strong> 50 جنيه</p>
+  <p><strong>السعر الإجمالي:</strong> <span id="modalTotal"></span> جنيه</p>
+  <button onclick="closeInvoice()">إغلاق</button>
+</div>
 
-    function formatTime(ms) {
-      let totalSeconds = Math.floor(ms / 1000);
-      let hours = Math.floor(totalSeconds / 3600);
-      let minutes = Math.floor((totalSeconds % 3600) / 60);
-      let seconds = totalSeconds % 60;
+<script>
+  const pricePerHour = 50;
+  const rooms = {};
 
-      return [
-        hours.toString().padStart(2,'0'),
-        minutes.toString().padStart(2,'0'),
-        seconds.toString().padStart(2,'0')
-      ].join(':');
+  // تنسيق الوقت hh:mm:ss
+  function formatTime(ms) {
+    let totalSeconds = Math.floor(ms / 1000);
+    let h = Math.floor(totalSeconds / 3600);
+    let m = Math.floor((totalSeconds % 3600) / 60);
+    let s = totalSeconds % 60;
+    return [h,m,s].map(x => x.toString().padStart(2,'0')).join(':');
+  }
+
+  // بدء مؤقت غرفة
+  function startTimer(roomNumber) {
+    if (!rooms[roomNumber]) {
+      rooms[roomNumber] = {start: Date.now(), elapsed: 0, interval: null, running: true};
+    } else {
+      if (rooms[roomNumber].running) return; // لا تبدأ إذا كانت تعمل
+      rooms[roomNumber].start = Date.now();
+      rooms[roomNumber].running = true;
     }
-
-    function startTimer() {
-      startTime = Date.now();
-      timerInterval = setInterval(() => {
-        const elapsed = Date.now() - startTime;
-        timerDisplay.textContent = formatTime(elapsed);
-      }, 1000);
-    }
-
-    function stopTimer() {
-      clearInterval(timerInterval);
-      const elapsedMs = Date.now() - startTime;
-      timerDisplay.textContent = formatTime(elapsedMs);
-
-      // حساب السعر بناءً على الوقت بالساعات العشرية تقريبًا
-      const hoursDecimal = elapsedMs / (1000 * 3600);
-      const totalPrice = (hoursDecimal * pricePerHour).toFixed(2);
-
-      // عرض الفاتورة
-      invRoom.textContent = roomSelect.value;
-      invDuration.textContent = formatTime(elapsedMs);
-      invTotal.textContent = totalPrice;
-
-      invoice.style.display = 'block';
-    }
-
-    startBtn.addEventListener('click', () => {
-      invoice.style.display = 'none';
-      startBtn.disabled = true;
-      stopBtn.disabled = false;
-      timerDisplay.textContent = "00:00:00";
-      startTimer();
-    });
-
-    stopBtn.addEventListener('click', () => {
-      stopBtn.disabled = true;
-      startBtn.disabled = false;
-      stopTimer();
-    });
-  </script>
-
-</body>
-</html>
+    const timerEl = document.getElementById('timer' + roomNumber);
+    const priceEl = document.getElementById('price' + roomNumber);
+    const startBtn = document.querySelector
