@@ -152,11 +152,11 @@
     background-color: #00e5ff;
     transform: translateY(-2px);
   }
-  button.stop {
+  button.end {
     background-color: #ff4757;
     color: #fff;
   }
-  button.stop:hover:not(:disabled) {
+  button.end:hover:not(:disabled) {
     background-color: #ff6b81;
     transform: translateY(-2px);
   }
@@ -185,6 +185,78 @@
   }
   .summary-btn:hover {
     background-color: #00e5ff;
+    transform: translateY(-2px);
+  }
+  
+  /* Login Form */
+  .login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+  }
+  
+  .login-form {
+    background: #0f2027;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 30px #00d4ffaa;
+    border: 1px solid #00d4ff;
+  }
+  
+  .login-form h2 {
+    color: #00d4ff;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #00d4ff;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #00d4ff;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #00d4ff;
+    color: #0f2027;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .login-btn:hover {
+    background: #00e5ff;
     transform: translateY(-2px);
   }
   
@@ -256,102 +328,121 @@
 </head>
 <body>
 
-<h1><i class="fas fa-gamepad"></i> نظام بلايستيشن احترافي</h1>
-
-<div class="rooms-container">
-  <div class="room-card" id="room1">
-    <div class="status offline" id="status1">متوقفة</div>
-    <h2><i class="fas fa-door-open"></i> غرفة 1</h2>
-    <div class="timer-container">
-      <div class="timer" id="timer1">00:00:00</div>
+<!-- Login Form -->
+<div id="loginContainer" class="login-container">
+  <div class="login-form">
+    <h2><i class="fas fa-lock"></i> تسجيل الدخول</h2>
+    <div class="form-group">
+      <label for="email">البريد الإلكتروني</label>
+      <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني">
     </div>
-    <div class="price" id="price1">0.00 جنيه</div>
-    <div class="buttons">
-      <button class="start" id="start1" onclick="startTimer(1)"><i class="fas fa-play"></i> ابدأ</button>
-      <button class="stop" id="stop1" onclick="stopTimer(1)" disabled><i class="fas fa-stop"></i> إيقاف</button>
+    <div class="form-group">
+      <label for="password">كلمة المرور</label>
+      <input type="password" id="password" placeholder="أدخل كلمة المرور">
     </div>
-    <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
-  </div>
-
-  <div class="room-card" id="room2">
-    <div class="status offline" id="status2">متوقفة</div>
-    <h2><i class="fas fa-door-open"></i> غرفة 2</h2>
-    <div class="timer-container">
-      <div class="timer" id="timer2">00:00:00</div>
-    </div>
-    <div class="price" id="price2">0.00 جنيه</div>
-    <div class="buttons">
-      <button class="start" id="start2" onclick="startTimer(2)"><i class="fas fa-play"></i> ابدأ</button>
-      <button class="stop" id="stop2" onclick="stopTimer(2)" disabled><i class="fas fa-stop"></i> إيقاف</button>
-    </div>
-    <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
-  </div>
-
-  <div class="room-card" id="room3">
-    <div class="status offline" id="status3">متوقفة</div>
-    <h2><i class="fas fa-door-open"></i> غرفة 3</h2>
-    <div class="timer-container">
-      <div class="timer" id="timer3">00:00:00</div>
-    </div>
-    <div class="price" id="price3">0.00 جنيه</div>
-    <div class="buttons">
-      <button class="start" id="start3" onclick="startTimer(3)"><i class="fas fa-play"></i> ابدأ</button>
-      <button class="stop" id="stop3" onclick="stopTimer(3)" disabled><i class="fas fa-stop"></i> إيقاف</button>
-    </div>
-    <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
-  </div>
-
-  <div class="room-card" id="room4">
-    <div class="status offline" id="status4">متوقفة</div>
-    <h2><i class="fas fa-door-open"></i> غرفة 4</h2>
-    <div class="timer-container">
-      <div class="timer" id="timer4">00:00:00</div>
-    </div>
-    <div class="price" id="price4">0.00 جنيه</div>
-    <div class="buttons">
-      <button class="start" id="start4" onclick="startTimer(4)"><i class="fas fa-play"></i> ابدأ</button>
-      <button class="stop" id="stop4" onclick="stopTimer(4)" disabled><i class="fas fa-stop"></i> إيقاف</button>
-    </div>
-    <button class="print" onclick="printInvoice(4)"><i class="fas fa-print"></i> طباعة</button>
+    <button class="login-btn" onclick="login()"><i class="fas fa-sign-in-alt"></i> دخول</button>
   </div>
 </div>
 
-<button class="summary-btn" onclick="showDailySummary()">
-  <i class="fas fa-calculator"></i> إجمالي اليوم
-</button>
+<!-- Main Content (Hidden until login) -->
+<div id="mainContent" style="display: none;">
+  <h1><i class="fas fa-gamepad"></i> نظام بلايستيشن احترافي</h1>
 
-<!-- Hidden print content -->
-<div id="printContent" class="print-content" style="display: none;">
-  <div class="print-header">
-    <h2><i class="fas fa-receipt"></i> فاتورة نظام البلايستيشن</h2>
-    <p>نظام إدارة صالات الألعاب</p>
-  </div>
-  
-  <div class="print-details">
-    <p>رقم الغرفة: <span id="printRoom">1</span></p>
-    <p>وقت اللعب: <span id="printTime">00:00:00</span></p>
-    <p>سعر الساعة: <span id="printRate">10.00 جنيه</span></p>
-    <div class="print-divider"></div>
-    <p>المبلغ المستحق: <span id="printTotal">0.00 جنيه</span></p>
-    <p>تاريخ الطباعة: <span id="printDate">--/--/---- --:--</span></p>
-  </div>
-  
-  <div class="print-footer">
-    <p>شكراً لزيارتكم - نتمنى لكم وقتاً ممتعاً</p>
-    <p>للاستفسار: 0123456789</p>
-  </div>
-</div>
-
-<!-- Daily Summary Modal -->
-<div id="summaryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
-  <div style="background: #0f2027; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 0 30px #00d4ffaa; border: 1px solid #00d4ff;">
-    <h2 style="color: #00d4ff; margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-coins"></i> إجمالي اليوم</h2>
-    <div id="summaryContent" style="font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6;">
-      <!-- Content will be inserted here -->
+  <div class="rooms-container">
+    <div class="room-card" id="room1">
+      <div class="status offline" id="status1">متوقفة</div>
+      <h2><i class="fas fa-door-open"></i> غرفة 1</h2>
+      <div class="timer-container">
+        <div class="timer" id="timer1">00:00:00</div>
+      </div>
+      <div class="price" id="price1">0.00 جنيه</div>
+      <div class="buttons">
+        <button class="start" id="start1" onclick="startTimer(1)"><i class="fas fa-play"></i> ابدأ</button>
+        <button class="end" id="end1" onclick="endTimer(1)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+      </div>
+      <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
     </div>
-    <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #00d4ff; color: #0f2027; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
-      <i class="fas fa-times"></i> إغلاق
-    </button>
+
+    <div class="room-card" id="room2">
+      <div class="status offline" id="status2">متوقفة</div>
+      <h2><i class="fas fa-door-open"></i> غرفة 2</h2>
+      <div class="timer-container">
+        <div class="timer" id="timer2">00:00:00</div>
+      </div>
+      <div class="price" id="price2">0.00 جنيه</div>
+      <div class="buttons">
+        <button class="start" id="start2" onclick="startTimer(2)"><i class="fas fa-play"></i> ابدأ</button>
+        <button class="end" id="end2" onclick="endTimer(2)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+      </div>
+      <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
+    </div>
+
+    <div class="room-card" id="room3">
+      <div class="status offline" id="status3">متوقفة</div>
+      <h2><i class="fas fa-door-open"></i> غرفة 3</h2>
+      <div class="timer-container">
+        <div class="timer" id="timer3">00:00:00</div>
+      </div>
+      <div class="price" id="price3">0.00 جنيه</div>
+      <div class="buttons">
+        <button class="start" id="start3" onclick="startTimer(3)"><i class="fas fa-play"></i> ابدأ</button>
+        <button class="end" id="end3" onclick="endTimer(3)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+      </div>
+      <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
+    </div>
+
+    <div class="room-card" id="room4">
+      <div class="status offline" id="status4">متوقفة</div>
+      <h2><i class="fas fa-door-open"></i> غرفة 4</h2>
+      <div class="timer-container">
+        <div class="timer" id="timer4">00:00:00</div>
+      </div>
+      <div class="price" id="price4">0.00 جنيه</div>
+      <div class="buttons">
+        <button class="start" id="start4" onclick="startTimer(4)"><i class="fas fa-play"></i> ابدأ</button>
+        <button class="end" id="end4" onclick="endTimer(4)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+      </div>
+      <button class="print" onclick="printInvoice(4)"><i class="fas fa-print"></i> طباعة</button>
+    </div>
+  </div>
+
+  <button class="summary-btn" onclick="showDailySummary()">
+    <i class="fas fa-calculator"></i> إجمالي اليوم
+  </button>
+
+  <!-- Hidden print content -->
+  <div id="printContent" class="print-content" style="display: none;">
+    <div class="print-header">
+      <h2><i class="fas fa-receipt"></i> فاتورة نظام البلايستيشن</h2>
+      <p>نظام إدارة صالات الألعاب</p>
+    </div>
+    
+    <div class="print-details">
+      <p>رقم الغرفة: <span id="printRoom">1</span></p>
+      <p>وقت اللعب: <span id="printTime">00:00:00</span></p>
+      <p>سعر الساعة: <span id="printRate">10.00 جنيه</span></p>
+      <div class="print-divider"></div>
+      <p>المبلغ المستحق: <span id="printTotal">0.00 جنيه</span></p>
+      <p>تاريخ الطباعة: <span id="printDate">--/--/---- --:--</span></p>
+    </div>
+    
+    <div class="print-footer">
+      <p>شكراً لزيارتكم - نتمنى لكم وقتاً ممتعاً</p>
+      <p>للاستفسار: 0123456789</p>
+    </div>
+  </div>
+
+  <!-- Daily Summary Modal -->
+  <div id="summaryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+    <div style="background: #0f2027; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 0 30px #00d4ffaa; border: 1px solid #00d4ff;">
+      <h2 style="color: #00d4ff; margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-coins"></i> إجمالي اليوم</h2>
+      <div id="summaryContent" style="font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6;">
+        <!-- Content will be inserted here -->
+      </div>
+      <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #00d4ff; color: #0f2027; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+        <i class="fas fa-times"></i> إغلاق
+      </button>
+    </div>
   </div>
 </div>
 
@@ -359,6 +450,8 @@
   // Configuration
   const HOUR_RATE = 10; // 10 جنيه لكل ساعة
   const rooms = 4; // عدد الغرف
+  const ADMIN_EMAIL = "pro.antiban";
+  const ADMIN_PASSWORD = "pro.antiban";
   
   // Initialize timers and states
   let timers = {};
@@ -373,6 +466,19 @@
     dailyEarnings[i] = 0;
   }
   
+  // Login function
+  function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      document.getElementById('loginContainer').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+    } else {
+      alert('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+    }
+  }
+  
   // Start timer function
   function startTimer(roomNum) {
     if (timers[roomNum]) return;
@@ -381,7 +487,7 @@
     document.getElementById(`status${roomNum}`).className = 'status online';
     document.getElementById(`status${roomNum}`).textContent = 'شغالة';
     document.getElementById(`start${roomNum}`).disabled = true;
-    document.getElementById(`stop${roomNum}`).disabled = false;
+    document.getElementById(`end${roomNum}`).disabled = false;
     
     // Record start time
     startTimes[roomNum] = new Date();
@@ -392,8 +498,8 @@
     }, 1000);
   }
   
-  // Stop timer function
-  function stopTimer(roomNum) {
+  // End timer function
+  function endTimer(roomNum) {
     if (!timers[roomNum]) return;
     
     // Clear timer
@@ -404,13 +510,21 @@
     document.getElementById(`status${roomNum}`).className = 'status offline';
     document.getElementById(`status${roomNum}`).textContent = 'متوقفة';
     document.getElementById(`start${roomNum}`).disabled = false;
-    document.getElementById(`stop${roomNum}`).disabled = true;
+    document.getElementById(`end${roomNum}`).disabled = true;
     
     // Calculate final price
     updateTimer(roomNum);
     
     // Add to daily earnings
     dailyEarnings[roomNum] += prices[roomNum];
+    
+    // Show final price alert
+    alert(`سعر الغرفة ${roomNum}: ${prices[roomNum].toFixed(2)} جنيه`);
+    
+    // Reset timer display
+    document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
+    document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
+    prices[roomNum] = 0;
   }
   
   // Update timer display and calculate price
@@ -438,7 +552,12 @@
   // Print invoice function
   function printInvoice(roomNum) {
     if (timers[roomNum]) {
-      alert('الرجاء إيقاف العداد قبل طباعة الفاتورة');
+      alert('الرجاء إنهاء الجلسة قبل طباعة الفاتورة');
+      return;
+    }
+    
+    if (prices[roomNum] <= 0) {
+      alert('لا يوجد مبلغ لطباعة الفاتورة');
       return;
     }
     
