@@ -270,6 +270,7 @@
     .menu-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px;
       margin-bottom: 8px;
       background: rgba(0, 0, 0, 0.3);
@@ -286,6 +287,41 @@
     .menu-item-price {
       color: #00d4ff;
       font-weight: bold;
+    }
+    
+    .menu-item-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .menu-item-controls button {
+      min-width: 30px;
+      padding: 5px;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    
+    .menu-item-controls .plus {
+      background-color: #00d4ff;
+      color: #0f2027;
+    }
+    .menu-item-controls .plus:hover {
+      background-color: #00e5ff;
+    }
+    .menu-item-controls .minus {
+      background-color: #ff4757;
+      color: #fff;
+    }
+    .menu-item-controls .minus:hover {
+      background-color: #ff6b81;
+    }
+    
+    .menu-item-controls span {
+      color: #fff;
+      font-weight: bold;
+      min-width: 30px;
+      text-align: center;
     }
     
     .close-menu {
@@ -540,46 +576,91 @@
         <h2 style="color: #f39c12; text-align: center; margin-bottom: 20px;"><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
         <div class="menu-category">
           <h3>المشروبات الغازية</h3>
-          <div class="menu-item" onclick="addDrinkToOrder('كولا', 15)">
+          <div class="menu-item" data-drink="كولا" data-price="15">
             <span>كولا</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('كولا', -1)">−</button>
+              <span id="quantity-كولا">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('كولا', 1)">+</button>
+            </div>
             <span class="menu-item-price">15 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('سفن أب', 15)">
+          <div class="menu-item" data-drink="سفن أب" data-price="15">
             <span>سفن أب</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('سفن أب', -1)">−</button>
+              <span id="quantity-سفن أب">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('سفن أب', 1)">+</button>
+            </div>
             <span class="menu-item-price">15 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('فانتا', 15)">
+          <div class="menu-item" data-drink="فانتا" data-price="15">
             <span>فانتا</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('فانتا', -1)">−</button>
+              <span id="quantity-فانتا">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('فانتا', 1)">+</button>
+            </div>
             <span class="menu-item-price">15 جنيه</span>
           </div>
         </div>
         <div class="menu-category">
           <h3>العصائر</h3>
-          <div class="menu-item" onclick="addDrinkToOrder('عصير برتقال', 20)">
+          <div class="menu-item" data-drink="عصير برتقال" data-price="20">
             <span>عصير برتقال</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير برتقال', -1)">−</button>
+              <span id="quantity-عصير برتقال">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير برتقال', 1)">+</button>
+            </div>
             <span class="menu-item-price">20 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('عصير مانجو', 25)">
+          <div class="menu-item" data-drink="عصير مانجو" data-price="25">
             <span>عصير مانجو</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير مانجو', -1)">−</button>
+              <span id="quantity-عصير مانجو">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير مانجو', 1)">+</button>
+            </div>
             <span class="menu-item-price">25 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('عصير فراولة', 25)">
+          <div class="menu-item" data-drink="عصير فراولة" data-price="25">
             <span>عصير فراولة</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير فراولة', -1)">−</button>
+              <span id="quantity-عصير فراولة">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير فراولة', 1)">+</button>
+            </div>
             <span class="menu-item-price">25 جنيه</span>
           </div>
         </div>
         <div class="menu-category">
           <h3>المشروبات الساخنة</h3>
-          <div class="menu-item" onclick="addDrinkToOrder('شاي', 10)">
+          <div class="menu-item" data-drink="شاي" data-price="10">
             <span>شاي</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('شاي', -1)">−</button>
+              <span id="quantity-شاي">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('شاي', 1)">+</button>
+            </div>
             <span class="menu-item-price">10 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('قهوة', 15)">
+          <div class="menu-item" data-drink="قهوة" data-price="15">
             <span>قهوة</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('قهوة', -1)">−</button>
+              <span id="quantity-قهوة">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('قهوة', 1)">+</button>
+            </div>
             <span class="menu-item-price">15 جنيه</span>
           </div>
-          <div class="menu-item" onclick="addDrinkToOrder('كابتشينو', 20)">
+          <div class="menu-item" data-drink="كابتشينو" data-price="20">
             <span>كابتشينو</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('كابتشينو', -1)">−</button>
+              <span id="quantity-كابتشينو">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('كابتشينو', 1)">+</button>
+            </div>
             <span class="menu-item-price">20 جنيه</span>
           </div>
         </div>
@@ -630,8 +711,10 @@
 
   <script>
     // Configuration
-    const ADMIN_USERNAME = "pro.antiban";
-    const ADMIN_PASSWORD = "pro.antiban";
+    const ADMIN_CREDENTIALS = [
+      { username: "pro.antiban", password: "12345pro" },
+      { username: "pro.antiban2", password: "12345678pro" }
+    ];
     const HOUR_RATE = 10; // 10 جنيه لكل ساعة
     const rooms = 4; // عدد الغرف
     
@@ -644,6 +727,7 @@
     let drinksPrices = {};
     let dailyTimeEarnings = {};
     let dailyDrinksEarnings = {};
+    let drinkQuantities = {};
     
     for (let i = 1; i <= rooms; i++) {
       timers[i] = null;
@@ -653,6 +737,11 @@
       drinksPrices[i] = 0;
       dailyTimeEarnings[i] = 0;
       dailyDrinksEarnings[i] = 0;
+      drinkQuantities[i] = {
+        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
+        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
+        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
+      };
     }
     
     // Login function with single-use email check
@@ -667,7 +756,12 @@
         return;
       }
       
-      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+      // Check credentials
+      const validCredential = ADMIN_CREDENTIALS.find(
+        cred => cred.username === username && cred.password === password
+      );
+      
+      if (validCredential) {
         // Store login state and email
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('loggedInUser', username);
@@ -736,7 +830,6 @@
         المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه
         الإجمالي: ${total.toFixed(2)} جنيه`);
         
-        // Fully reset room data
         resetRoom(roomNum);
         saveData();
         playSound('end');
@@ -768,28 +861,69 @@
     // Open drinks menu
     function openDrinksMenu(roomNum) {
       currentRoom = roomNum;
+      resetDrinkQuantities();
+      updateDrinkQuantitiesDisplay();
       document.getElementById('drinksModal').style.display = 'flex';
       playSound('drink');
     }
     
     // Close drinks menu
     function closeDrinksMenu() {
+      updateDrinksFromQuantities();
+      updateDrinksDisplay(currentRoom);
+      saveData();
       document.getElementById('drinksModal').style.display = 'none';
     }
     
-    // Add drink to order
-    function addDrinkToOrder(drinkName, drinkPrice) {
-      if (!currentRoom || !drinkName || isNaN(drinkPrice)) {
-        alert('خطأ في إضافة المشروب، حاول مرة أخرى');
-        return;
-      }
-      drinks[currentRoom].push({ name: drinkName, price: drinkPrice });
-      drinksPrices[currentRoom] += drinkPrice;
-      
-      updateDrinksDisplay(currentRoom);
-      saveData();
-      closeDrinksMenu();
+    // Update drink quantity
+    function updateDrinkQuantity(drinkName, change) {
+      if (!currentRoom) return;
+      const newQuantity = Math.max(0, (drinkQuantities[currentRoom][drinkName] || 0) + change);
+      drinkQuantities[currentRoom][drinkName] = newQuantity;
+      document.getElementById(`quantity-${drinkName}`).textContent = newQuantity;
       playSound('drink');
+    }
+    
+    // Update drinks from quantities
+    function updateDrinksFromQuantities() {
+      if (!currentRoom) return;
+      drinks[currentRoom] = [];
+      drinksPrices[currentRoom] = 0;
+      
+      const drinkPrices = {
+        'كولا': 15, 'سفن أب': 15, 'فانتا': 15,
+        'عصير برتقال': 20, 'عصير مانجو': 25, 'عصير فراولة': 25,
+        'شاي': 10, 'قهوة': 15, 'كابتشينو': 20
+      };
+      
+      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
+        if (quantity > 0) {
+          for (let i = 0; i < quantity; i++) {
+            drinks[currentRoom].push({ name: drink, price: drinkPrices[drink] });
+            drinksPrices[currentRoom] += drinkPrices[drink];
+          }
+        }
+      }
+    }
+    
+    // Reset drink quantities display
+    function resetDrinkQuantities() {
+      if (!currentRoom) return;
+      const drinkNames = ['كولا', 'سفن أب', 'فانتا', 'عصير برتقال', 'عصير مانجو', 'عصير فراولة', 'شاي', 'قهوة', 'كابتشينو'];
+      drinkNames.forEach(drink => {
+        drinkQuantities[currentRoom][drink] = drinks[currentRoom].filter(item => item.name === drink).length;
+      });
+    }
+    
+    // Update drink quantities display
+    function updateDrinkQuantitiesDisplay() {
+      if (!currentRoom) return;
+      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
+        const element = document.getElementById(`quantity-${drink}`);
+        if (element) {
+          element.textContent = quantity;
+        }
+      }
     }
     
     // Update drinks display
@@ -797,15 +931,21 @@
       const drinksList = document.getElementById(`drinksList${roomNum}`);
       drinksList.innerHTML = '';
       
+      const drinkSummary = {};
       drinks[roomNum].forEach(item => {
+        drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+      });
+      
+      for (const [name, quantity] of Object.entries(drinkSummary)) {
+        const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
         const drinkItem = document.createElement('div');
         drinkItem.className = 'drink-item';
         drinkItem.innerHTML = `
-          <span>${item.name}</span>
-          <span>${item.price.toFixed(2)} جنيه</span>
+          <span>${name} (x${quantity})</span>
+          <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
         `;
         drinksList.appendChild(drinkItem);
-      });
+      }
       
       document.getElementById(`drinksTotal${roomNum}`).textContent = `المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه`;
     }
@@ -817,6 +957,11 @@
       timePrices[roomNum] = 0;
       drinks[roomNum] = [];
       drinksPrices[roomNum] = 0;
+      drinkQuantities[roomNum] = {
+        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
+        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
+        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
+      };
       
       document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
       document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
@@ -844,14 +989,20 @@
         const printDrinks = document.getElementById('printDrinks');
         printDrinks.innerHTML = '<p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>';
         
+        const drinkSummary = {};
         drinks[roomNum].forEach(item => {
+          drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+        });
+        
+        for (const [name, quantity] of Object.entries(drinkSummary)) {
+          const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
           const drinkRow = document.createElement('p');
           drinkRow.innerHTML = `
-            <span>${item.name}</span>
-            <span>${item.price.toFixed(2)} جنيه</span>
+            <span>${name} (x${quantity})</span>
+            <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
           `;
           printDrinks.appendChild(drinkRow);
-        });
+        }
         
         const total = timePrices[roomNum] + drinksPrices[roomNum];
         document.getElementById('printTotal').textContent = total.toFixed(2) + ' جنيه';
@@ -914,7 +1065,8 @@
         startTimes,
         timePrices,
         drinks,
-        drinksPrices
+        drinksPrices,
+        drinkQuantities
       };
       localStorage.setItem('playstationData', JSON.stringify(data));
     }
@@ -926,6 +1078,7 @@
         const parsed = JSON.parse(data);
         dailyTimeEarnings = parsed.dailyTimeEarnings || dailyTimeEarnings;
         dailyDrinksEarnings = parsed.dailyDrinksEarnings || dailyDrinksEarnings;
+        drinkQuantities = parsed.drinkQuantities || drinkQuantities;
         
         for (let i = 1; i <= rooms; i++) {
           if (parsed.startTimes[i]) {
