@@ -246,6 +246,8 @@
     .menu-content {
       background: #0f2027;
       padding: 20px;
+
+
       border-radius: 15px;
       width: 90%;
       max-width: 500px;
@@ -410,22 +412,28 @@
     
     /* Print styles */
     @media print {
+      body {
+        background: white;
+        color: black;
+      }
       body * {
         visibility: hidden;
       }
       .print-content, .print-content * {
-        visibility: visible;
+        visibility: visible !important;
+        color: black !important;
       }
       .print-content {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: auto;
         background: white;
         color: black;
         padding: 20px;
         font-family: 'Tajawal', Arial, sans-serif;
+        font-size: 12pt;
       }
       .print-header {
         text-align: center;
@@ -433,11 +441,11 @@
       }
       .print-header h2 {
         color: #0f2027;
-        font-size: 1.8rem;
+        font-size: 18pt;
         margin-bottom: 10px;
       }
       .print-details {
-        font-size: 1.1rem;
+        font-size: 12pt;
         margin: 15px 0;
       }
       .print-details p {
@@ -457,7 +465,7 @@
       .print-footer {
         text-align: center;
         margin-top: 25px;
-        font-size: 0.9rem;
+        font-size: 10pt;
         color: #666;
       }
     }
@@ -977,40 +985,62 @@
       }
       
       if (confirm(`هل تريد طباعة فاتورة غرفة ${roomNum}؟`)) {
+        // Log data for debugging
+        console.log('Printing invoice for room:', roomNum);
+        console.log('Time Price:', timePrices[roomNum]);
+        console.log('Drinks:', drinks[roomNum]);
+        console.log('Drinks Price:', drinksPrices[roomNum]);
+        
         const now = new Date();
         const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + 
                         now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
         
+        // Populate print content
         document.getElementById('printRoom').textContent = roomNum;
         document.getElementById('printTime').textContent = document.getElementById(`timer${roomNum}`).textContent;
-        document.getElementById('printRate').textContent = HOUR_RATE.toFixed(2) + ' جنيه';
-        document.getElementById('printTimeTotal').textContent = timePrices[roomNum].toFixed(2) + ' جنيه';
+        document.getElementById('printRate').textContent = `${HOUR_RATE.toFixed(2)} جنيه`;
+        document.getElementById('printTimeTotal').textContent = `${timePrices[roomNum].toFixed(2)} جنيه`;
         
         const printDrinks = document.getElementById('printDrinks');
         printDrinks.innerHTML = '<p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>';
         
-        const drinkSummary = {};
-        drinks[roomNum].forEach(item => {
-          drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
-        });
-        
-        for (const [name, quantity] of Object.entries(drinkSummary)) {
-          const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
-          const drinkRow = document.createElement('p');
-          drinkRow.innerHTML = `
-            <span>${name} (x${quantity})</span>
-            <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
-          `;
-          printDrinks.appendChild(drinkRow);
+        if (drinks[roomNum].length === 0) {
+          const noDrinks = document.createElement('p');
+          noDrinks.textContent = 'لا توجد مشروبات';
+          printDrinks.appendChild(noDrinks);
+        } else {
+          const drinkSummary = {};
+          drinks[roomNum].forEach(item => {
+            drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+          });
+          
+          for (const [name, quantity] of Object.entries(drinkSummary)) {
+            const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
+            const drinkRow = document.createElement('p');
+            drinkRow.innerHTML = `
+              <span>${name} (x${quantity})</span>
+              <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
+            `;
+            printDrinks.appendChild(drinkRow);
+          }
         }
         
         const total = timePrices[roomNum] + drinksPrices[roomNum];
-        document.getElementById('printTotal').textContent = total.toFixed(2) + ' جنيه';
+        document.getElementById('printTotal').textContent = `${total.toFixed(2)} جنيه`;
         document.getElementById('printDate').textContent = dateStr;
         
-        document.getElementById('printContent').style.display = 'block';
-        window.print();
-        document.getElementById('printContent').style.display = 'none';
+        // Ensure print content is visible and force DOM update
+        const printContent = document.getElementById('printContent');
+        printContent.style.display = 'block';
+        
+        // Log print content for debugging
+        console.log('Print Content HTML:', printContent.innerHTML);
+        
+        // Delay print to ensure DOM is updated
+        setTimeout(() => {
+          window.print();
+          printContent.style.display = 'none';
+        }, 100);
       }
     }
     
