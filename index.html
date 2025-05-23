@@ -655,16 +655,40 @@
       dailyDrinksEarnings[i] = 0;
     }
     
-    // Login function
+    // Login function with single-use email check
     function login() {
       const username = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
       
+      // Check if email was used before
+      const usedEmails = JSON.parse(localStorage.getItem('usedEmails') || '[]');
+      if (usedEmails.includes(username)) {
+        alert('هذا البريد الإلكتروني تم استخدامه بالفعل!');
+        return;
+      }
+      
       if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        // Store login state and email
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('loggedInUser', username);
+        usedEmails.push(username);
+        localStorage.setItem('usedEmails', JSON.stringify(usedEmails));
+        
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
+        saveData();
       } else {
         alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+      }
+    }
+    
+    // Check login state on page load
+    function checkLoginState() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn === 'true') {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        loadData();
       }
     }
     
@@ -687,7 +711,7 @@
       playSound('start');
     }
     
-    // End timer function
+    // End timer function with full reset
     function endTimer(roomNum) {
       if (!timers[roomNum]) return;
       
@@ -712,8 +736,9 @@
         المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه
         الإجمالي: ${total.toFixed(2)} جنيه`);
         
-        saveData();
+        // Fully reset room data
         resetRoom(roomNum);
+        saveData();
         playSound('end');
       }
     }
@@ -787,6 +812,8 @@
     
     // Reset room
     function resetRoom(roomNum) {
+      timers[roomNum] = null;
+      startTimes[roomNum] = null;
       timePrices[roomNum] = 0;
       drinks[roomNum] = [];
       drinksPrices[roomNum] = 0;
@@ -957,7 +984,7 @@
     
     // Auto-save and load
     setInterval(saveData, 60000);
-    window.onload = loadData;
+    window.onload = checkLoginState;
   </script>
 </body>
 </html>
