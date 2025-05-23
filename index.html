@@ -246,8 +246,6 @@
     .menu-content {
       background: #0f2027;
       padding: 20px;
-
-
       border-radius: 15px;
       width: 90%;
       max-width: 500px;
@@ -912,6 +910,7 @@
           }
         }
       }
+      console.log(`Updated drinks for room ${currentRoom}:`, drinks[currentRoom]); // Debug
     }
     
     // Reset drink quantities display
@@ -921,6 +920,7 @@
       drinkNames.forEach(drink => {
         drinkQuantities[currentRoom][drink] = drinks[currentRoom].filter(item => item.name === drink).length;
       });
+      console.log(`Reset quantities for room ${currentRoom}:`, drinkQuantities[currentRoom]); // Debug
     }
     
     // Update drink quantities display
@@ -945,7 +945,7 @@
       });
       
       for (const [name, quantity] of Object.entries(drinkSummary)) {
-        const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
+        const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
         const drinkItem = document.createElement('div');
         drinkItem.className = 'drink-item';
         drinkItem.innerHTML = `
@@ -956,6 +956,7 @@
       }
       
       document.getElementById(`drinksTotal${roomNum}`).textContent = `المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه`;
+      console.log(`Updated drinks display for room ${roomNum}:`, drinkSummary); // Debug
     }
     
     // Reset room
@@ -975,6 +976,7 @@
       document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
       document.getElementById(`drinksList${roomNum}`).innerHTML = '';
       document.getElementById(`drinksTotal${roomNum}`).textContent = 'المشروبات: 0.00 جنيه';
+      console.log(`Reset room ${roomNum}`); // Debug
     }
     
     // Print invoice
@@ -985,11 +987,12 @@
       }
       
       if (confirm(`هل تريد طباعة فاتورة غرفة ${roomNum}؟`)) {
-        // Log data for debugging
+        // Debug: Log all relevant data
         console.log('Printing invoice for room:', roomNum);
         console.log('Time Price:', timePrices[roomNum]);
         console.log('Drinks:', drinks[roomNum]);
         console.log('Drinks Price:', drinksPrices[roomNum]);
+        console.log('Drink Quantities:', drinkQuantities[roomNum]);
         
         const now = new Date();
         const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + 
@@ -1004,18 +1007,23 @@
         const printDrinks = document.getElementById('printDrinks');
         printDrinks.innerHTML = '<p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>';
         
-        if (drinks[roomNum].length === 0) {
+        // Summarize drinks
+        const drinkSummary = {};
+        drinks[roomNum].forEach(item => {
+          if (item && item.name && item.price) {
+            drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+          }
+        });
+        
+        console.log('Drink Summary for print:', drinkSummary); // Debug
+        
+        if (Object.keys(drinkSummary).length === 0) {
           const noDrinks = document.createElement('p');
           noDrinks.textContent = 'لا توجد مشروبات';
           printDrinks.appendChild(noDrinks);
         } else {
-          const drinkSummary = {};
-          drinks[roomNum].forEach(item => {
-            drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
-          });
-          
           for (const [name, quantity] of Object.entries(drinkSummary)) {
-            const drinkPrice = drinks[roomNum].find(item => item.name === name).price;
+            const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
             const drinkRow = document.createElement('p');
             drinkRow.innerHTML = `
               <span>${name} (x${quantity})</span>
@@ -1029,18 +1037,18 @@
         document.getElementById('printTotal').textContent = `${total.toFixed(2)} جنيه`;
         document.getElementById('printDate').textContent = dateStr;
         
-        // Ensure print content is visible and force DOM update
+        // Ensure print content is visible
         const printContent = document.getElementById('printContent');
         printContent.style.display = 'block';
         
-        // Log print content for debugging
-        console.log('Print Content HTML:', printContent.innerHTML);
+        // Debug: Log final print content
+        console.log('Final Print Content HTML:', printContent.innerHTML);
         
-        // Delay print to ensure DOM is updated
+        // Delay print to ensure DOM update
         setTimeout(() => {
           window.print();
           printContent.style.display = 'none';
-        }, 100);
+        }, 200); // Increased delay to 200ms
       }
     }
     
@@ -1099,6 +1107,7 @@
         drinkQuantities
       };
       localStorage.setItem('playstationData', JSON.stringify(data));
+      console.log('Saved data:', data); // Debug
     }
     
     // Load data from localStorage
@@ -1129,6 +1138,7 @@
             }
           }
         }
+        console.log('Loaded data:', parsed); // Debug
       }
     }
     
