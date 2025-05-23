@@ -5,41 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام كاشير مطعم مصري</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
             padding: 20px;
             direction: rtl;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
         }
         .menu {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
         .menu-item {
-            background: #eee;
-            padding: 10px;
-            border-radius: 5px;
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s, background 0.3s;
+            font-size: 1.1em;
         }
         .menu-item:hover {
-            background: #ddd;
+            background: #2980b9;
+            transform: scale(1.05);
         }
         .order {
             margin-top: 20px;
@@ -50,44 +59,99 @@
             margin-bottom: 20px;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             text-align: center;
+            font-size: 1em;
         }
         th {
-            background: #007bff;
+            background: #2c3e50;
             color: white;
+        }
+        .quantity-control {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-control button {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .quantity-control button:hover {
+            background: #2980b9;
+        }
+        .quantity-control input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
         }
         .total {
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
             text-align: left;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
         button {
-            padding: 10px 20px;
-            background: #28a745;
-            color: white;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
         }
-        button:hover {
+        .print-btn {
+            background: #28a745;
+            color: white;
+        }
+        .print-btn:hover {
             background: #218838;
         }
         .remove-btn {
             background: #dc3545;
+            color: white;
         }
         .remove-btn:hover {
             background: #c82333;
         }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .print-area {
+                font-size: 12pt;
+                text-align: center;
+            }
+            .print-area table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .print-area th, .print-area td {
+                border: 1px solid #000;
+                padding: 8px;
+            }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container no-print">
         <h1>نظام كاشير مطعم مصري</h1>
-        <div class="menu" id="menu">
-            <!-- الأصناف سيتم إضافتها هنا ديناميكيًا -->
-        </div>
+        <div class="menu" id="menu"></div>
         <div class="order">
             <h2>الطلبات</h2>
             <table id="orderTable">
@@ -103,12 +167,15 @@
                 <tbody id="orderBody"></tbody>
             </table>
             <div class="total">الإجمالي: <span id="totalPrice">0</span> جنيه</div>
-            <button onclick="printBill()">إصدار فاتورة</button>
+            <div class="action-buttons">
+                <button class="print-btn" onclick="printBill()">طباعة الفاتورة</button>
+            </div>
         </div>
     </div>
 
+    <div id="printArea" class="print-area" style="display: none;"></div>
+
     <script>
-        // قائمة الأصناف
         const menuItems = [
             { name: "كشري", price: 25 },
             { name: "فول", price: 15 },
@@ -121,7 +188,6 @@
             { name: "مشروب غازي", price: 10 }
         ];
 
-        // تحميل الأصناف في القائمة
         const menuDiv = document.getElementById('menu');
         menuItems.forEach(item => {
             const itemDiv = document.createElement('div');
@@ -133,7 +199,6 @@
 
         let orders = [];
 
-        // إضافة صنف للطلب
         function addToOrder(item) {
             const existingOrder = orders.find(order => order.name === item.name);
             if (existingOrder) {
@@ -144,21 +209,34 @@
             updateOrderTable();
         }
 
-        // تحديث جدول الطلبات
+        function updateQuantity(index, change) {
+            orders[index].quantity = Math.max(1, orders[index].quantity + change);
+            updateOrderTable();
+        }
+
+        function removeOrder(index) {
+            orders.splice(index, 1);
+            updateOrderTable();
+        }
+
         function updateOrderTable() {
             const orderBody = document.getElementById('orderBody');
             orderBody.innerHTML = '';
             let total = 0;
 
             orders.forEach((order, index) => {
-                const row = document.createElement('tr');
                 const itemTotal = order.price * order.quantity;
                 total += itemTotal;
+                const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${order.name}</td>
                     <td>${order.price}</td>
                     <td>
-                        <input type="number" value="${order.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                        <div class="quantity-control">
+                            <button onclick="updateQuantity(${index}, -1)">-</button>
+                            <input type="number" value="${order.quantity}" min="1" readonly>
+                            <button onclick="updateQuantity(${index}, 1)">+</button>
+                        </div>
                     </td>
                     <td>${itemTotal}</td>
                     <td><button class="remove-btn" onclick="removeOrder(${index})">إزالة</button></td>
@@ -169,44 +247,53 @@
             document.getElementById('totalPrice').textContent = total;
         }
 
-        // تحديث الكمية
-        function updateQuantity(index, quantity) {
-            orders[index].quantity = parseInt(quantity) || 1;
-            updateOrderTable();
-        }
-
-        // إزالة صنف من الطلب
-        function removeOrder(index) {
-            orders.splice(index, 1);
-            updateOrderTable();
-        }
-
-        // إصدار فاتورة
         function printBill() {
             if (orders.length === 0) {
                 alert("لا توجد طلبات!");
                 return;
             }
 
-            let bill = "فاتورة مطعم مصري\n\n";
-            bill += "الصنف\t\tالسعر\tالكمية\tالإجمالي\n";
-            bill += "----------------------------------------\n";
+            const printArea = document.getElementById('printArea');
+            let bill = `
+                <h2 style="text-align: center;">فاتورة مطعم مصري</h2>
+                <p style="text-align: center;">التاريخ: ${new Date().toLocaleString('ar-EG')}</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الصنف</th>
+                            <th>السعر</th>
+                            <th>الكمية</th>
+                            <th>الإجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
             let total = 0;
 
             orders.forEach(order => {
                 const itemTotal = order.price * order.quantity;
                 total += itemTotal;
-                bill += `${order.name}\t${order.price}\t${order.quantity}\t${itemTotal}\n`;
+                bill += `
+                    <tr>
+                        <td>${order.name}</td>
+                        <td>${order.price}</td>
+                        <td>${order.quantity}</td>
+                        <td>${itemTotal}</td>
+                    </tr>
+                `;
             });
 
-            bill += "----------------------------------------\n";
-            bill += `الإجمالي: ${total} جنيه\n`;
-            bill += `التاريخ: ${new Date().toLocaleString('ar-EG')}\n`;
+            bill += `
+                    </tbody>
+                </table>
+                <p style="text-align: left; font-weight: bold;">الإجمالي: ${total} جنيه</p>
+            `;
 
-            // عرض الفاتورة في نافذة تنبيه (يمكن تعديلها للطباعة)
-            alert(bill);
+            printArea.innerHTML = bill;
+            printArea.style.display = 'block';
+            window.print();
+            printArea.style.display = 'none';
 
-            // إعادة تعيين الطلبات
             orders = [];
             updateOrderTable();
         }
