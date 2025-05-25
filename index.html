@@ -3,433 +3,544 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نظام بلايستيشن ومشروبات</title>
+  <title>نظام إدارة بلايستيشن ومشروبات</title>
+  <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Tajawal Font for Arabic Typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- HTML2PDF for Invoice Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
+    /* Reset and Base Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Tajawal', sans-serif;
+      scroll-behavior: smooth;
     }
+
     body {
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #eee;
+      color: #ffffff;
       min-height: 100vh;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-size: 16px;
+      line-height: 1.6;
     }
+
+    /* Typography */
     h1 {
-      width: 100%;
       text-align: center;
       color: #00d4ff;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: 900;
-      margin: 20px 0;
-      text-shadow: 0 0 15px #00d4ffaa;
+      margin: 30px 0;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
+      animation: fadeIn 1s ease-in-out;
     }
+
+    /* Rooms Container */
     .rooms-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 25px;
       width: 100%;
-      max-width: 1400px;
-      margin-bottom: 30px;
+      max-width: 1440px;
+      margin-bottom: 40px;
     }
+
+    /* Room Card */
     .room-card {
-      background: rgba(15, 32, 39, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      box-shadow: 0 0 20px #00d4ff88;
+      background: rgba(15, 32, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+      padding: 25px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      height: 100%;
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      position: relative;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(0, 212, 255, 0.3);
-      height: 100%;
     }
+
     .room-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px #00d4ffaa;
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.5);
     }
+
     .room-header {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 900;
       color: #00d4ff;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
     }
+
+    /* Status Indicator */
     .status {
       position: absolute;
       top: 15px;
       left: 15px;
+      font-size: 0.95rem;
       font-weight: 700;
-      font-size: 0.9rem;
-      padding: 5px 10px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 12px;
       user-select: none;
-      box-shadow: 0 0 8px #000;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
     }
+
     .status.offline {
-      background-color: #666;
-      color: #bbb;
+      background-color: #4b5e6d;
+      color: #b0bec5;
     }
+
     .status.online {
       background-color: #00d4ff;
       color: #0f2027;
-      box-shadow: 0 0 12px #00d4ffbb;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
+      animation: pulse 2s infinite;
     }
+
+    /* Timer and Price */
     .timer-container {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
+      text-align: center;
     }
+
     .timer {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: 900;
       color: #00d4ff;
-      text-align: center;
-      font-family: 'Courier New', Courier, monospace;
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px #00d4ff88;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 4px;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
       user-select: none;
-      line-height: 1;
     }
+
     .price {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 800;
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+ Poppyادرسة
       user-select: none;
     }
+
+    /* Drinks List */
     .drinks-list {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px;
-      max-height: 120px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
+      max-height: 140px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-width: thin;
+      scrollbar-color: #00d4ff rgba(0, 0, 0, 0.3);
     }
+
     .drink-item {
       display: flex;
-      justify-content: flex-start; /* Align to left */
+      justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
+      padding: 8px 0;
       border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
+
     .drink-item:last-child {
       border-bottom: none;
     }
+
     .drink-item span.quantity {
-      margin-left: 10px;
       color: #00d4ff;
       font-weight: bold;
+      margin-left: 10px;
     }
+
     .drinks-total {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
+
+    /* Buttons */
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 15px;
     }
+
     button {
       flex: 1;
-      min-width: 120px;
-      padding: 10px 0;
-      border-radius: 10px;
+      min-width: 130px;
+      padding: 12px;
+      border-radius: 12px;
       border: none;
-      font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      user-select: none;
-      box-shadow: 0 0 6px #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
+
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.5;
-      transform: none !important;
+      opacity: 0.6;
     }
+
     button.start {
       background-color: #00d4ff;
       color: #0f2027;
     }
+
     button.start:hover:not(:disabled) {
       background-color: #00e5ff;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
+
     button.end {
       background-color: #ff4757;
-      color: #fff;
+      color: #ffffff;
     }
+
     button.end:hover:not(:disabled) {
       background-color: #ff6b81;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
+
     button.drinks {
       background-color: #f39c12;
-      color: #fff;
+      color: #ffffff;
     }
+
     button.drinks:hover:not(:disabled) {
       background-color: #f1c40f;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
+
     button.print {
       background-color: #2c5364;
-      color: #ddd;
-      font-weight: 700;
+      color: #ffffff;
     }
-    button.print:hover {
+
+    button.print:hover:not(:disabled) {
       background-color: #3a7188;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
+
     .summary-btn {
       background-color: #00d4ff;
       color: #0f2027;
-      padding: 12px 25px;
-      border-radius: 12px;
+      padding: 14px 30px;
+      border-radius: 14px;
+      font-size: 1.1rem;
       font-weight: 800;
-      margin: 20px 0;
+      margin: 30px 0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      transition: all 0.3s ease;
     }
+
     .summary-btn:hover {
       background-color: #00e5ff;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
     }
+
+    /* Drinks Menu Modal */
     .menu-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 1001;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
+
     .menu-content {
       background: #0f2027;
-      padding: 20px;
-      border-radius: 15px;
+      padding: 25px;
+      border-radius: 20px;
       width: 90%;
-      max-width: 500px;
-      max-height: 80vh;
+      max-width: 550px;
+      max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 0 30px #00d4ffaa;
-      border: 1px solid #00d4ff;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
+      border: 1px solid rgba(0, 212, 255, 0.5);
     }
+
     .menu-category {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     .menu-category h3 {
       color: #00d4ff;
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-      border-bottom: 2px solid #00d4ff;
-      padding-bottom: 5px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border-bottom: 2px solid rgba(0, 212, 255, 0.5);
+      padding-bottom: 8px;
     }
+
     .menu-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
-      margin-bottom: 8px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
+
     .menu-item:hover {
-      background: rgba(0, 212, 255, 0.2);
+      background: rgba(0, 212, 255, 0.3);
       transform: translateX(-5px);
     }
+
     .menu-item-price {
       color: #00d4ff;
-      font-weight: bold;
+      font-weight: 700;
     }
+
     .menu-item-controls {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
-      justify-content: flex-start; /* Align to left */
     }
+
     .menu-item-controls button {
-      min-width: 30px;
-      padding: 5px;
-      font-size: 1rem;
-      border-radius: 5px;
+      min-width: 35px;
+      padding: 6px;
+      font-size: 1.1rem;
+      border-radius: 8px;
     }
+
     .menu-item-controls .plus {
       background-color: #00d4ff;
       color: #0f2027;
     }
+
     .menu-item-controls .plus:hover {
       background-color: #00e5ff;
     }
+
     .menu-item-controls .minus {
       background-color: #ff4757;
-      color: #fff;
+      color: #ffffff;
     }
+
     .menu-item-controls .minus:hover {
       background-color: #ff6b81;
     }
+
     .menu-item-controls span {
-      color: #fff;
-      font-weight: bold;
-      min-width: 30px;
-      text-align: left; /* Align quantity to left */
+      color: #ffffff;
+      font-weight: 700;
+      min-width: 35px;
+      text-align: center;
     }
+
     .close-menu {
       background: #ff4757;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-weight: bold;
+      color: #ffffff;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 25px;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
+      transition: all 0.3s ease;
       width: 100%;
     }
+
+    .close-menu:hover {
+      background: #ff6b81;
+      transform: translateY(-3px);
+    }
+
+    /* Login Container */
     .login-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
     }
+
     .login-form {
       background: #0f2027;
-      padding: 30px;
-      border-radius: 15px;
+      padding: 35px;
+      border-radius: 20px;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 30px #00d4ffaa;
-      border: 1px solid #00d4ff;
+      max-width: 450px;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
+      border: 1px solid rgba(0, 212, 255, 0.5);
     }
+
     .login-form h2 {
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
+      margin-bottom: 30px;
+      font-size: 2rem;
     }
+
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     .form-group label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: #00d4ff;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 1.1rem;
     }
+
+ égalادرسة
     .form-group input {
       width: 100%;
-      padding: 12px 15px;
-      border-radius: 8px;
-      border: 1px solid #00d4ff;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 212, 255, 0.5);
+      background: rgba(0, 0, 0, 0.4);
+      color: #ffffff;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
     .login-btn {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background: #00d4ff;
       color: #0f2027;
       border: none;
-      border-radius: 8px;
-      font-weight: bold;
+      border-radius: 10px;
       font-size: 1.1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 10px;
     }
+
     .login-btn:hover {
       background: #00e5ff;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
     }
+
+    /* Print Styles */
     .print-content {
-      background: white;
-      color: black;
-      padding: 20px;
+      background: #ffffff;
+      color: #0f2027;
+      padding: 25px;
       font-family: 'Tajawal', Arial, sans-serif;
-      font-size: 12pt;
+      font-size: 14pt;
       width: 100%;
       max-width: 210mm;
       margin: 0 auto;
+      border-radius: 10px;
     }
+
     .print-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     .print-header h2 {
       color: #0f2027;
-      font-size: 18pt;
-      margin-bottom: 10px;
+      font-size: 20pt;
+      margin-bottom: 12px;
     }
+
     .print-details {
-      font-size: 12pt;
-      margin: 15px 0;
+      font-size: 14pt;
+      margin: 20px 0;
     }
+
     .print-details p {
       display: flex;
       justify-content: space-between;
-      margin: 8px 0;
+      margin: 10px 0;
     }
+
     .print-details span {
-      font-weight: bold;
+      font-weight: 700;
       color: #0f2027;
     }
+
     .print-divider {
-      height: 2px;
+      height: 3px;
       background: linear-gradient(90deg, transparent, #0f2027, transparent);
-      margin: 15px 0;
+      margin: 20px 0;
     }
+
     .print-footer {
       text-align: center;
-      margin-top: 25px;
-      font-size: 10pt;
-      color: #666;
+      margin-top: 30px;
+      font-size: 12pt;
+      color: #4b5e6d;
     }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 212, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
+    }
+
+    /* Responsive Design */
     @media print {
       body * {
         visibility: hidden;
       }
       .print-content, .print-content * {
         visibility: visible !important;
-        color: black !important;
+        color: #0f2027 !important;
       }
       .print-content {
         position: absolute;
@@ -439,12 +550,35 @@
         height: auto;
       }
     }
+
     @media (max-width: 768px) {
       h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
       .rooms-container {
         grid-template-columns: 1fr;
+      }
+      .room-card {
+        padding: 20px;
+      }
+      .timer {
+        font-size: 2.2rem;
+      }
+      button {
+        min-width: 100px;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .login-form {
+        padding: 20px;
+        max-width: 90%;
+      }
+      .menu-content {
+        padding: 20px;
+        max-width: 95%;
       }
     }
   </style>
@@ -468,10 +602,11 @@
     </div>
   </div>
 
-  <!-- Main Content (Hidden until login) -->
+  <!-- Main Content -->
   <div id="mainContent" style="display: none;">
-    <h1><i class="fas fa-gamepad"></i> نظام بلايستيشن ومشروبات</h1>
+    <h1><i class="fas fa-gamepad"></i> نظام إدارة بلايستيشن ومشروبات</h1>
     <div class="rooms-container">
+      <!-- Room 1 -->
       <div class="room-card" id="room1">
         <div class="status offline" id="status1">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 1</h2>
@@ -488,6 +623,7 @@
           <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
+      <!-- Room 2 -->
       <div class="room-card" id="room2">
         <div class="status offline" id="status2">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 2</h2>
@@ -504,6 +640,7 @@
           <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
+      <!-- Room 3 -->
       <div class="room-card" id="room3">
         <div class="status offline" id="status3">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 3</h2>
@@ -520,6 +657,7 @@
           <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
+      <!-- Room 4 -->
       <div class="room-card" id="room4">
         <div class="status offline" id="status4">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 4</h2>
@@ -540,9 +678,10 @@
     <button class="summary-btn" onclick="showDailySummary()">
       <i class="fas fa-calculator"></i> إجمالي اليوم
     </button>
+    <!-- Drinks Menu Modal -->
     <div id="drinksModal" class="menu-modal">
       <div class="menu-content">
-        <h2 style="color: #f39c12; text-align: center; margin-bottom: 20px;"><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
+        <h2 style="color: #f39c12; text-align: center; margin-bottom: 25px;"><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
         <div class="menu-category">
           <h3>المشروبات الغازية</h3>
           <div class="menu-item" data-drink="كولا" data-price="15">
@@ -577,531 +716,4 @@
           <h3>العصائر</h3>
           <div class="menu-item" data-drink="عصير برتقال" data-price="20">
             <span>عصير برتقال</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير برتقال', -1)">−</button>
-              <span id="quantity-عصير برتقال">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير برتقال', 1)">+</button>
-            </div>
-            <span class="menu-item-price">20 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="عصير مانجو" data-price="25">
-            <span>عصير مانجو</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير مانجو', -1)">−</button>
-              <span id="quantity-عصير مانجو">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير مانجو', 1)">+</button>
-            </div>
-            <span class="menu-item-price">25 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="عصير فراولة" data-price="25">
-            <span>عصير فراولة</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير فراولة', -1)">−</button>
-              <span id="quantity-عصير فراولة">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير فراولة', 1)">+</button>
-            </div>
-            <span class="menu-item-price">25 جنيه</span>
-          </div>
-        </div>
-        <div class="menu-category">
-          <h3>المشروبات الساخنة</h3>
-          <div class="menu-item" data-drink="شاي" data-price="10">
-            <span>شاي</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('شاي', -1)">−</button>
-              <span id="quantity-شاي">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('شاي', 1)">+</button>
-            </div>
-            <span class="menu-item-price">10 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="قهوة" data-price="15">
-            <span>قهوة</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('قهوة', -1)">−</button>
-              <span id="quantity-قهوة">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('قهوة', 1)">+</button>
-            </div>
-            <span class="menu-item-price">15 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="كابتشينو" data-price="20">
-            <span>كابتشينو</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('كابتشينو', -1)">−</button>
-              <span id="quantity-كابتشينو">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('كابتشينو', 1)">+</button>
-            </div>
-            <span class="menu-item-price">20 جنيه</span>
-          </div>
-        </div>
-        <button class="close-menu" onclick="closeDrinksMenu()"><i class="fas fa-times"></i> إغلاق القائمة</button>
-      </div>
-    </div>
-    <div id="printContent" class="print-content" style="display: none;">
-      <div class="print-header">
-        <h2><i class="fas fa-receipt"></i> فاتورة بلايستيشن ومشروبات</h2>
-        <p>نظام إدارة صالات الألعاب</p>
-      </div>
-      <div class="print-details">
-        <p>رقم الغرفة: <span id="printRoom">1</span></p>
-        <p>وقت اللعب: <span id="printTime">00:00:00</span></p>
-        <p>سعر الساعة: <span id="printRate">10.00 جنيه</span></p>
-        <p>إجمالي الوقت: <span id="printTimeTotal">0.00 جنيه</span></p>
-        <div id="printDrinks">
-          <p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>
-        </div>
-        <div class="print-divider"></div>
-        <p>المبلغ المستحق: <span id="printTotal">0.00 جنيه</span></p>
-        <p>تاريخ الطباعة: <span id="printDate">--/--/---- --:--</span></p>
-      </div>
-      <div class="print-footer">
-        <p>شكراً لزيارتكم - نتمنى لكم وقتاً ممتعاً</p>
-        <p>للاستفسار: 0123456789</p>
-      </div>
-    </div>
-    <div id="summaryModal" class="menu-modal" style="display: none;">
-      <div class="menu-content">
-        <h2 style="color: #00d4ff; margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-coins"></i> إجمالي اليوم</h2>
-        <div id="summaryContent" style="font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6;"></div>
-        <div style="display: flex; gap: 10px;">
-          <button onclick="resetDailyEarnings()" style="background: #ff4757; color: #fff; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
-            <i class="fas fa-redo"></i> إعادة تعيين اليوم
-          </button>
-          <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #00d4ff; color: #0f2027; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
-            <i class="fas fa-times"></i> إغلاق
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Configuration
-    const ADMIN_CREDENTIALS = [
-      { email: "admin1@example.com", password: "12345pro", expiryDays: 1 },
-      { email: "admin2@example.com", password: "12345678pro", expiryDays: 2 }
-    ];
-    const HOUR_RATE = 10;
-    const rooms = 4;
-    
-    let currentRoom = 1;
-    let timers = {};
-    let startTimes = {};
-    let timePrices = {};
-    let drinks = {};
-    let drinksPrices = {};
-    let dailyTimeEarnings = {};
-    let dailyDrinksEarnings = {};
-    let drinkQuantities = {};
-    
-    for (let i = 1; i <= rooms; i++) {
-      timers[i] = null;
-      startTimes[i] = null;
-      timePrices[i] = 0;
-      drinks[i] = [];
-      drinksPrices[i] = 0;
-      dailyTimeEarnings[i] = 0;
-      dailyDrinksEarnings[i] = 0;
-      drinkQuantities[i] = {
-        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
-        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
-        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
-      };
-    }
-    
-    // Login function with expiration
-    function login() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      
-      // Check if email is used and not expired
-      const usedCredentials = JSON.parse(localStorage.getItem('usedCredentials') || '{}');
-      const credential = ADMIN_CREDENTIALS.find(
-        cred => cred.email === email && cred.password === password
-      );
-      
-      if (!credential) {
-        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة');
-        return;
-      }
-      
-      // Check expiration
-      const now = new Date().getTime();
-      if (usedCredentials[email]) {
-        const { expiry } = usedCredentials[email];
-        if (now > expiry) {
-          alert('هذا الحساب منتهي الصلاحية!');
-          delete usedCredentials[email];
-          localStorage.setItem('usedCredentials', JSON.stringify(usedCredentials));
-          return;
-        }
-      } else {
-        // Set expiration for new login
-        const expiryDays = credential.expiryDays;
-        const expiry = now + expiryDays * 24 * 60 * 60 * 1000;
-        usedCredentials[email] = { expiry };
-        localStorage.setItem('usedCredentials', JSON.stringify(usedCredentials));
-      }
-      
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('loggedInEmail', email);
-      document.getElementById('loginContainer').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-      saveData();
-    }
-    
-    function checkLoginState() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      if (isLoggedIn === 'true') {
-        const email = localStorage.getItem('loggedInEmail');
-        const usedCredentials = JSON.parse(localStorage.getItem('usedCredentials') || '{}');
-        const now = new Date().getTime();
-        if (usedCredentials[email] && now <= usedCredentials[email].expiry) {
-          document.getElementById('loginContainer').style.display = 'none';
-          document.getElementById('mainContent').style.display = 'block';
-          loadData();
-        } else {
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('loggedInEmail');
-        }
-      }
-    }
-    
-    function startTimer(roomNum) {
-      if (timers[roomNum]) return;
-      document.getElementById(`status${roomNum}`).className = 'status online';
-      document.getElementById(`status${roomNum}`).textContent = 'شغالة';
-      document.getElementById(`start${roomNum}`).disabled = true;
-      document.getElementById(`end${roomNum}`).disabled = false;
-      document.getElementById(`drinks${roomNum}`).disabled = false;
-      startTimes[roomNum] = new Date();
-      timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
-      saveData();
-      playSound('start');
-    }
-    
-    function endTimer(roomNum) {
-      if (!timers[roomNum]) return;
-      if (confirm(`هل تريد إنهاء جلسة غرفة ${roomNum}؟`)) {
-        clearInterval(timers[roomNum]);
-        timers[roomNum] = null;
-        document.getElementById(`status${roomNum}`).className = 'status offline';
-        document.getElementById(`status${roomNum}`).textContent = 'متوقفة';
-        document.getElementById(`start${roomNum}`).disabled = false;
-        document.getElementById(`end${roomNum}`).disabled = true;
-        document.getElementById(`drinks${roomNum}`).disabled = true;
-        updateTimer(roomNum);
-        dailyTimeEarnings[roomNum] += timePrices[roomNum];
-        dailyDrinksEarnings[roomNum] += drinksPrices[roomNum];
-        const total = timePrices[roomNum] + drinksPrices[roomNum];
-        alert(`إجمالي غرفة ${roomNum}:
-        الوقت: ${timePrices[roomNum].toFixed(2)} جنيه
-        المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه
-        الإجمالي: ${total.toFixed(2)} جنيه`);
-        resetRoom(roomNum);
-        saveData();
-        playSound('end');
-      }
-    }
-    
-    function updateTimer(roomNum) {
-      if (!startTimes[roomNum]) return;
-      const now = new Date();
-      const diff = now - startTimes[roomNum];
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      const formattedTime = 
-        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-      document.getElementById(`timer${roomNum}`).textContent = formattedTime;
-      const hoursPlayed = diff / (1000 * 60 * 60);
-      timePrices[roomNum] = Math.round(hoursPlayed * HOUR_RATE * 100) / 100;
-      document.getElementById(`price${roomNum}`).textContent = `${timePrices[roomNum].toFixed(2)} جنيه`;
-    }
-    
-    function openDrinksMenu(roomNum) {
-      currentRoom = roomNum;
-      resetDrinkQuantities();
-      updateDrinkQuantitiesDisplay();
-      document.getElementById('drinksModal').style.display = 'flex';
-      playSound('drink');
-    }
-    
-    function closeDrinksMenu() {
-      updateDrinksFromQuantities();
-      updateDrinksDisplay(currentRoom);
-      saveData();
-      document.getElementById('drinksModal').style.display = 'none';
-    }
-    
-    function updateDrinkQuantity(drinkName, change) {
-      if (!currentRoom) return;
-      const newQuantity = Math.max(0, (drinkQuantities[currentRoom][drinkName] || 0) + change);
-      drinkQuantities[currentRoom][drinkName] = newQuantity;
-      document.getElementById(`quantity-${drinkName}`).textContent = newQuantity;
-      playSound('drink');
-      console.log(`Updated ${drinkName} quantity for room ${currentRoom}: ${newQuantity}`);
-    }
-    
-    function updateDrinksFromQuantities() {
-      if (!currentRoom) return;
-      drinks[currentRoom] = [];
-      drinksPrices[currentRoom] = 0;
-      const drinkPrices = {
-        'كولا': 15, 'سفن أب': 15, 'فانتا': 15,
-        'عصير برتقال': 20, 'عصير مانجو': 25, 'عصير فراولة': 25,
-        'شاي': 10, 'قهوة': 15, 'كابتشينو': 20
-      };
-      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
-        if (quantity > 0) {
-          for (let i = 0; i < quantity; i++) {
-            drinks[currentRoom].push({ name: drink, price: drinkPrices[drink] });
-            drinksPrices[currentRoom] += drinkPrices[drink];
-          }
-        }
-      }
-      console.log(`Updated drinks for room ${currentRoom}:`, drinks[currentRoom]);
-      console.log(`Drinks price for room ${currentRoom}: ${drinksPrices[currentRoom]}`);
-    }
-    
-    function resetDrinkQuantities() {
-      if (!currentRoom) return;
-      const drinkNames = ['كولا', 'سفن أب', 'فانتا', 'عصير برتقال', 'عصير مانجو', 'عصير فراولة', 'شاي', 'قهوة', 'كابتشينو'];
-      drinkNames.forEach(drink => {
-        drinkQuantities[currentRoom][drink] = drinks[currentRoom].filter(item => item.name === drink).length;
-      });
-      console.log(`Reset quantities for room ${currentRoom}:`, drinkQuantities[currentRoom]);
-    }
-    
-    function updateDrinkQuantitiesDisplay() {
-      if (!currentRoom) return;
-      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
-        const element = document.getElementById(`quantity-${drink}`);
-        if (element) {
-          element.textContent = quantity;
-        }
-      }
-    }
-    
-    function updateDrinksDisplay(roomNum) {
-      const drinksList = document.getElementById(`drinksList${roomNum}`);
-      drinksList.innerHTML = '';
-      const drinkSummary = {};
-      drinks[roomNum].forEach(item => {
-        if (item && item.name) {
-          drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
-        }
-      });
-      for (const [name, quantity] of Object.entries(drinkSummary)) {
-        const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
-        const drinkItem = document.createElement('div');
-        drinkItem.className = 'drink-item';
-        drinkItem.innerHTML = `
-          <span>${name}</span>
-          <span class="quantity">x${quantity}</span>
-          <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
-        `;
-        drinksList.appendChild(drinkItem);
-      }
-      document.getElementById(`drinksTotal${roomNum}`).textContent = `المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه`;
-      console.log(`Updated drinks display for room ${roomNum}:`, drinkSummary);
-    }
-    
-    function resetRoom(roomNum) {
-      timers[roomNum] = null;
-      startTimes[roomNum] = null;
-      timePrices[roomNum] = 0;
-      drinks[roomNum] = [];
-      drinksPrices[roomNum] = 0;
-      drinkQuantities[roomNum] = {
-        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
-        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
-        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
-      };
-      document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
-      document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
-      document.getElementById(`drinksList${roomNum}`).innerHTML = '';
-      document.getElementById(`drinksTotal${roomNum}`).textContent = 'المشروبات: 0.00 جنيه';
-      console.log(`Reset room ${roomNum}`);
-    }
-    
-    function printInvoice(roomNum) {
-      if (timePrices[roomNum] <= 0 && drinksPrices[roomNum] <= 0) {
-        alert('لا يوجد مشتريات لطباعة الفاتورة');
-        return;
-      }
-      if (confirm(`هل تريد طباعة فاتورة غرفة ${roomNum}؟`)) {
-        console.log('Printing invoice for room:', roomNum);
-        console.log('Time Price:', timePrices[roomNum]);
-        console.log('Drinks:', drinks[roomNum]);
-        console.log('Drinks Price:', drinksPrices[roomNum]);
-        console.log('Drink Quantities:', drinkQuantities[roomNum]);
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + 
-                        now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('printRoom').textContent = roomNum;
-        document.getElementById('printTime').textContent = document.getElementById(`timer${roomNum}`).textContent;
-        document.getElementById('printRate').textContent = `${HOUR_RATE.toFixed(2)} جنيه`;
-        document.getElementById('printTimeTotal').textContent = `${timePrices[roomNum].toFixed(2)} جنيه`;
-        const printDrinks = document.getElementById('printDrinks');
-        printDrinks.innerHTML = '<p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>';
-        const drinkSummary = {};
-        drinks[roomNum].forEach(item => {
-          if (item && item.name && item.price) {
-            drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
-          }
-        });
-        console.log('Drink Summary for print:', drinkSummary);
-        if (Object.keys(drinkSummary).length === 0) {
-          const noDrinks = document.createElement('p');
-          noDrinks.textContent = 'لا توجد مشروبات';
-          printDrinks.appendChild(noDrinks);
-        } else {
-          for (const [name, quantity] of Object.entries(drinkSummary)) {
-            const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
-            const drinkRow = document.createElement('p');
-            drinkRow.innerHTML = `
-              <span>${name} (x${quantity})</span>
-              <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
-            `;
-            printDrinks.appendChild(drinkRow);
-          }
-        }
-        const total = timePrices[roomNum] + drinksPrices[roomNum];
-        document.getElementById('printTotal').textContent = `${total.toFixed(2)} جنيه`;
-        document.getElementById('printDate').textContent = dateStr;
-        const printContent = document.getElementById('printContent');
-        printContent.style.display = 'block';
-        console.log('Final Print Content HTML:', printContent.innerHTML);
-        const opt = {
-          margin: 10,
-          filename: `فاتورة_غرفة_${roomNum}_${dateStr.replace(/[: ]/g, '-')}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        html2pdf().from(printContent).set(opt).toPdf().get('pdf').then(function (pdf) {
-          const blob = pdf.output('blob');
-          const url = URL.createObjectURL(blob);
-          window.open(url, '_blank');
-          printContent.style.display = 'none';
-        }).catch(err => {
-          console.error('PDF generation error:', err);
-          alert('حدث خطأ أثناء إنشاء PDF. تحقق من وحدة التحكم للحصول على التفاصيل.');
-          printContent.style.display = 'none';
-        });
-      }
-    }
-    
-    function showDailySummary() {
-      let timeTotal = 0;
-      let drinksTotal = 0;
-      let summaryHTML = '';
-      for (let i = 1; i <= rooms; i++) {
-        timeTotal += dailyTimeEarnings[i];
-        drinksTotal += dailyDrinksEarnings[i];
-        summaryHTML += `
-          <p>غرفة ${i}: 
-            <span style="color: #00d4ff;">${dailyTimeEarnings[i].toFixed(2)}</span> (وقت) + 
-            <span style="color: #f39c12;">${dailyDrinksEarnings[i].toFixed(2)}</span> (مشروبات) = 
-            <span style="font-weight: bold;">${(dailyTimeEarnings[i] + dailyDrinksEarnings[i]).toFixed(2)} جنيه</span>
-          </p>`;
-      }
-      const grandTotal = timeTotal + drinksTotal;
-      summaryHTML += `
-        <div style="margin: 20px 0; height: 2px; background: linear-gradient(90deg, transparent, #00d4ff, transparent);"></div>
-        <p>إجمالي الوقت: <span style="color: #00d4ff; font-weight: bold;">${timeTotal.toFixed(2)} جنيه</span></p>
-        <p>إجمالي المشروبات: <span style="color: #f39c12; font-weight: bold;">${drinksTotal.toFixed(2)} جنيه</span></p>
-        <p>الإجمالي الكلي: <span style="color: #00ff85; font-weight: bold;">${grandTotal.toFixed(2)} جنيه</span></p>
-      `;
-      document.getElementById('summaryContent').innerHTML = summaryHTML;
-      document.getElementById('summaryModal').style.display = 'flex';
-    }
-    
-    function resetDailyEarnings() {
-      if (confirm('هل تريد إعادة تعيين إجمالي اليوم؟')) {
-        for (let i = 1; i <= rooms; i++) {
-          dailyTimeEarnings[i] = 0;
-          dailyDrinksEarnings[i] = 0;
-        }
-        saveData();
-        alert('تم إعادة تعيين إجمالي اليوم');
-        document.getElementById('summaryModal').style.display = 'none';
-      }
-    }
-    
-    function saveData() {
-      const data = {
-        dailyTimeEarnings,
-        dailyDrinksEarnings,
-        timers,
-        startTimes,
-        timePrices,
-        drinks,
-        drinksPrices,
-        drinkQuantities
-      };
-      localStorage.setItem('playstationData', JSON.stringify(data));
-      console.log('Saved data:', data);
-    }
-    
-    function loadData() {
-      const data = localStorage.getItem('playstationData');
-      if (data) {
-        const parsed = JSON.parse(data);
-        dailyTimeEarnings = parsed.dailyTimeEarnings || dailyTimeEarnings;
-        dailyDrinksEarnings = parsed.dailyDrinksEarnings || dailyDrinksEarnings;
-        drinkQuantities = parsed.drinkQuantities || drinkQuantities;
-        for (let i = 1; i <= rooms; i++) {
-          if (parsed.startTimes[i]) {
-            startTimes[i] = new Date(parsed.startTimes[i]);
-            timePrices[i] = parsed.timePrices[i] || 0;
-            drinks[i] = parsed.drinks[i] || [];
-            drinksPrices[i] = parsed.drinksPrices[i] || 0;
-            if (startTimes[i]) {
-              document.getElementById(`status${i}`).className = 'status online';
-              document.getElementById(`status${i}`).textContent = 'شغالة';
-              document.getElementById(`start${i}`).disabled = true;
-              document.getElementById(`end${i}`).disabled = false;
-              document.getElementById(`drinks${i}`).disabled = false;
-              timers[i] = setInterval(() => updateTimer(i), 1000);
-              updateDrinksDisplay(i);
-            }
-          }
-        }
-        console.log('Loaded data:', parsed);
-      }
-    }
-    
-    function playSound(action) {
-      const sounds = {
-        start: new Audio('https://www.soundjay.com/buttons/button-09.mp3'),
-        end: new Audio('https://www.soundjay.com/buttons/button-10.mp3'),
-        drink: new Audio('https://www.soundjay.com/buttons/button-3.mp3')
-      };
-      if (sounds[action]) {
-        sounds[action].play().catch(() => {});
-      }
-    }
-    
-    document.getElementById('password').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        login();
-      }
-    });
-    document.addEventListener('keydown', function(event) {
-      if (event.ctrlKey && event.key === 'l' && document.getElementById('loginContainer').style.display !== 'none') {
-        document.getElementById('email').focus();
-      }
-    });
-    window.addEventListener('beforeunload', function(event) {
-      saveData();
-      if (Object.values(timers).some(timer => timer !== null)) {
-        event.preventDefault();
-        event.returnValue = 'يوجد غرف تعمل حاليًا، هل تريد المغادرة؟';
-      }
-    });
-    setInterval(saveData, 60000);
-    window.onload = checkLoginState;
-  </script>
-</body>
-</html>
+   
