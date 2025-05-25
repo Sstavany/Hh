@@ -3,645 +3,495 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نظام إدارة بلايستيشن ومشروبات - الأدمن</title>
-  <!-- Font Awesome for Icons -->
+  <title>نظام بلايستيشن ومشروبات</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Tajawal Font for Arabic Typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <!-- HTML2PDF for Invoice Generation -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
-    /* Reset and Base Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Tajawal', sans-serif;
-      scroll-behavior: smooth;
+      font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     body {
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
+      color: #eee;
       min-height: 100vh;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 16px;
-      line-height: 1.6;
     }
-
-    /* Typography */
     h1 {
+      width: 100%;
       text-align: center;
       color: #00d4ff;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 900;
-      margin: 30px 0;
-      text-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
-      animation: fadeIn 1s ease-in-out;
+      margin: 20px 0;
+      text-shadow: 0 0 15px #00d4ffaa;
     }
-
-    h2 {
-      color: #00d4ff;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    /* Rooms Container */
     .rooms-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
       width: 100%;
-      max-width: 1440px;
-      margin-bottom: 40px;
+      max-width: 1400px;
+      margin-bottom: 30px;
     }
-
-    /* Room Card */
     .room-card {
-      background: rgba(15, 32, 39, 0.85);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
-      padding: 25px;
-      position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      height: 100%;
+      background: rgba(15, 32, 39, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00d4ff88;
       display: flex;
       flex-direction: column;
+      padding: 20px;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      height: 100%;
     }
-
     .room-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px #00d4ffaa;
     }
-
     .room-header {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: #00d4ff;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
     }
-
-    /* Status Indicator */
     .status {
       position: absolute;
       top: 15px;
       left: 15px;
-      font-size: 0.95rem;
       font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 12px;
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 10px;
       user-select: none;
-      transition: all 0.3s ease;
+      box-shadow: 0 0 8px #000;
+      transition: all 0.4s ease;
     }
-
     .status.offline {
-      background-color: #4b5e6d;
-      color: #b0bec5;
+      background-color: #666;
+      color: #bbb;
     }
-
     .status.online {
       background-color: #00d4ff;
       color: #0f2027;
-      box-shadow: 0 0 15px rgba(0, 212, 255, 0.8);
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 12px #00d4ffbb;
     }
-
-    /* Timer and Price */
     .timer-container {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 15px;
-      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
     }
-
     .timer {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 900;
       color: #00d4ff;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 4px;
-      text-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 3px;
+      text-shadow: 0 0 10px #00d4ff88;
       user-select: none;
+      line-height: 1;
     }
-
     .price {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 800;
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       user-select: none;
     }
-
-    /* Drinks List */
     .drinks-list {
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 15px;
-      max-height: 140px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      max-height: 120px;
       overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: #00d4ff rgba(0, 0, 0, 0.3);
     }
-
     .drink-item {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
-      padding: 8px 0;
+      padding: 5px 0;
       border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
-
     .drink-item:last-child {
       border-bottom: none;
     }
-
     .drink-item span.quantity {
+      margin-left: 10px;
       color: #00d4ff;
       font-weight: bold;
-      margin-left: 10px;
     }
-
     .drinks-total {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
-
-    /* Buttons */
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 15px;
+      gap: 10px;
+      margin-bottom: 10px;
     }
-
     button {
       flex: 1;
-      min-width: 130px;
-      padding: 12px;
-      border-radius: 12px;
+      min-width: 120px;
+      padding: 10px 0;
+      border-radius: 10px;
       border: none;
-      font-size: 0.95rem;
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      user-select: none;
+      box-shadow: 0 0 6px #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      gap: 6px;
     }
-
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: 0.5;
+      transform: none !important;
     }
-
     button.start {
       background-color: #00d4ff;
       color: #0f2027;
     }
-
     button.start:hover:not(:disabled) {
       background-color: #00e5ff;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
-
     button.end {
       background-color: #ff4757;
-      color: #ffffff;
+      color: #fff;
     }
-
     button.end:hover:not(:disabled) {
       background-color: #ff6b81;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
-
     button.drinks {
       background-color: #f39c12;
-      color: #ffffff;
+      color: #fff;
     }
-
     button.drinks:hover:not(:disabled) {
       background-color: #f1c40f;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
-
     button.print {
       background-color: #2c5364;
-      color: #ffffff;
+      color: #ddd;
+      font-weight: 700;
     }
-
-    button.print:hover:not(:disabled) {
+    button.print:hover {
       background-color: #3a7188;
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
-
     .summary-btn, .admin-btn {
       background-color: #00d4ff;
       color: #0f2027;
-      padding: 14px 30px;
-      border-radius: 14px;
-      font-size: 1.1rem;
+      padding: 12px 25px;
+      border-radius: 12px;
       font-weight: 800;
-      margin: 20px 10px;
-      display: inline-flex;
+      margin: 10px;
+      display: flex;
       align-items: center;
-      gap: 12px;
-      transition: all 0.3s ease;
+      gap: 10px;
     }
-
     .summary-btn:hover, .admin-btn:hover {
       background-color: #00e5ff;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
+      transform: translateY(-2px);
     }
-
-    /* Drinks Menu Modal */
     .menu-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(0, 0, 0, 0.9);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 1001;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
     }
-
     .menu-content {
       background: #0f2027;
-      padding: 25px;
-      border-radius: 20px;
+      padding: 20px;
+      border-radius: 15px;
       width: 90%;
-      max-width: 550px;
-      max-height: 85vh;
+      max-width: 600px;
+      max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
-      border: 1px solid rgba(0, 212, 255, 0.5);
+      box-shadow: 0 0 30px #00d4ffaa;
+      border: 1px solid #00d4ff;
     }
-
     .menu-category {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
-
     .menu-category h3 {
       color: #00d4ff;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      border-bottom: 2px solid rgba(0, 212, 255, 0.5);
-      padding-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+      border-bottom: 2px solid #00d4ff;
+      padding-bottom: 5px;
     }
-
     .menu-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-
     .menu-item:hover {
-      background: rgba(0, 212, 255, 0.3);
+      background: rgba(0, 212, 255, 0.2);
       transform: translateX(-5px);
     }
-
     .menu-item-price {
       color: #00d4ff;
-      font-weight: 700;
+      font-weight: bold;
     }
-
     .menu-item-controls {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
+      justify-content: flex-start;
     }
-
     .menu-item-controls button {
-      min-width: 35px;
-      padding: 6px;
-      font-size: 1.1rem;
-      border-radius: 8px;
+      min-width: 30px;
+      padding: 5px;
+      font-size: 1rem;
+      border-radius: 5px;
     }
-
     .menu-item-controls .plus {
       background-color: #00d4ff;
       color: #0f2027;
     }
-
     .menu-item-controls .plus:hover {
       background-color: #00e5ff;
     }
-
     .menu-item-controls .minus {
       background-color: #ff4757;
-      color: #ffffff;
+      color: #fff;
     }
-
     .menu-item-controls .minus:hover {
       background-color: #ff6b81;
     }
-
     .menu-item-controls span {
-      color: #ffffff;
-      font-weight: 700;
-      min-width: 35px;
-      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      min-width: 30px;
+      text-align: left;
     }
-
     .close-menu {
       background: #ff4757;
-      color: #ffffff;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 25px;
-      font-size: 1rem;
-      font-weight: 700;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
       width: 100%;
     }
-
-    .close-menu:hover {
-      background: #ff6b81;
-      transform: translateY(-3px);
-    }
-
-    /* Login Container */
     .login-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.95);
+      background: rgba(0, 0, 0, 0.9);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(5px);
     }
-
     .login-form {
       background: #0f2027;
-      padding: 35px;
-      border-radius: 20px;
+      padding: 30px;
+      border-radius: 15px;
       width: 100%;
-      max-width: 450px;
-      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
-      border: 1px solid rgba(0, 212, 255, 0.5);
+      max-width: 400px;
+      box-shadow: 0 0 30px #00d4ffaa;
+      border: 1px solid #00d4ff;
     }
-
     .login-form h2 {
       color: #00d4ff;
       text-align: center;
-      margin-bottom: 30px;
-      font-size: 2rem;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
     }
-
     .form-group {
-      margin-bottom: 25px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 10px;
-      color: #00d4ff;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 212, 255, 0.5);
-      background: rgba(0, 0, 0, 0.4);
-      color: #ffffff;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: #00d4ff;
-      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-    }
-
-    .error-message {
-      color: #ff4757;
-      font-size: 0.9rem;
-      text-align: center;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      background: #00d4ff;
-      color: #0f2027;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .login-btn:hover {
-      background: #00e5ff;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
-    }
-
-    /* Admin Panel */
-    .admin-panel {
-      display: none;
-      background: rgba(15, 32, 39, 0.9);
-      padding: 25px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 600px;
-      margin: 20px auto;
-      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
-      border: 1px solid rgba(0, 212, 255, 0.5);
-    }
-
-    .admin-panel h2 {
-      color: #00d4ff;
-      margin-bottom: 25px;
-    }
-
-    .admin-form-group {
       margin-bottom: 20px;
     }
-
-    .admin-form-group label {
+    .form-group label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #00d4ff;
-      font-weight: 700;
+      font-weight: bold;
     }
-
-    .admin-form-group input, .admin-form-group select {
+    .form-group input {
       width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(0, 212, 255, 0.5);
-      background: rgba(0, 0, 0, 0.4);
-      color: #ffffff;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #00d4ff;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
       font-size: 1rem;
     }
-
-    .admin-form-group select {
-      appearance: none;
-      background: rgba(0, 0, 0, 0.4) url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
-    }
-
-    .admin-form-group input:focus, .admin-form-group select:focus {
-      outline: none;
-      border-color: #00d4ff;
-      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-    }
-
-    .add-user-btn {
+    .login-btn {
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       background: #00d4ff;
       color: #0f2027;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
+      font-weight: bold;
       font-size: 1.1rem;
-      font-weight: 700;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin-top: 10px;
     }
-
-    .add-user-btn:hover {
+    .login-btn:hover {
       background: #00e5ff;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
+      transform: translateY(-2px);
     }
-
-    .users-list {
-      margin-top: 20px;
-    }
-
-    .user-item {
+    .admin-panel-form {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .admin-panel-form input {
       padding: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #00d4ff;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
     }
-
-    .user-item span {
-      color: #00d4ff;
-      font-weight: 700;
-    }
-
-    /* Print Styles */
-    .print-content {
-      background: #ffffff;
+    .admin-panel-form button {
+      background: #00d4ff;
       color: #0f2027;
-      padding: 25px;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .admin-panel-form button:hover {
+      background: #00e5ff;
+      transform: translateY(-2px);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .admin-table th, .admin-table td {
+      padding: 10px;
+      border: 1px solid #00d4ff;
+      text-align: center;
+    }
+    .admin-table th {
+      background: #00d4ff;
+      color: #0f2027;
+      font-weight: bold;
+    }
+    .admin-table td {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .admin-table button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+    .admin-table .edit-btn {
+      background: #f39c12;
+      color: #fff;
+    }
+    .admin-table .edit-btn:hover {
+      background: #f1c40f;
+    }
+    .admin-table .delete-btn {
+      background: #ff4757;
+      color: #fff;
+    }
+    .admin-table .delete-btn:hover {
+      background: #ff6b81;
+    }
+    .print-content {
+      background: white;
+      color: black;
+      padding: 20px;
       font-family: 'Tajawal', Arial, sans-serif;
-      font-size: 14pt;
+      font-size: 12pt;
       width: 100%;
       max-width: 210mm;
       margin: 0 auto;
-      border-radius: 10px;
     }
-
     .print-header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
-
     .print-header h2 {
       color: #0f2027;
-      font-size: 20pt;
-      margin-bottom: 12px;
+      font-size: 18pt;
+      margin-bottom: 10px;
     }
-
     .print-details {
-      font-size: 14pt;
-      margin: 20px 0;
+      font-size: 12pt;
+      margin: 15px 0;
     }
-
     .print-details p {
       display: flex;
       justify-content: space-between;
-      margin: 10px 0;
+      margin: 8px 0;
     }
-
     .print-details span {
-      font-weight: 700;
+      font-weight: bold;
       color: #0f2027;
     }
-
     .print-divider {
-      height: 3px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, #0f2027, transparent);
-      margin: 20px 0;
+      margin: 15px 0;
     }
-
     .print-footer {
       text-align: center;
-      margin-top: 30px;
-      font-size: 12pt;
-      color: #4b5e6d;
+      margin-top: 25px;
+      font-size: 10pt;
+      color: #666;
     }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(0, 212, 255, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); }
-    }
-
-    /* Responsive Design */
     @media print {
       body * {
         visibility: hidden;
       }
       .print-content, .print-content * {
         visibility: visible !important;
-        color: #0f2027 !important;
+        color: black !important;
       }
       .print-content {
         position: absolute;
@@ -651,35 +501,15 @@
         height: auto;
       }
     }
-
     @media (max-width: 768px) {
       h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       .rooms-container {
         grid-template-columns: 1fr;
       }
-      .room-card {
-        padding: 20px;
-      }
-      .timer {
-        font-size: 2.2rem;
-      }
-      button {
-        min-width: 100px;
-        padding: 10px;
-        font-size: 0.9rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .login-form, .admin-panel {
-        padding: 20px;
-        max-width: 90%;
-      }
-      .menu-content {
-        padding: 20px;
-        max-width: 95%;
+      .admin-table {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -688,7 +518,7 @@
   <!-- Login Form -->
   <div id="loginContainer" class="login-container">
     <div class="login-form">
-      <h2><i class="fas fa-lock"></i> تسجيل دخول الأدمن</h2>
+      <h2><i class="fas fa-lock"></i> تسجيل الدخول</h2>
       <form onsubmit="event.preventDefault(); login();">
         <div class="form-group">
           <label for="email">البريد الإلكتروني</label>
@@ -698,7 +528,6 @@
           <label for="password">كلمة المرور</label>
           <input type="password" id="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password">
         </div>
-        <div id="errorMessage" class="error-message">خطأ في البريد الإلكتروني أو كلمة المرور</div>
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
       </form>
     </div>
@@ -706,32 +535,16 @@
 
   <!-- Main Content (Hidden until login) -->
   <div id="mainContent" style="display: none;">
-    <h1><i class="fas fa-gamepad"></i> نظام إدارة بلايستيشن ومشروبات</h1>
-    <!-- Admin Panel (Hidden until admin login) -->
-    <div id="adminPanel" class="admin-panel">
-      <h2><i class="fas fa-user-shield"></i> لوحة تحكم الأدمن</h2>
-      <form onsubmit="event.preventDefault(); addUser();">
-        <div class="admin-form-group">
-          <label for="newEmail">بريد إلكتروني جديد</label>
-          <input type="email" id="newEmail" placeholder="أدخل البريد الإلكتروني" required>
-        </div>
-        <div class="admin-form-group">
-          <label for="newPassword">كلمة المرور</label>
-          <input type="password" id="newPassword" placeholder="أدخل كلمة المرور" required>
-        </div>
-        <div class="admin-form-group">
-          <label for="role">الصلاحية</label>
-          <select id="role" required>
-            <option value="admin">أدمن</option>
-            <option value="user">مستخدم</option>
-          </select>
-        </div>
-        <button type="submit" class="add-user-btn"><i class="fas fa-user-plus"></i> إضافة مستخدم</button>
-      </form>
-      <div class="users-list" id="usersList"></div>
+    <h1><i class="fas fa-gamepad"></i> نظام بلايستيشن ومشروبات</h1>
+    <div style="display: flex; gap: 10px;">
+      <button id="adminBtn" class="admin-btn" onclick="openAdminPanel()" style="display: none;">
+        <i class="fas fa-user-shield"></i> لوحة تحكم الأدمن
+      </button>
+      <button class="summary-btn" onclick="showDailySummary()">
+        <i class="fas fa-calculator"></i> إجمالي اليوم
+      </button>
     </div>
     <div class="rooms-container">
-      <!-- Room 1 -->
       <div class="room-card" id="room1">
         <div class="status offline" id="status1">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 1</h2>
@@ -748,7 +561,6 @@
           <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
-      <!-- Room 2 -->
       <div class="room-card" id="room2">
         <div class="status offline" id="status2">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 2</h2>
@@ -765,7 +577,6 @@
           <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
-      <!-- Room 3 -->
       <div class="room-card" id="room3">
         <div class="status offline" id="status3">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 3</h2>
@@ -782,7 +593,6 @@
           <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
-      <!-- Room 4 -->
       <div class="room-card" id="room4">
         <div class="status offline" id="status4">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 4</h2>
@@ -800,18 +610,9 @@
         </div>
       </div>
     </div>
-    <div>
-      <button class="summary-btn" onclick="showDailySummary()">
-        <i class="fas fa-calculator"></i> إجمالي اليوم
-      </button>
-      <button class="admin-btn" id="toggleAdminPanel" onclick="toggleAdminPanel()">
-        <i class="fas fa-user-shield"></i> لوحة الأدمن
-      </button>
-    </div>
-    <!-- Drinks Menu Modal -->
     <div id="drinksModal" class="menu-modal">
       <div class="menu-content">
-        <h2 style="color: #f39c12; text-align: center; margin-bottom: 25px;"><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
+        <h2 style="color: #f39c12; text-align: center; margin-bottom: 20px;"><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
         <div class="menu-category">
           <h3>المشروبات الغازية</h3>
           <div class="menu-item" data-drink="كولا" data-price="15">
@@ -865,7 +666,7 @@
           <div class="menu-item" data-drink="عصير فراولة" data-price="25">
             <span>عصير فراولة</span>
             <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير فراولة', -1)">−</button>
+              <button class="minus" onclick="updateDrinkQuantity('−1')">−</button>
               <span id="quantity-عصير فراولة">0</span>
               <button class="plus" onclick="updateDrinkQuantity('عصير فراولة', 1)">+</button>
             </div>
@@ -877,7 +678,7 @@
           <div class="menu-item" data-drink="شاي" data-price="10">
             <span>شاي</span>
             <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('شاي', -1)">−</button>
+              <button class="minus" onclick="updateDrinkQuantity('شاي', −1)">−</button>
               <span id="quantity-شاي">0</span>
               <button class="plus" onclick="updateDrinkQuantity('شاي', 1)">+</button>
             </div>
@@ -892,132 +693,668 @@
             </div>
             <span class="menu-item-price">15 جنيه</span>
           </div>
+          <div class="menu-item" data-drink="كابتشينو" data-price="20">
+            <span>كابتشينو</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('كابتشينو', -1)">−</button>
+              <span id="quantity-كابتشينو">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('كابتشينو', 1)">+</button>
+            </div>
+            <span class="menu-item-price">20 جنيه</span>
+          </div>
         </div>
-        <button class="close-menu" onclick="closeDrinksMenu()">إغلاق</button>
+        <button class="close-menu" onclick="closeDrinksMenu()"><i class="fas fa-times"></i> إغلاق القائمة</button>
+      </div>
+    </div>
+    <!-- Admin Panel Modal -->
+    <div id="adminPanelModal" class="menu-modal" style="display: none;">
+      <div class="menu-content">
+        <h2 style="color: #00d4ff; text-align: center; margin-bottom: 20px;">
+          <i class="fas fa-user-shield"></i> لوحة تحكم الأدمن
+        </h2>
+        <div class="admin-panel-form">
+          <h3>إضافة مستخدم جديد</h3>
+          <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" required>
+          <input type="password" id="adminPassword" placeholder="كلمة المرور" required>
+          <input type="number" id="adminExpiryDays" placeholder="مدة الصلاحية (أيام)" min="1" required>
+          <input type="text" id="adminCode" placeholder="الكود (اختياري)" maxlength="6">
+          <button onclick="addCredential()">إضافة مستخدم</button>
+        </div>
+        <h3>قائمة المستخدمين</h3>
+        <table class="admin-table" id="adminCredentialsTable">
+          <thead>
+            <tr>
+              <th>البريد الإلكتروني</th>
+              <th>الكود</th>
+              <th>مدة الصلاحية</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="adminCredentialsTableBody"></tbody>
+        </table>
+        <button class="close-menu" onclick="closeAdminModal()"><i class="fas fa-times"></i> إغلاق</button>
+      </div>
+    </div>
+    <div id="printContent" class="print-content" style="display: none;">
+      <div class="print-header">
+        <h2><i class="fas fa-receipt"></i> فاتورة بلايستيشن ومشروبات</h2>
+        <p>نظام إدارة صالات الألعاب</p>
+      </div>
+      <div class="print-details">
+        <p>رقم الغرفة: <span id="printRoomId">1</span></p>
+        <p>وقت اللعب: <span id="printTime">00:00:00</span></p>
+        <p>سعر الساعة: <span id="printRate">10.00 جنيه</span></p>
+        <p>إجمالي الوقت: <span id="printTimeTotal">0.00 جنيه</span></p>
+        <div id="printDrinks">
+          <p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>
+        </div>
+        <div class="print-divider"></div>
+        <p>المبلغ المستحق: <span id="printTotal">0.00 جنيه</span></p>
+        <p>تاريخ الطباعة: <span id="printDate">--/--/---- --:--</span></p>
+      </div>
+      <div class="print-footer">
+        <p>شكراً لزيارتكم - نتمنى لكم وقتاً ممتعاً</p>
+        <p>للاستفسار: 0123456789</p>
+      </div>
+    </div>
+    <div id="summaryModal" class="menu-modal" style="display: none;">
+      <div class="menu-content">
+        <h2 style="color: #00d4ff; margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-coins"></i> إجمالي اليوم</h2>
+        <div id="summaryContent" style="font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6;"></div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="resetDailyEarnings()" style="background: #ff4757; color: #fff; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+            <i class="fas fa-redo"></i> إعادة تعيين اليوم
+          </button>
+          <button onclick="document.getElementById('summaryModal').style.display='none'" style="background: #00d4ff; color: #0f2027; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+            <i class="fas fa-times"></i> إغلاق
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script>
-    // Simulated user database (for testing purposes)
-    let users = [
-      { email: "admin@playstation.com", password: "Admin123!", role: "admin" }
-    ];
+    // Configuration
+    const ADMIN_EMAIL = 'admin@example.com';
+    const ADMIN_PASSWORD = 'admin12345';
+    const HOUR_RATE = 10;
+    const rooms = 4;
 
-    // Current logged-in user
-    let currentUser = null;
+    let currentRoom = 1;
+    let timers = {};
+    let startTimes = {};
+    let timePrices = {};
+    let drinks = {};
+    let drinksPrices = {};
+    let dailyTimeEarnings = {};
+    let dailyDrinksEarnings = {};
+    let drinkQuantities = {};
+
+    for (let i = 1; i <= rooms; i++) {
+      timers[i] = null;
+      startTimes[i] = null;
+      timePrices[i] = 0;
+      drinks[i] = [];
+      drinksPrices[i] = 0;
+      dailyTimeEarnings[i] = 0;
+      dailyDrinksEarnings[i] = 0;
+      drinkQuantities[i] = {
+        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
+        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
+        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
+      };
+    }
+
+    // Generate unique code
+    function generateCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
+    // Load credentials from localStorage
+    function loadCredentials() {
+      return JSON.parse(localStorage.getItem('credentialsList') || []);
+    }
+
+    // Save credentials to localStorage
+    function saveCredentials(credentials) {
+      localStorage.setItem('credentialsList', JSON.stringify(credentials));
+    }
 
     // Login function
     function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const errorMessage = document.getElementById('errorMessage');
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const now = new Date().getTime();
 
-      const user = users.find(u => u.email === email && u.password === password && u.role === "admin");
-
-      if (user) {
-        currentUser = user;
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('loggedInEmail', email);
+        localStorage.setItem('isAdmin', 'true');
         document.getElementById('loginContainer').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
-        document.getElementById('toggleAdminPanel').style.display = 'inline-flex';
-        errorMessage.style.display = 'none';
-      } else {
-        errorMessage.style.display = 'block';
+        document.getElementById('adminBtn').style.display = 'flex';
+        saveData();
+        return;
       }
+
+      const credentials = loadCredentials();
+      const credential = credentials.find(
+        cred => cred.email === email && cred.password === password
+      );
+
+      if (!credential) {
+        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+        return;
+      }
+
+      if (now > credential.expiry) {
+        alert('هذا الحساب منتهي الصلاحية!');
+        const updatedCredentials = credentials.filter(c => c.email !== email);
+        saveCredentials(updatedCredentials);
+        return;
+      }
+
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('loggedInEmail', email);
+      localStorage.setItem('isAdmin', 'false');
+      document.getElementById('loginContainer').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      document.getElementById('adminBtn').style.display = 'none';
+      saveData();
     }
 
-    // Toggle Admin Panel
-    function toggleAdminPanel() {
-      const adminPanel = document.getElementById('adminPanel');
-      adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
-      updateUsersList();
-    }
+    // Check login state
+    function checkLoginState() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn === 'true') {
+        const email = localStorage.getItem('loggedInEmail');
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        const now = new Date().getTime();
 
-    // Add new user
-    function addUser() {
-      if (currentUser && currentUser.role === 'admin') {
-        const newEmail = document.getElementById('newEmail').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const role = document.getElementById('role').value;
-
-        if (newEmail && newPassword) {
-          if (users.find(u => u.email === newEmail)) {
-            alert('البريد الإلكتروني مستخدم بالفعل!');
-            return;
-          }
-          users.push({ email: newEmail, password: newPassword, role: role });
-          alert('تم إضافة المستخدم بنجاح!');
-          document.getElementById('newEmail').value = '';
-          document.getElementById('newPassword').value = '';
-          updateUsersList();
-        } else {
-          alert('يرجى إدخال بريد إلكتروني وكلمة مرور صالحين.');
+        if (isAdmin && email === ADMIN_EMAIL) {
+          document.getElementById('loginContainer').style.display = 'none';
+          document.getElementById('mainContent').style.display = 'block';
+          document.getElementById('adminBtn').style.display = 'flex';
+          loadData();
+          return;
         }
-      } else {
-        alert('غير مصرح لك بإضافة مستخدمين!');
+
+        const credentials = loadCredentials();
+        const credential = credentials.find(c => c.email === email);
+        if (credential && now <= credential.expiry) {
+          document.getElementById('loginContainer').style.display = 'none';
+          document.getElementById('mainContent').style.display = 'block';
+          document.getElementById('adminBtn').style.display = 'none';
+          loadData();
+        } else {
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('loggedInEmail');
+          localStorage.removeItem('isAdmin');
+        }
       }
     }
 
-    // Update users list in admin panel
-    function updateUsersList() {
-      const usersList = document.getElementById('usersList');
-      usersList.innerHTML = '';
-      users.forEach(user => {
-        const userItem = document.createElement('div');
-        userItem.className = 'user-item';
-        userItem.innerHTML = `
-          <span>${user.email} (${user.role === 'admin' ? 'أدمن' : 'مستخدم'})</span>
-          <button class="delete-user" onclick="deleteUser('${user.email}')"><i class="fas fa-trash"></i> حذف</button>
+    // Open admin panel
+    function openAdminPanel() {
+      updateCredentialsTable();
+      document.getElementById('adminPanelModal').style.display = 'flex';
+    }
+
+    // Close admin panel
+    function closeAdminModal() {
+      document.getElementById('adminPanelModal').style.display = 'none';
+    }
+
+    // Add new credential
+    function addCredential() {
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const expiryDays = parseInt(document.getElementById('adminExpiryDays').value.trim());
+      let code = document.getElementById('adminCode').value.trim() || generateCode();
+
+      if (!email || !password || isNaN(expiryDays) || expiryDays < 1) {
+        alert('يرجى ملء جميع الحقول بشكل صحيح');
+        return;
+      }
+
+      const credentials = loadCredentials();
+      if (credentials.find(c => c.email === email)) {
+        alert('هذا البريد الإلكتروني مستخدم بالفعل');
+        return;
+      }
+
+      const now = new Date().getTime();
+      const expiry = now + expiryDays * 24 * 60 * 60 * 1000;
+      credentials.push({ email, password, expiry, code });
+      saveCredentials(credentials);
+
+      document.getElementById('adminEmail').value = '';
+      document.getElementById('adminPassword').value = '';
+      document.getElementById('adminExpiryDays').value = '';
+      document.getElementById('adminCode').value = '';
+      updateCredentialsTable();
+      alert('تم إضافة المستخدم بنجاح');
+    }
+
+    // Update credentials table
+    function updateCredentialsTable() {
+      const tbody = document.getElementById('adminCredentialsTableBody');
+      tbody.innerHTML = '';
+      const credentials = loadCredentials();
+      credentials.forEach((cred, index) => {
+        const expiryDate = new Date(cred.expiry).toLocaleDateString('ar-EG');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${cred.email}</td>
+          <td>${cred.code}</td>
+          <td>${expiryDate}</td>
+          <td>
+            <button class="edit-btn" onclick="editCredential(${index})">تعديل</button>
+            <button class="delete-btn" onclick="deleteCredential(${index})">حذف</button>
+          </td>
         `;
-        usersList.appendChild(userItem);
+        tbody.appendChild(row);
       });
     }
 
-    // Delete user
-    function deleteUser(email) {
-      if (currentUser && currentUser.role === 'admin') {
-        if (email === currentUser.email) {
-          alert('لا يمكنك حذف حسابك الخاص!');
+    // Edit credential
+    function editCredential(index) {
+      const credentials = loadCredentials();
+      const cred = credentials[index];
+      const newEmail = prompt('أدخل البريد الإلكتروني الجديد:', cred.email);
+      const newPassword = prompt('أدخل كلمة المرور الجديدة:', cred.password);
+      const newExpiryDays = prompt('أدخل مدة الصلاحية (أيام):', (cred.expiry - new Date().getTime()) / (24 * 60 * 60 * 1000));
+      const newCode = prompt('أدخل الكود الجديد:', cred.code);
+
+      if (newEmail && newPassword && newExpiryDays && !isNaN(newExpiryDays) && newExpiryDays > 0) {
+        if (newEmail !== cred.email && credentials.find(c => c.email === newEmail)) {
+          alert('هذا البريد الإلكتروني مستخدم بالفعل');
           return;
         }
-        users = users.filter(u => u.email !== email);
-        updateUsersList();
-        alert('تم حذف المستخدم بنجاح!');
+        const now = new Date().getTime();
+        credentials[index] = {
+          email: newEmail,
+          password: newPassword,
+          expiry: now + parseInt(newExpiryDays) * 24 * 60 * 60 * 1000,
+          code: newCode || generateCode()
+        };
+        saveCredentials(credentials);
+        updateCredentialsTable();
+        alert('تم تعديل المستخدم بنجاح');
       } else {
-        alert('غير مصرح لك بحذف المستخدمين!');
+        alert('يرجى إدخال بيانات صحيحة');
       }
     }
 
-    // Placeholder for timer functions
-    function startTimer(roomId) {
-      // Add your timer start logic here
+    // Delete credential
+    function deleteCredential(index) {
+      if (confirm('هل تريد حذف هذا المستخدم؟')) {
+        const credentials = loadCredentials();
+        credentials.splice(index, 1);
+        saveCredentials(credentials);
+        updateCredentialsTable();
+        alert('تم حذف المستخدم');
+      }
     }
 
-    function endTimer(roomId) {
-      // Add your timer end logic here
+    // Start timer
+    function startTimer(roomNum) {
+      if (timers[roomNum]) return;
+      document.getElementById(`status${roomNum}`).className = 'status online';
+      document.getElementById(`status${roomNum}`).textContent = 'شغالة';
+      document.getElementById(`start${roomNum}`).disabled = true;
+      document.getElementById(`end${roomNum}`).disabled = false;
+      document.getElementById(`drinks${roomNum}`).disabled = false;
+      startTimes[roomNum] = new Date();
+      timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
+      saveData();
+      playSound('start');
     }
 
-    // Drinks menu functions
-    function openDrinksMenu(roomId) {
+    // End timer
+    function endTimer(roomNum) {
+      if (!timers[roomNum]) return;
+      if (confirm(`هل تريد إنهاء جلسة غرفة ${roomNum}؟`)) {
+        clearInterval(timers[roomNum]);
+        timers[roomNum] = null;
+        document.getElementById(`status${roomNum}`).className = 'status offline';
+        document.getElementById(`status${roomNum}`).textContent = 'متوقفة';
+        document.getElementById(`start${roomNum}`).disabled = false;
+        document.getElementById(`end${roomNum}`).disabled = true;
+        document.getElementById(`drinks${roomNum}`).disabled = true;
+        updateTimer(roomNum);
+        dailyTimeEarnings[roomNum] += timePrices[roomNum];
+        dailyDrinksEarnings[roomNum] += drinksPrices[roomNum];
+        const total = timePrices[roomNum] + drinksPrices[roomNum];
+        alert(`إجمالي غرفة ${roomNum}:
+        الوقت: ${timePrices[roomNum].toFixed(2)} جنيه
+        المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه
+        الإجمالي: ${total.toFixed(2)} جنيه`);
+        resetRoom(roomNum);
+        saveData();
+        playSound('end');
+      }
+    }
+
+    // Update timer
+    function updateTimer(roomNum) {
+      if (!startTimes[roomNum]) return;
+      const now = new Date();
+      const diff = now - startTimes[roomNum];
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const formattedTime = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      document.getElementById(`timer${roomNum}`).textContent = formattedTime;
+      const hoursPlayed = diff / (1000 * 60 * 60);
+      timePrices[roomNum] = Math.round(hoursPlayed * HOUR_RATE * 100) / 100;
+      document.getElementById(`price${roomNum}`).textContent = `${timePrices[roomNum].toFixed(2)} جنيه`;
+    }
+
+    // Open drinks menu
+    function openDrinksMenu(roomNum) {
+      currentRoom = roomNum;
+      resetDrinkQuantities();
+      updateDrinkQuantitiesDisplay();
       document.getElementById('drinksModal').style.display = 'flex';
+      playSound('drink');
     }
 
+    // Close drinks menu
     function closeDrinksMenu() {
+      updateDrinksFromQuantities();
+      updateDrinksDisplay(currentRoom);
+      saveData();
       document.getElementById('drinksModal').style.display = 'none';
     }
 
-    function updateDrinkQuantity(drink, change) {
-      // Add your drink quantity update logic here
+    // Update drink quantity
+    function updateDrinkQuantity(drinkName, change) {
+      if (!currentRoom) return;
+      const newQuantity = Math.max(0, (drinkQuantities[currentRoom][drinkName] || 0) + change);
+      drinkQuantities[currentRoom][drinkName] = newQuantity;
+      document.getElementById(`quantity-${drinkName}`).textContent = newQuantity;
+      playSound('drink');
+      console.log(`Updated ${drinkName} quantity for room ${currentRoom}: ${newQuantity}`);
     }
 
-    function printInvoice(roomId) {
-      // Add your print invoice logic here
+    // Update drinks from quantities
+    function updateDrinksFromQuantities() {
+      if (!currentRoom) return;
+      drinks[currentRoom] = [];
+      drinksPrices[currentRoom] = 0;
+      const drinkPrices = {
+        'كولا': 15, 'سفن أب': 15, 'فانتا': 15,
+        'عصير برتقال': 20, 'عصير مانجو': 25, 'عصير فراولة': 25,
+        'شاي': 10, 'قهوة': 15, 'كابتشينو': 20
+      };
+      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
+        if (quantity > 0) {
+          for (let i = 0; i < quantity; i++) {
+            drinks[currentRoom].push({ name: drink, price: drinkPrices[drink] });
+            drinksPrices[currentRoom] += drinkPrices[drink];
+          }
+        }
+      }
+      console.log(`Updated drinks for room ${currentRoom}:`, drinks[currentRoom]);
+      console.log(`Drinks price for room ${currentRoom}: ${drinksPrices[currentRoom]}`);
     }
 
+    // Reset drink quantities
+    function resetDrinkQuantities() {
+      if (!currentRoom) return;
+      const drinkNames = ['كولا', 'سفن أب', 'فانتا', 'عصير برتقال', 'عصير مانجو', 'عصير فراولة', 'شاي', 'قهوة', 'كابتشينو'];
+      drinkNames.forEach(drink => {
+        drinkQuantities[currentRoom][drink] = drinks[currentRoom].filter(item => item.name === drink).length;
+      });
+      console.log(`Reset quantities for room ${currentRoom}:`, drinkQuantities[currentRoom]);
+    }
+
+    // Update drink quantities display
+    function updateDrinkQuantitiesDisplay() {
+      if (!currentRoom) return;
+      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
+        const element = document.getElementById(`quantity-${drink}`);
+        if (element) {
+          element.textContent = quantity;
+        }
+      }
+    }
+
+    // Update drinks display
+    function updateDrinksDisplay(roomNum) {
+      const drinksList = document.getElementById(`drinksList${roomNum}`);
+      drinksList.innerHTML = '';
+      const drinkSummary = {};
+      drinks[roomNum].forEach(item => {
+        if (item && item.name) {
+          drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+        }
+      });
+      for (const [name, quantity] of Object.entries(drinkSummary)) {
+        const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
+        const drinkItem = document.createElement('div');
+        drinkItem.className = 'drink-item';
+        drinkItem.innerHTML = `
+          <span>${name}</span>
+          <span class="quantity">x${quantity}</span>
+          <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
+        `;
+        drinksList.appendChild(drinkItem);
+      }
+      document.getElementById(`drinksTotal${roomNum}`).textContent = `المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه`;
+      console.log(`Updated drinks display for room ${roomNum}:`, drinkSummary);
+    }
+
+    // Reset room
+    function resetRoom(roomNum) {
+      timers[roomNum] = null;
+      startTimes[roomNum] = null;
+      timePrices[roomNum] = 0;
+      drinks[roomNum] = [];
+      drinksPrices[roomNum] = 0;
+      drinkQuantities[roomNum] = {
+        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
+        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
+        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
+      };
+      document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
+      document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
+      document.getElementById(`drinksList${roomNum}`).innerHTML = '';
+      document.getElementById(`drinksTotal${roomNum}`).textContent = 'المشروبات: 0.00 جنيه';
+      console.log(`Reset room ${roomNum}`);
+    }
+
+    // Print invoice
+    function printInvoice(roomNum) {
+      if (timePrices[roomNum] <= 0 && drinksPrices[roomNum] <= 0) {
+        alert('لا توجد مشتريات لطباعة الفاتورة');
+        return;
+      }
+      if (confirm(`هل تريد طباعة فاتورة غرفة ${roomNum}؟`)) {
+        console.log('Printing invoice for room:', roomNum);
+        console.log('Time Price:', timePrices[roomNum]);
+        console.log('Drinks:', drinks[roomNum]);
+        console.log('Drinks Price:', drinksPrices[roomNum]);
+        console.log('Drink Quantities:', drinkQuantities[roomNum]);
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + 
+                        now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('printRoomId').textContent = roomNum;
+        document.getElementById('printTime').textContent = document.getElementById(`timer${roomNum}`).textContent;
+        document.getElementById('printRate').textContent = `${HOUR_RATE.toFixed(2)} جنيه`;
+        document.getElementById('printTimeTotal').textContent = `${timePrices[roomNum].toFixed(2)} جنيه`;
+        const printDrinks = document.getElementById('printDrinks');
+        printDrinks.innerHTML = '<p style="font-weight: bold; margin-top: 15px;">المشروبات:</p>';
+        const drinkSummary = {};
+        drinks[roomNum].forEach(item => {
+          if (item && item.name && item.price) {
+            drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
+          }
+        });
+        console.log('Drink Summary for print:', drinkSummary);
+        if (Object.keys(drinkSummary).length === 0) {
+          const noDrinks = document.createElement('p');
+          noDrinks.textContent = 'لا توجد مشروبات';
+          printDrinks.appendChild(noDrinks);
+        } else {
+          for (const [name, quantity] of Object.entries(drinkSummary)) {
+            const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
+            const drinkRow = document.createElement('p');
+            drinkRow.innerHTML = `
+              <span>${name} (x${quantity})</span>
+              <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
+            `;
+            printDrinks.appendChild(drinkRow);
+          }
+        }
+        const total = timePrices[roomNum] + drinksPrices[roomNum];
+        document.getElementById('printTotal').textContent = `${total.toFixed(2)} جنيه`;
+        document.getElementById('printDate').textContent = dateStr;
+        const printContent = document.getElementById('printContent');
+        printContent.style.display = 'block';
+        console.log('Final Print Content HTML:', printContent.innerHTML);
+        const opt = {
+          margin: 10,
+          filename: `فاتورة_غرفة_${roomNum}_${dateStr.replace(/[: ]/g, '-')}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().from(printContent).set(opt).toPdf().get('pdf').then(function(pdf) {
+          const blob = pdf.output('blob');
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
+          printContent.style.display = 'none';
+        }).catch(err => {
+          console.error('PDF generation error:', err);
+          alert('حدث خطأ أثناء إنشاء PDF.');
+          printContent.style.display = 'none';
+        });
+      }
+    }
+
+    // Show daily summary
     function showDailySummary() {
-      // Add your daily summary logic here
+      let timeTotal = 0;
+      let drinksTotal = 0;
+      let summaryHTML = '';
+      for (let i = 1; i <= rooms; i++) {
+        timeTotal += dailyTimeEarnings[i];
+        drinksTotal += dailyDrinksEarnings[i];
+        summaryHTML += `
+          <p>غرفة ${i}: 
+            <span style="color: #00d4ff;">${dailyTimeEarnings[i].toFixed(2)}</span> (وقت) + 
+            <span style="color: #f39c12;">${dailyDrinksEarnings[i].toFixed(2)}</span> (مشروبات) = 
+            <span style="font-weight: bold;">${(dailyTimeEarnings[i] + dailyDrinksEarnings[i]).toFixed(2)} جنيه</span>
+          </p>`;
+      }
+      const grandTotal = timeTotal + drinksTotal;
+      summaryHTML += `
+        <div style="margin: 20px 0; height: 2px; background: linear-gradient(90deg, transparent, #00d4ff, transparent);"></div>
+        <p>إجمالي الوقت: <span style="color: #00d4ff; font-weight: bold;">${timeTotal.toFixed(2)} جنيه</span></p>
+        <p>إجمالي المشروبات: <span style="color: #f39c12; font-weight: bold;">${drinksTotal.toFixed(2)} جنيه</span></p>
+        <p>الإجمالي الكلي: <span style="color: #00ff88; font-weight: bold;">${grandTotal.toFixed(2)} جنيه</span></p>
+      `;
+      document.getElementById('summaryContent').innerHTML = summaryHTML;
+      document.getElementById('summaryModal').style.display = 'flex';
     }
+
+    // Reset daily earnings
+    function resetDailyEarnings() {
+      if (confirm('هل تريد إعادة تعيين إجمالي اليوم؟')) {
+        for (let i = 1; i <= rooms; i++) {
+          dailyTimeEarnings[i] = 0;
+          dailyDrinksEarnings[i] = 0;
+        }
+        saveData();
+        alert('تم إعادة تعيين إجمالي اليوم');
+        document.getElementById('summaryModal').style.display = 'none';
+      }
+    }
+
+    // Save data
+    function saveData() {
+      const data = {
+        dailyTimeEarnings,
+        dailyDrinksEarnings,
+        timers,
+        startTimes,
+        timePrices,
+        drinks,
+        drinksPrices,
+        drinkQuantities
+      };
+      localStorage.setItem('playstationData', JSON.stringify(data));
+      console.log('Saved data:', data);
+    }
+
+    // Load data
+    function loadData() {
+      const data = localStorage.getItem('playstationData');
+      if (data) {
+        const parsed = JSON.parse(data);
+        dailyTimeEarnings = parsed.dailyTimeEarnings || dailyTimeEarnings;
+        dailyDrinksEarnings = parsed.dailyDrinksEarnings || dailyDrinksEarnings;
+        drinkQuantities = parsed.drinkQuantities || drinkQuantities;
+        for (let i = 1; i <= rooms; i++) {
+          if (parsed.startTimes[i]) {
+            startTimes[i] = new Date(parsed.startTimes[i]);
+            timePrices[i] = parsed.timePrices[i] || 0;
+            drinks[i] = parsed.drinks[i] || [];
+            drinksPrices[i] = parsed.drinksPrices[i] || 0;
+            if (startTimes[i]) {
+              document.getElementById(`status${i}`).className = 'status online';
+              document.getElementById(`status${i}`).textContent = 'شغالة';
+              document.getElementById(`start${i}`).disabled = true;
+              document.getElementById(`end${i}`).disabled = false;
+              document.getElementById(`drinks${i}`).disabled = false;
+              timers[i] = setInterval(() => updateTimer(i), 1000);
+              updateDrinksDisplay(i);
+            }
+          }
+        }
+        console.log('Loaded data:', parsed);
+      }
+    }
+
+    // Play sound
+    function playSound(action) {
+      const sounds = {
+        start: new Audio('https://www.soundjay.com/buttons/button-09.mp3'),
+        end: new Audio('https://www.soundjay.com/buttons/button-10.mp3'),
+        drink: new Audio('https://www.soundjay.com/buttons/button-3.mp3')
+      };
+      if (sounds[action]) {
+        sounds[action].play().catch(() => {});
+      }
+    }
+
+    document.getElementById('password').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        login();
+      }
+    });
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.key === 'l' && document.getElementById('loginContainer').style.display !== 'none') {
+        document.getElementById('email').focus();
+      }
+    });
+    window.addEventListener('beforeunload', function(event) {
+      saveData();
+      if (Object.values(timers).some(timer => timer !== null)) {
+        event.preventDefault();
+        event.returnValue = 'يوجد غرف تعمل حاليًا، هل تريد المغادرة؟';
+      }
+    });
+    setInterval(saveData, 60000);
+    window.onload = checkLoginState;
   </script>
 </body>
 </html>
