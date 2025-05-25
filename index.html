@@ -63,24 +63,6 @@
       justify-content: center;
       gap: 8px;
     }
-    .status {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-weight: 700;
-      font-size: clamp(0.7rem, 2vw, 0.8rem);
-      padding: 5px 10px;
-      border-radius: 8px;
-      user-select: none;
-    }
-    .status.offline {
-      background-color: #9ca3af;
-      color: #fff;
-    }
-    .status.online {
-      background-color: #22c55e;
-      color: #fff;
-    }
     .timer-container {
       background: #f8fafc;
       border-radius: 8px;
@@ -187,6 +169,13 @@
     }
     button.end:hover:not(:disabled) {
       background-color: #dc2626;
+    }
+    button.pause {
+      background-color: #f59e0b;
+      color: #fff;
+    }
+    button.pause:hover:not(:disabled) {
+      background-color: #d97706;
     }
     button.drinks {
       background-color: #f59e0b;
@@ -588,7 +577,6 @@
     </div>
     <div class="rooms-container">
       <div class="room-card" id="room1">
-        <div class="status offline" id="status1">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 1</h2>
         <div class="timer-container">
           <div class="timer" id="timer1">00:00:00</div>
@@ -598,13 +586,13 @@
         <div class="drinks-total" id="drinksTotal1">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start1" onclick="startTimer(1)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause1" onclick="togglePause(1)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end1" onclick="endTimer(1)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks1" onclick="openDrinksMenu(1)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
       <div class="room-card" id="room2">
-        <div class="status offline" id="status2">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 2</h2>
         <div class="timer-container">
           <div class="timer" id="timer2">00:00:00</div>
@@ -614,13 +602,13 @@
         <div class="drinks-total" id="drinksTotal2">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start2" onclick="startTimer(2)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause2" onclick="togglePause(2)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end2" onclick="endTimer(2)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks2" onclick="openDrinksMenu(2)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
       <div class="room-card" id="room3">
-        <div class="status offline" id="status3">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 3</h2>
         <div class="timer-container">
           <div class="timer" id="timer3">00:00:00</div>
@@ -630,13 +618,13 @@
         <div class="drinks-total" id="drinksTotal3">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start3" onclick="startTimer(3)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause3" onclick="togglePause(3)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end3" onclick="endTimer(3)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks3" onclick="openDrinksMenu(3)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
       <div class="room-card" id="room4">
-        <div class="status offline" id="status4">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 4</h2>
         <div class="timer-container">
           <div class="timer" id="timer4">00:00:00</div>
@@ -646,13 +634,13 @@
         <div class="drinks-total" id="drinksTotal4">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start4" onclick="startTimer(4)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause4" onclick="togglePause(4)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end4" onclick="endTimer(4)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks4" onclick="openDrinksMenu(4)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(4)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
       <div class="room-card" id="room5">
-        <div class="status offline" id="status5">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 5</h2>
         <div class="timer-container">
           <div class="timer" id="timer5">00:00:00</div>
@@ -662,13 +650,13 @@
         <div class="drinks-total" id="drinksTotal5">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start5" onclick="startTimer(5)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause5" onclick="togglePause(5)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end5" onclick="endTimer(5)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks5" onclick="openDrinksMenu(5)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(5)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
       <div class="room-card" id="room6">
-        <div class="status offline" id="status6">متوقفة</div>
         <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 6</h2>
         <div class="timer-container">
           <div class="timer" id="timer6">00:00:00</div>
@@ -678,6 +666,7 @@
         <div class="drinks-total" id="drinksTotal6">المشروبات: 0.00 جنيه</div>
         <div class="buttons">
           <button class="start" id="start6" onclick="startTimer(6)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="pause" id="pause6" onclick="togglePause(6)" disabled><i class="fas fa-pause"></i> إيقاف</button>
           <button class="end" id="end6" onclick="endTimer(6)" disabled><i class="fas fa-stop"></i> إنهاء</button>
           <button class="drinks" id="drinks6" onclick="openDrinksMenu(6)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(6)"><i class="fas fa-print"></i> طباعة</button>
@@ -767,12 +756,14 @@
     const ADMIN_EMAIL = 'adminproantiban@playstaion.com';
     const ADMIN_PASSWORD = 'pro@123456789';
     const HOUR_RATE = 10;
-    const rooms = 6; // Updated to 6 rooms
+    const rooms = 6;
     const CONTACT_PHONE = '0123456789';
 
     let currentRoom = 1;
     let timers = {};
     let startTimes = {};
+    let paused = {};
+    let pausedTime = {};
     let timePrices = {};
     let drinks = {};
     let drinksPrices = {};
@@ -783,6 +774,8 @@
     for (let i = 1; i <= rooms; i++) {
       timers[i] = null;
       startTimes[i] = null;
+      paused[i] = false;
+      pausedTime[i] = 0;
       timePrices[i] = 0;
       drinks[i] = [];
       drinksPrices[i] = 0;
@@ -1015,25 +1008,48 @@
     // Start timer
     function startTimer(roomNum) {
       if (timers[roomNum]) return;
-      document.getElementById(`status${roomNum}`).className = 'status online';
-      document.getElementById(`status${roomNum}`).textContent = 'شغالة';
       document.getElementById(`start${roomNum}`).disabled = true;
+      document.getElementById(`pause${roomNum}`).disabled = false;
       document.getElementById(`end${roomNum}`).disabled = false;
       startTimes[roomNum] = new Date();
+      paused[roomNum] = false;
+      pausedTime[roomNum] = 0;
       timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
       saveData();
       playSound('start');
     }
 
+    // Toggle pause/resume
+    function togglePause(roomNum) {
+      if (!startTimes[roomNum]) return;
+      if (paused[roomNum]) {
+        // Resume
+        startTimes[roomNum] = new Date(new Date().getTime() - pausedTime[roomNum]);
+        timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
+        document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
+        paused[roomNum] = false;
+        playSound('start');
+      } else {
+        // Pause
+        clearInterval(timers[roomNum]);
+        timers[roomNum] = null;
+        pausedTime[roomNum] = new Date().getTime() - startTimes[roomNum].getTime();
+        document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-play"></i> استئناف';
+        paused[roomNum] = true;
+        playSound('end');
+      }
+      saveData();
+    }
+
     // End timer
     function endTimer(roomNum) {
-      if (!timers[roomNum]) return;
+      if (!startTimes[roomNum]) return;
       if (confirm(`هل تريد إنهاء جلسة غرفة ${roomNum}؟`)) {
         clearInterval(timers[roomNum]);
         timers[roomNum] = null;
-        document.getElementById(`status${roomNum}`).className = 'status offline';
-        document.getElementById(`status${roomNum}`).textContent = 'متوقفة';
         document.getElementById(`start${roomNum}`).disabled = false;
+        document.getElementById(`pause${roomNum}`).disabled = true;
+        document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
         document.getElementById(`end${roomNum}`).disabled = true;
         updateTimer(roomNum);
         dailyTimeEarnings[roomNum] = (dailyTimeEarnings[roomNum] || 0) + timePrices[roomNum];
@@ -1051,7 +1067,7 @@
 
     // Update timer
     function updateTimer(roomNum) {
-      if (!startTimes[roomNum]) return;
+      if (!startTimes[roomNum] || paused[roomNum]) return;
       const now = new Date();
       const diff = now - startTimes[roomNum];
       const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -1184,6 +1200,8 @@
     function resetRoom(roomNum) {
       timers[roomNum] = null;
       startTimes[roomNum] = null;
+      paused[roomNum] = false;
+      pausedTime[roomNum] = 0;
       timePrices[roomNum] = 0;
       drinks[roomNum] = [];
       drinksPrices[roomNum] = 0;
@@ -1192,6 +1210,10 @@
       document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
       document.getElementById(`drinksList${roomNum}`).innerHTML = '';
       document.getElementById(`drinksTotal${roomNum}`).textContent = 'المشروبات: 0.00 جنيه';
+      document.getElementById(`start${roomNum}`).disabled = false;
+      document.getElementById(`pause${roomNum}`).disabled = true;
+      document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
+      document.getElementById(`end${roomNum}`).disabled = true;
     }
 
     // Print invoice
@@ -1303,6 +1325,8 @@
         dailyDrinksEarnings,
         timers,
         startTimes,
+        paused,
+        pausedTime,
         timePrices,
         drinks,
         drinksPrices,
@@ -1319,21 +1343,30 @@
         dailyTimeEarnings = parsed.dailyTimeEarnings || {};
         dailyDrinksEarnings = parsed.dailyDrinksEarnings || {};
         drinkQuantities = parsed.drinkQuantities || {};
+        paused = parsed.paused || {};
+        pausedTime = parsed.pausedTime || {};
         for (let i = 1; i <= rooms; i++) {
           drinkQuantities[i] = drinkQuantities[i] || {};
+          paused[i] = paused[i] || false;
+          pausedTime[i] = pausedTime[i] || 0;
           if (parsed.startTimes && parsed.startTimes[i]) {
             startTimes[i] = new Date(parsed.startTimes[i]);
             timePrices[i] = parsed.timePrices ? parsed.timePrices[i] || 0 : 0;
             drinks[i] = parsed.drinks ? parsed.drinks[i] || [] : [];
             drinksPrices[i] = parsed.drinksPrices ? parsed.drinksPrices[i] || 0 : 0;
-            if (startTimes[i]) {
-              document.getElementById(`status${i}`).className = 'status online';
-              document.getElementById(`status${i}`).textContent = 'شغالة';
+            if (startTimes[i] && !paused[i]) {
               document.getElementById(`start${i}`).disabled = true;
+              document.getElementById(`pause${i}`).disabled = false;
               document.getElementById(`end${i}`).disabled = false;
               timers[i] = setInterval(() => updateTimer(i), 1000);
-              updateDrinksDisplay(i);
+            } else if (paused[i]) {
+              document.getElementById(`start${i}`).disabled = true;
+              document.getElementById(`pause${i}`).disabled = false;
+              document.getElementById(`pause${i}`).innerHTML = '<i class="fas fa-play"></i> استئناف';
+              document.getElementById(`end${i}`).disabled = false;
+              updateTimer(i);
             }
+            updateDrinksDisplay(i);
           }
         }
       }
