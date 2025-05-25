@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>نظام بلايستيشن ومشروبات</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -15,8 +15,8 @@
       font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #eee;
+      background: #f1f5f9;
+      color: #1e293b;
       min-height: 100vh;
       padding: 20px;
       display: flex;
@@ -26,230 +26,201 @@
     h1 {
       width: 100%;
       text-align: center;
-      color: #00d4ff;
-      font-size: 2.5rem;
-      font-weight: 900;
+      color: #0284c7;
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
+      font-weight: 700;
       margin: 20px 0;
-      text-shadow: 0 0 15px #00d4ffaa;
     }
     .rooms-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
       width: 100%;
-      max-width: 1400px;
-      margin-bottom: 30px;
+      max-width: 1200px;
+      margin-bottom: 20px;
     }
     .room-card {
-      background: rgba(15, 32, 39, 0.8);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      box-shadow: 0 0 20px #00d4ff88;
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      position: relative;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(0, 212, 255, 0.3);
-      height: 100%;
+      transition: transform 0.2s ease;
     }
     .room-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px #00d4ffaa;
+      transform: translateY(-3px);
     }
     .room-header {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: #00d4ff;
-      margin-bottom: 15px;
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-weight: 700;
+      color: #0284c7;
+      margin-bottom: 10px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
     }
     .status {
       position: absolute;
-      top: 15px;
-      left: 15px;
+      top: 10px;
+      left: 10px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: clamp(0.7rem, 2vw, 0.8rem);
       padding: 5px 10px;
-      border-radius: 10px;
+      border-radius: 8px;
       user-select: none;
-      box-shadow: 0 0 8px #000;
-      transition: all 0.4s ease;
     }
     .status.offline {
-      background-color: #666;
-      color: #bbb;
+      background-color: #9ca3af;
+      color: #fff;
     }
     .status.online {
-      background-color: #00d4ff;
-      color: #0f2027;
-      box-shadow: 0 0 12px #00d4ffbb;
+      background-color: #22c55e;
+      color: #fff;
     }
     .timer-container {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      padding: 10px;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 8px;
       margin-bottom: 10px;
     }
     .timer {
-      font-size: 2.5rem;
-      font-weight: 900;
-      color: #00d4ff;
+      font-size: clamp(1.8rem, 5vw, 2rem);
+      font-weight: 700;
+      color: #0284c7;
       text-align: center;
       font-family: 'Courier New', Courier, monospace;
-      letter-spacing: 3px;
-      text-shadow: 0 0 10px #00d4ff88;
-      user-select: none;
-      line-height: 1;
+      letter-spacing: 2px;
     }
     .price {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #00d4ff;
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 700;
+      color: #0284c7;
       text-align: center;
       margin-bottom: 10px;
-      user-select: none;
     }
     .drinks-list {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      border-radius: 12px;
-      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 10px;
       margin-bottom: 10px;
-      max-height: 150px;
+      max-height: 120px;
       overflow-y: auto;
-      border: 1px solid #60a5fa;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      border: 1px solid #e2e8f0;
     }
     .drink-item {
       display: flex;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 1rem;
-      color: #fff;
-      transition: background 0.2s ease;
-    }
-    .drink-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      color: #1e293b;
     }
     .drink-item:last-child {
       border-bottom: none;
     }
     .drink-item i {
-      margin-left: 10px;
-      color: #facc15;
-      font-size: 1.2rem;
+      margin-left: 8px;
+      color: #f59e0b;
+      font-size: clamp(1rem, 3vw, 1.1rem);
     }
     .drink-item span.name {
       flex-grow: 1;
     }
     .drink-item span.quantity {
-      margin: 0 10px;
-      color: #facc15;
-      font-weight: bold;
-      min-width: 30px;
-      text-align: left;
+      margin: 0 8px;
+      color: #f59e0b;
+      font-weight: 700;
     }
     .drink-item span.price {
-      color: #fff;
+      color: #1e293b;
       font-weight: 600;
     }
     .drinks-total {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 3vw, 1.1rem);
       font-weight: 700;
-      color: #facc15;
+      color: #f59e0b;
       text-align: center;
       margin-bottom: 10px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 8px;
+      padding: 6px;
+      background: #f8fafc;
       border-radius: 8px;
     }
     .buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 10px;
     }
     button {
       flex: 1;
-      min-width: 120px;
-      padding: 10px 0;
-      border-radius: 10px;
-      border: none;
-      font-weight: 800;
-      font-size: 0.9rem;
+      min-width: 100px;
+      padding: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-weight: 700;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
       cursor: pointer;
-      transition: all 0.3s ease;
-      user-select: none;
-      box-shadow: 0 0 6px #000;
+      transition: background 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
     }
     button:disabled {
       cursor: not-allowed;
       opacity: 0.5;
-      transform: none !important;
     }
     button.start {
-      background-color: #00d4ff;
-      color: #0f2027;
+      background-color: #22c55e;
+      color: #fff;
     }
     button.start:hover:not(:disabled) {
-      background-color: #00e5ff;
-      transform: translateY(-2px);
+      background-color: #16a34a;
     }
     button.end {
-      background-color: #ff4757;
+      background-color: #ef4444;
       color: #fff;
     }
     button.end:hover:not(:disabled) {
-      background-color: #ff6b81;
-      transform: translateY(-2px);
+      background-color: #dc2626;
     }
     button.drinks {
-      background-color: #f39c12;
+      background-color: #f59e0b;
       color: #fff;
     }
     button.drinks:hover:not(:disabled) {
-      background-color: #f1c40f;
-      transform: translateY(-2px);
+      background-color: #d97706;
     }
     button.print {
-      background-color: #2c5364;
-      color: #ddd;
-      font-weight: 700;
+      background-color: #0284c7;
+      color: #fff;
     }
     button.print:hover {
-      background-color: #3a7188;
-      transform: translateY(-2px);
+      background-color: #0369a1;
     }
     .summary-btn, .admin-btn, .logout-btn {
-      background-color: #00d4ff;
-      color: #0f2027;
-      padding: 12px 25px;
-      border-radius: 12px;
-      font-weight: 800;
-      margin: 10px;
+      background-color: #0284c7;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin: 8px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .summary-btn:hover, .admin-btn:hover, .logout-btn:hover {
-      background-color: #00e5ff;
-      transform: translateY(-2px);
+      background-color: #0369a1;
     }
     .logout-btn {
-      background-color: #ff4757;
+      background-color: #ef4444;
     }
     .logout-btn:hover {
-      background-color: #ff6b81;
+      background-color: #dc2626;
     }
     .menu-modal {
       position: fixed;
@@ -257,130 +228,118 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 1001;
-      backdrop-filter: blur(5px);
     }
     .menu-content {
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      padding: 25px;
-      border-radius: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
       width: 90%;
-      max-width: 700px;
-      max-height: 85vh;
+      max-width: 600px;
+      max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
-      border: 2px solid #60a5fa;
+      border: 1px solid #e2e8f0;
     }
     .menu-content h2 {
-      color: #facc15;
+      color: #0284c7;
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
-    }
-    .menu-category {
-      margin-bottom: 25px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    .menu-category h3 {
-      color: #fff;
       margin-bottom: 15px;
-      font-size: 1.4rem;
-      border-bottom: 2px solid #facc15;
-      padding-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
     }
-    .menu-item {
+    .custom-drink-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .custom-drink-form input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #1e293b;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+    .custom-drink-form button {
+      background: #22c55e;
+      color: #fff;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    .custom-drink-form button:hover {
+      background: #16a34a;
+    }
+    .custom-drink-list {
+      margin-bottom: 20px;
+    }
+    .custom-drink-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      margin-bottom: 8px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
     }
-    .menu-item:hover {
-      background: rgba(250, 204, 21, 0.2);
-      transform: translateX(-5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    .custom-drink-item i {
+      color: #f59e0b;
+      font-size: clamp(1.2rem, 3vw, 1.3rem);
+      margin-left: 8px;
     }
-    .menu-item i {
-      color: #facc15;
-      font-size: 1.5rem;
-      margin-left: 10px;
-    }
-    .menu-item span.name {
+    .custom-drink-item span.name {
       flex-grow: 1;
-      color: #fff;
+      color: #1e293b;
       font-weight: 600;
     }
-    .menu-item-price {
-      color: #facc15;
-      font-weight: bold;
-      min-width: 80px;
-      text-align: left;
+    .custom-drink-item span.quantity {
+      color: #f59e0b;
+      font-weight: 700;
+      margin: 0 10px;
     }
-    .menu-item-controls {
-      display: flex;
-      gap: 12px;
-      align-items: center;
+    .custom-drink-item span.price {
+      color: #f59e0b;
+      font-weight: 700;
     }
-    .menu-item-controls button {
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
+    .custom-drink-item button {
+      width: 35px;
+      height: 35px;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    .menu-item-controls .plus {
+    .custom-drink-item .plus {
       background-color: #22c55e;
       color: #fff;
     }
-    .menu-item-controls .plus:hover {
+    .custom-drink-item .plus:hover {
       background-color: #16a34a;
     }
-    .menu-item-controls .minus {
+    .custom-drink-item .minus {
       background-color: #ef4444;
       color: #fff;
     }
-    .menu-item-controls .minus:hover {
+    .custom-drink-item .minus:hover {
       background-color: #dc2626;
-    }
-    .menu-item-controls span {
-      color: #facc15;
-      font-weight: bold;
-      min-width: 40px;
-      text-align: center;
-      font-size: 1.1rem;
     }
     .close-menu {
       background: #ef4444;
       color: #fff;
       border: none;
-      padding: 12px 25px;
-      border-radius: 12px;
-      margin-top: 20px;
-      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-weight: 700;
       cursor: pointer;
       width: 100%;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
+      font-size: clamp(1rem, 3vw, 1.1rem);
     }
     .close-menu:hover {
       background: #dc2626;
-      transform: translateY(-2px);
     }
     .login-container {
       position: fixed;
@@ -388,167 +347,163 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.8);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      backdrop-filter: blur(5px);
     }
     .login-form {
-      background: #0f2027;
-      padding: 30px;
-      border-radius: 15px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 30px #00d4ffaa;
-      border: 1px solid #00d4ff;
+      max-width: 350px;
+      border: 1px solid #e2e8f0;
     }
     .login-form h2 {
-      color: #00d4ff;
+      color: #0284c7;
       text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-size: clamp(1.4rem, 4vw, 1.6rem);
     }
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     .form-group label {
       display: block;
-      margin-bottom: 8px;
-      color: #00d4ff;
-      font-weight: bold;
+      margin-bottom: 6px;
+      color: #0284c7;
+      font-weight: 700;
     }
     .form-group input {
       width: 100%;
-      padding: 12px 15px;
+      padding: 10px;
       border-radius: 8px;
-      border: 1px solid #00d4ff;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-      font-size: 1rem;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #1e293b;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
     }
     .login-btn {
       width: 100%;
-      padding: 12px;
-      background: #00d4ff;
-      color: #0f2027;
+      padding: 10px;
+      background: #0284c7;
+      color: #fff;
       border: none;
       border-radius: 8px;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
       cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 10px;
     }
     .login-btn:hover {
-      background: #00e5ff;
-      transform: translateY(-2px);
+      background: #0369a1;
     }
     .admin-panel-form {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-bottom: 20px;
+      gap: 10px;
+      margin-bottom: 15px;
     }
     .admin-panel-form input {
-      padding: 10px;
+      padding: 8px;
       border-radius: 8px;
-      border: 1px solid #00d4ff;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #1e293b;
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     }
     .admin-panel-form button {
-      background: #00d4ff;
-      color: #0f2027;
-      padding: 10px;
+      background: #0284c7;
+      color: #fff;
+      padding: 8px;
       border-radius: 8px;
-      font-weight: bold;
+      font-weight: 700;
     }
     .admin-panel-form button:hover {
-      background: #00e5ff;
-      transform: translateY(-2px);
+      background: #0369a1;
     }
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     .admin-table th, .admin-table td {
-      padding: 10px;
-      border: 1px solid #00d4ff;
+      padding: 8px;
+      border: 1px solid #e2e8f0;
       text-align: center;
+      font-size: clamp(0.7rem, 2vw, 0.8rem);
     }
     .admin-table th {
-      background: #00d4ff;
-      color: #0f2027;
-      font-weight: bold;
+      background: #0284c7;
+      color: #fff;
+      font-weight: 700;
     }
     .admin-table td {
-      background: rgba(0, 0, 0, 0.3);
+      background: #f8fafc;
     }
     .admin-table button {
-      padding: 5px 10px;
-      margin: 0 5px;
+      padding: 5px 8px;
+      margin: 0 3px;
       border-radius: 5px;
-      font-size: 0.9rem;
+      font-size: clamp(0.7rem, 2vw, 0.8rem);
     }
     .admin-table .edit-btn {
-      background: #f39c12;
+      background: #f59e0b;
       color: #fff;
     }
     .admin-table .edit-btn:hover {
-      background: #f1c40f;
+      background: #d97706;
     }
     .admin-table .delete-btn {
-      background: #ff4757;
+      background: #ef4444;
       color: #fff;
     }
     .admin-table .delete-btn:hover {
-      background-color: #ff6b81;
+      background: #dc2626;
     }
     .print-content {
-      background: white;
-      color: black;
-      padding: 20px;
+      background: #fff;
+      color: #1e293b;
+      padding: 15px;
       font-family: 'Tajawal', Arial, sans-serif;
-      font-size: 12pt;
+      font-size: 11pt;
       width: 100%;
       max-width: 210mm;
       margin: 0 auto;
     }
     .print-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     .print-header h2 {
-      color: #0f2027;
-      font-size: 18pt;
-      margin-bottom: 10px;
+      color: #0284c7;
+      font-size: 16pt;
+      margin-bottom: 8px;
     }
     .print-details {
-      font-size: 12pt;
-      margin: 15px 0;
+      font-size: 11pt;
+      margin: 10px 0;
     }
     .print-details p {
       display: flex;
       justify-content: space-between;
-      margin: 8px 0;
+      margin: 6px 0;
     }
     .print-details span {
-      font-weight: bold;
-      color: #0f2027;
+      font-weight: 700;
+      color: #0284c7;
     }
     .print-divider {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #0f2027, transparent);
-      margin: 15px 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 10px 0;
     }
     .print-footer {
       text-align: center;
-      margin-top: 25px;
-      font-size: 10pt;
-      color: #666;
+      margin-top: 20px;
+      font-size: 9pt;
+      color: #6b7280;
     }
     @media print {
       body * {
@@ -556,7 +511,7 @@
       }
       .print-content, .print-content * {
         visibility: visible !important;
-        color: black !important;
+        color: #1e293b !important;
       }
       .print-content {
         position: absolute;
@@ -567,9 +522,6 @@
       }
     }
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
       .rooms-container {
         grid-template-columns: 1fr;
       }
@@ -577,17 +529,23 @@
         width: 95%;
         padding: 15px;
       }
-      .menu-item {
+      .custom-drink-form {
+        flex-direction: column;
+      }
+      .custom-drink-form input {
+        width: 100%;
+      }
+      .custom-drink-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 8px;
       }
-      .menu-item-controls {
-        width: 100%;
-        justify-content: space-between;
+      .custom-drink-item button {
+        width: 40px;
+        height: 40px;
       }
       .admin-table {
-        font-size: 0.8rem;
+        font-size: clamp(0.6rem, 1.8vw, 0.7rem);
       }
     }
   </style>
@@ -611,7 +569,7 @@
     </div>
   </div>
 
-  <!-- Main Content (Hidden until login) -->
+  <!-- Main Content -->
   <div id="mainContent" style="display: none;">
     <h1><i class="fas fa-gamepad"></i> نظام بلايستيشن ومشروبات</h1>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -693,115 +651,21 @@
     </div>
     <div id="drinksModal" class="menu-modal">
       <div class="menu-content">
-        <h2><i class="fas fa-glass-whiskey"></i> قائمة المشروبات</h2>
-        <div class="menu-category">
-          <h3><i class="fas fa-wine-bottle"></i> المشروبات الغازية</h3>
-          <div class="menu-item" data-drink="كولا" data-price="15">
-            <i class="fas fa-glass-whiskey"></i>
-            <span class="name">كولا</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('كولا', -1)">−</button>
-              <span id="quantity-كولا">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('كولا', 1)">+</button>
-            </div>
-            <span class="menu-item-price">15 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="سفن أب" data-price="15">
-            <i class="fas fa-glass-whiskey"></i>
-            <span class="name">سفن أب</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('سفن أب', -1)">−</button>
-              <span id="quantity-سفن أب">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('سفن أب', 1)">+</button>
-            </div>
-            <span class="menu-item-price">15 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="فانتا" data-price="15">
-            <i class="fas fa-glass-whiskey"></i>
-            <span class="name">فانتا</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('فانتا', -1)">−</button>
-              <span id="quantity-فانتا">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('فانتا', 1)">+</button>
-            </div>
-            <span class="menu-item-price">15 جنيه</span>
-          </div>
+        <h2><i class="fas fa-glass-whiskey"></i> طلب مشروب مخصص</h2>
+        <div class="custom-drink-form">
+          <input type="text" id="customDrinkName" placeholder="اسم المشروب" required>
+          <input type="number" id="customDrinkPrice" placeholder="السعر (جنيه)" min="0" step="0.01" required>
+          <input type="number" id="customDrinkQuantity" placeholder="الكمية" min="1" value="1" required>
+          <button onclick="addCustomDrink()">إضافة مشروب</button>
         </div>
-        <div class="menu-category">
-          <h3><i class="fas fa-lemon"></i> العصائر</h3>
-          <div class="menu-item" data-drink="عصير برتقال" data-price="20">
-            <i class="fas fa-glass-martini"></i>
-            <span class="name">عصير برتقال</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير برتقال', -1)">−</button>
-              <span id="quantity-عصير برتقال">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير برتقال', 1)">+</button>
-            </div>
-            <span class="menu-item-price">20 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="عصير مانجو" data-price="25">
-            <i class="fas fa-glass-martini"></i>
-            <span class="name">عصير مانجو</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير مانجو', -1)">−</button>
-              <span id="quantity-عصير مانجو">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير مانجو', 1)">+</button>
-            </div>
-            <span class="menu-item-price">25 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="عصير فراولة" data-price="25">
-            <i class="fas fa-glass-martini"></i>
-            <span class="name">عصير فراولة</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('عصير فراولة', -1)">−</button>
-              <span id="quantity-عصير فراولة">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('عصير فراولة', 1)">+</button>
-            </div>
-            <span class="menu-item-price">25 جنيه</span>
-          </div>
-        </div>
-        <div class="menu-category">
-          <h3><i class="fas fa-coffee"></i> المشروبات الساخنة</h3>
-          <div class="menu-item" data-drink="شاي" data-price="10">
-            <i class="fas fa-mug-hot"></i>
-            <span class="name">شاي</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('شاي', -1)">−</button>
-              <span id="quantity-شاي">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('شاي', 1)">+</button>
-            </div>
-            <span class="menu-item-price">10 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="قهوة" data-price="15">
-            <i class="fas fa-mug-hot"></i>
-            <span class="name">قهوة</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('قهوة', -1)">−</button>
-              <span id="quantity-قهوة">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('قهوة', 1)">+</button>
-            </div>
-            <span class="menu-item-price">15 جنيه</span>
-          </div>
-          <div class="menu-item" data-drink="كابتشينو" data-price="20">
-            <i class="fas fa-mug-hot"></i>
-            <span class="name">كابتشينو</span>
-            <div class="menu-item-controls">
-              <button class="minus" onclick="updateDrinkQuantity('كابتشينو', -1)">−</button>
-              <span id="quantity-كابتشينو">0</span>
-              <button class="plus" onclick="updateDrinkQuantity('كابتشينو', 1)">+</button>
-            </div>
-            <span class="menu-item-price">20 جنيه</span>
-          </div>
-        </div>
+        <div class="custom-drink-list" id="customDrinkList"></div>
         <button class="close-menu" onclick="closeDrinksMenu()"><i class="fas fa-times"></i> إغلاق القائمة</button>
       </div>
     </div>
     <!-- Admin Panel Modal -->
     <div id="adminPanelModal" class="menu-modal" style="display: none;">
       <div class="menu-content">
-        <h2 style="color: #00d4ff; text-align: center; margin-bottom: 20px;">
-          <i class="fas fa-user-shield"></i> لوحة تحكم الأدمن
-        </h2>
+        <h2><i class="fas fa-user-shield"></i> لوحة تحكم الأدمن</h2>
         <div class="admin-panel-form">
           <h3>إضافة مستخدم جديد</h3>
           <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" required>
@@ -844,18 +708,18 @@
       </div>
       <div class="print-footer">
         <p>شكراً لزيارتكم - نتمنى لكم وقتاً ممتعاً</p>
-        <p>للاستفسار: 0123456789</p>
+        <p>للاستفسار: <span id="printContact">0123456789</span></p>
       </div>
     </div>
     <div id="summaryModal" class="menu-modal" style="display: none;">
       <div class="menu-content">
-        <h2 style="color: #00d4ff; margin-bottom: 20px; font-size: 1.8rem;"><i class="fas fa-coins"></i> إجمالي اليوم</h2>
-        <div id="summaryContent" style="font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6;"></div>
-        <div style="display: flex; gap: 10px;">
-          <button onclick="resetDailyEarnings()" style="background: #ff4757; color: #fff; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+        <h2><i class="fas fa-coins"></i> إجمالي اليوم</h2>
+        <div id="summaryContent" style="font-size: clamp(1rem, 3vw, 1.1rem); margin-bottom: 20px; line-height: 1.5;"></div>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="resetDailyEarnings()" style="background: #ef4444; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2.5vw, 1rem);">
             <i class="fas fa-redo"></i> إعادة تعيين اليوم
           </button>
-          <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #00d4ff; color: #0f2027; border: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+          <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #0284c7; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2.5vw, 1rem);">
             <i class="fas fa-times"></i> إغلاق
           </button>
         </div>
@@ -869,6 +733,7 @@
     const ADMIN_PASSWORD = 'pro@123456789';
     const HOUR_RATE = 10;
     const rooms = 4;
+    const CONTACT_PHONE = '0123456789'; // Configurable contact phone number
 
     let currentRoom = 1;
     let timers = {};
@@ -876,8 +741,6 @@
     let timePrices = {};
     let drinks = {};
     let drinksPrices = {};
-    let dailyTimeEarnings = {};
-    let dailyDrinksEarnings = {};
     let drinkQuantities = {};
 
     for (let i = 1; i <= rooms; i++) {
@@ -886,13 +749,7 @@
       timePrices[i] = 0;
       drinks[i] = [];
       drinksPrices[i] = 0;
-      dailyTimeEarnings[i] = 0;
-      dailyDrinksEarnings[i] = 0;
-      drinkQuantities[i] = {
-        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
-        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
-        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
-      };
+      drinkQuantities[i] = {};
     }
 
     // Generate unique code
@@ -1142,8 +999,8 @@
         document.getElementById(`end${roomNum}`).disabled = true;
         document.getElementById(`drinks${roomNum}`).disabled = true;
         updateTimer(roomNum);
-        dailyTimeEarnings[roomNum] += timePrices[roomNum];
-        dailyDrinksEarnings[roomNum] += drinksPrices[roomNum];
+        dailyTimeEarnings[roomNum] = (dailyTimeEarnings[roomNum] || 0) + timePrices[roomNum];
+        dailyDrinksEarnings[roomNum] = (dailyDrinksEarnings[roomNum] || 0) + drinksPrices[roomNum];
         const total = timePrices[roomNum] + drinksPrices[roomNum];
         alert(`إجمالي غرفة ${roomNum}:
         الوقت: ${timePrices[roomNum].toFixed(2)} جنيه
@@ -1174,71 +1031,90 @@
     // Open drinks menu
     function openDrinksMenu(roomNum) {
       currentRoom = roomNum;
-      resetDrinkQuantities();
-      updateDrinkQuantitiesDisplay();
+      updateCustomDrinksDisplay();
       document.getElementById('drinksModal').style.display = 'flex';
+      document.getElementById('customDrinkName').value = '';
+      document.getElementById('customDrinkPrice').value = '';
+      document.getElementById('customDrinkQuantity').value = '1';
       playSound('drink');
     }
 
     // Close drinks menu
     function closeDrinksMenu() {
-      updateDrinksFromQuantities();
       updateDrinksDisplay(currentRoom);
       saveData();
       document.getElementById('drinksModal').style.display = 'none';
     }
 
-    // Update drink quantity
-    function updateDrinkQuantity(drinkName, change) {
-      if (!currentRoom) return;
-      const newQuantity = Math.max(0, (drinkQuantities[currentRoom][drinkName] || 0) + change);
-      drinkQuantities[currentRoom][drinkName] = newQuantity;
-      document.getElementById(`quantity-${drinkName}`).textContent = newQuantity;
+    // Add custom drink
+    function addCustomDrink() {
+      const name = document.getElementById('customDrinkName').value.trim();
+      const price = parseFloat(document.getElementById('customDrinkPrice').value);
+      const quantity = parseInt(document.getElementById('customDrinkQuantity').value);
+
+      if (!name || isNaN(price) || price <= 0 || isNaN(quantity) || quantity <= 0) {
+        alert('يرجى إدخال اسم المشروب، السعر، والكمية بشكل صحيح');
+        return;
+      }
+
+      drinkQuantities[currentRoom][name] = (drinkQuantities[currentRoom][name] || 0) + quantity;
+      for (let i = 0; i < quantity; i++) {
+        drinks[currentRoom].push({ name, price });
+        drinksPrices[currentRoom] += price;
+      }
+
+      document.getElementById('customDrinkName').value = '';
+      document.getElementById('customDrinkPrice').value = '';
+      document.getElementById('customDrinkQuantity').value = '1';
+      updateCustomDrinksDisplay();
       playSound('drink');
-      console.log(`Updated ${drinkName} quantity for room ${currentRoom}: ${newQuantity}`);
     }
 
-    // Update drinks from quantities
-    function updateDrinksFromQuantities() {
-      if (!currentRoom) return;
-      drinks[currentRoom] = [];
-      drinksPrices[currentRoom] = 0;
-      const drinkPrices = {
-        'كولا': 15, 'سفن أب': 15, 'فانتا': 15,
-        'عصير برتقال': 20, 'عصير مانجو': 25, 'عصير فراولة': 25,
-        'شاي': 10, 'قهوة': 15, 'كابتشينو': 20
-      };
-      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
-        if (quantity > 0) {
-          for (let i = 0; i < quantity; i++) {
-            drinks[currentRoom].push({ name: drink, price: drinkPrices[drink] });
-            drinksPrices[currentRoom] += drinkPrices[drink];
-          }
+    // Update custom drinks display
+    function updateCustomDrinksDisplay() {
+      const list = document.getElementById('customDrinkList');
+      list.innerHTML = '';
+      const drinkSummary = {};
+      drinks[currentRoom].forEach(item => {
+        if (item && item.name) {
+          drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
         }
-      }
-      console.log(`Updated drinks for room ${currentRoom}:`, drinks[currentRoom]);
-      console.log(`Drinks price for room ${currentRoom}: ${drinksPrices[currentRoom]}`);
-    }
-
-    // Reset drink quantities
-    function resetDrinkQuantities() {
-      if (!currentRoom) return;
-      const drinkNames = ['كولا', 'سفن أب', 'فانتا', 'عصير برتقال', 'عصير مانجو', 'عصير فراولة', 'شاي', 'قهوة', 'كابتشينو'];
-      drinkNames.forEach(drink => {
-        drinkQuantities[currentRoom][drink] = drinks[currentRoom].filter(item => item.name === drink).length;
       });
-      console.log(`Reset quantities for room ${currentRoom}:`, drinkQuantities[currentRoom]);
+      for (const [name, quantity] of Object.entries(drinkSummary)) {
+        const price = drinks[currentRoom].find(item => item.name === name)?.price || 0;
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'custom-drink-item';
+        itemDiv.innerHTML = `
+          <i class="fas fa-glass-whiskey"></i>
+          <span class="name">${name}</span>
+          <span class="quantity">x${quantity}</span>
+          <span class="price">${(price * quantity).toFixed(2)} جنيه</span>
+          <button class="plus" onclick="updateCustomDrinkQuantity('${name}', 1)">+</button>
+          <button class="minus" onclick="updateCustomDrinkQuantity('${name}', -1)">−</button>
+        `;
+        list.appendChild(itemDiv);
+      }
+      updateDrinksDisplay(currentRoom);
     }
 
-    // Update drink quantities display
-    function updateDrinkQuantitiesDisplay() {
-      if (!currentRoom) return;
-      for (const [drink, quantity] of Object.entries(drinkQuantities[currentRoom])) {
-        const element = document.getElementById(`quantity-${drink}`);
-        if (element) {
-          element.textContent = quantity;
-        }
+    // Update custom drink quantity
+    function updateCustomDrinkQuantity(name, change) {
+      const currentQuantity = drinkQuantities[currentRoom][name] || 0;
+      const newQuantity = Math.max(0, currentQuantity + change);
+      drinkQuantities[currentRoom][name] = newQuantity;
+
+      // Update drinks array
+      drinks[currentRoom] = drinks[currentRoom].filter(item => item.name !== name);
+      drinksPrices[currentRoom] = drinks[currentRoom].reduce((sum, item) => sum + item.price, 0);
+      const price = drinks[currentRoom].find(item => item.name === name)?.price || 
+                    (drinks[currentRoom].length > 0 ? drinks[currentRoom][0].price : 0);
+      for (let i = 0; i < newQuantity; i++) {
+        drinks[currentRoom].push({ name, price });
+        drinksPrices[currentRoom] += price;
       }
+
+      updateCustomDrinksDisplay();
+      playSound('drink');
     }
 
     // Update drinks display
@@ -1246,36 +1122,24 @@
       const drinksList = document.getElementById(`drinksList${roomNum}`);
       drinksList.innerHTML = '';
       const drinkSummary = {};
-      const drinkIcons = {
-        'كولا': 'fas fa-glass-whiskey',
-        'سفن أب': 'fas fa-glass-whiskey',
-        'فانتا': 'fas fa-glass-whiskey',
-        'عصير برتقال': 'fas fa-glass-martini',
-        'عصير مانجو': 'fas fa-glass-martini',
-        'عصير فراولة': 'fas fa-glass-martini',
-        'شاي': 'fas fa-mug-hot',
-        'قهوة': 'fas fa-mug-hot',
-        'كابتشينو': 'fas fa-mug-hot'
-      };
       drinks[roomNum].forEach(item => {
         if (item && item.name) {
           drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
         }
       });
       for (const [name, quantity] of Object.entries(drinkSummary)) {
-        const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
+        const price = drinks[roomNum].find(item => item.name === name)?.price || 0;
         const drinkItem = document.createElement('div');
         drinkItem.className = 'drink-item';
         drinkItem.innerHTML = `
-          <i class="${drinkIcons[name] || 'fas fa-glass-whiskey'}"></i>
+          <i class="fas fa-glass-whiskey"></i>
           <span class="name">${name}</span>
           <span class="quantity">x${quantity}</span>
-          <span class="price">${(drinkPrice * quantity).toFixed(2)} جنيه</span>
+          <span class="price">${(price * quantity).toFixed(2)} جنيه</span>
         `;
         drinksList.appendChild(drinkItem);
       }
       document.getElementById(`drinksTotal${roomNum}`).textContent = `المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه`;
-      console.log(`Updated drinks display for room ${roomNum}:`, drinkSummary);
     }
 
     // Reset room
@@ -1285,16 +1149,11 @@
       timePrices[roomNum] = 0;
       drinks[roomNum] = [];
       drinksPrices[roomNum] = 0;
-      drinkQuantities[roomNum] = {
-        'كولا': 0, 'سفن أب': 0, 'فانتا': 0,
-        'عصير برتقال': 0, 'عصير مانجو': 0, 'عصير فراولة': 0,
-        'شاي': 0, 'قهوة': 0, 'كابتشينو': 0
-      };
+      drinkQuantities[roomNum] = {};
       document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
       document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
       document.getElementById(`drinksList${roomNum}`).innerHTML = '';
       document.getElementById(`drinksTotal${roomNum}`).textContent = 'المشروبات: 0.00 جنيه';
-      console.log(`Reset room ${roomNum}`);
     }
 
     // Print invoice
@@ -1304,11 +1163,6 @@
         return;
       }
       if (confirm(`هل تريد طباعة فاتورة غرفة ${roomNum}؟`)) {
-        console.log('Printing invoice for room:', roomNum);
-        console.log('Time Price:', timePrices[roomNum]);
-        console.log('Drinks:', drinks[roomNum]);
-        console.log('Drinks Price:', drinksPrices[roomNum]);
-        console.log('Drink Quantities:', drinkQuantities[roomNum]);
         const now = new Date();
         const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + 
                         now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
@@ -1324,18 +1178,17 @@
             drinkSummary[item.name] = (drinkSummary[item.name] || 0) + 1;
           }
         });
-        console.log('Drink Summary for print:', drinkSummary);
         if (Object.keys(drinkSummary).length === 0) {
           const noDrinks = document.createElement('p');
           noDrinks.textContent = 'لا توجد مشروبات';
           printDrinks.appendChild(noDrinks);
         } else {
           for (const [name, quantity] of Object.entries(drinkSummary)) {
-            const drinkPrice = drinks[roomNum].find(item => item.name === name)?.price || 0;
+            const price = drinks[roomNum].find(item => item.name === name)?.price || 0;
             const drinkRow = document.createElement('p');
             drinkRow.innerHTML = `
               <span>${name} (x${quantity})</span>
-              <span>${(drinkPrice * quantity).toFixed(2)} جنيه</span>
+              <span>${(price * quantity).toFixed(2)} جنيه</span>
             `;
             printDrinks.appendChild(drinkRow);
           }
@@ -1343,9 +1196,9 @@
         const total = timePrices[roomNum] + drinksPrices[roomNum];
         document.getElementById('printTotal').textContent = `${total.toFixed(2)} جنيه`;
         document.getElementById('printDate').textContent = dateStr;
+        document.getElementById('printContact').textContent = CONTACT_PHONE;
         const printContent = document.getElementById('printContent');
         printContent.style.display = 'block';
-        console.log('Final Print Content HTML:', printContent.innerHTML);
         const opt = {
           margin: 10,
           filename: `فاتورة_غرفة_${roomNum}_${dateStr.replace(/[: ]/g, '-')}.pdf`,
@@ -1372,21 +1225,21 @@
       let drinksTotal = 0;
       let summaryHTML = '';
       for (let i = 1; i <= rooms; i++) {
-        timeTotal += dailyTimeEarnings[i];
-        drinksTotal += dailyDrinksEarnings[i];
+        timeTotal += dailyTimeEarnings[i] || 0;
+        drinksTotal += dailyDrinksEarnings[i] || 0;
         summaryHTML += `
           <p>غرفة ${i}: 
-            <span style="color: #00d4ff;">${dailyTimeEarnings[i].toFixed(2)}</span> (وقت) + 
-            <span style="color: #f39c12;">${dailyDrinksEarnings[i].toFixed(2)}</span> (مشروبات) = 
-            <span style="font-weight: bold;">${(dailyTimeEarnings[i] + dailyDrinksEarnings[i]).toFixed(2)} جنيه</span>
+            <span style="color: #0284c7;">${(dailyTimeEarnings[i] || 0).toFixed(2)}</span> (وقت) + 
+            <span style="color: #f59e0b;">${(dailyDrinksEarnings[i] || 0).toFixed(2)}</span> (مشروبات) = 
+            <span style="font-weight: bold;">${((dailyTimeEarnings[i] || 0) + (dailyDrinksEarnings[i] || 0)).toFixed(2)} جنيه</span>
           </p>`;
       }
       const grandTotal = timeTotal + drinksTotal;
       summaryHTML += `
-        <div style="margin: 20px 0; height: 2px; background: linear-gradient(90deg, transparent, #00d4ff, transparent);"></div>
-        <p>إجمالي الوقت: <span style="color: #00d4ff; font-weight: bold;">${timeTotal.toFixed(2)} جنيه</span></p>
-        <p>إجمالي المشروبات: <span style="color: #f39c12; font-weight: bold;">${drinksTotal.toFixed(2)} جنيه</span></p>
-        <p>الإجمالي الكلي: <span style="color: #00ff85; font-weight: bold;">${grandTotal.toFixed(2)} جنيه</span></p>
+        <div style="margin: 15px 0; height: 1px; background: #e2e8f0;"></div>
+        <p>إجمالي الوقت: <span style="color: #0284c7; font-weight: bold;">${timeTotal.toFixed(2)} جنيه</span></p>
+        <p>إجمالي المشروبات: <span style="color: #f59e0b; font-weight: bold;">${drinksTotal.toFixed(2)} جنيه</span></p>
+        <p>الإجمالي الكلي: <span style="color: #22c55e; font-weight: bold;">${grandTotal.toFixed(2)} جنيه</span></p>
       `;
       document.getElementById('summaryContent').innerHTML = summaryHTML;
       document.getElementById('summaryModal').style.display = 'flex';
@@ -1418,7 +1271,6 @@
         drinkQuantities
       };
       localStorage.setItem('playstationData', JSON.stringify(data));
-      console.log('Saved data:', data);
     }
 
     // Load data
@@ -1426,15 +1278,16 @@
       const data = localStorage.getItem('playstationData');
       if (data) {
         const parsed = JSON.parse(data);
-        dailyTimeEarnings = parsed.dailyTimeEarnings || dailyTimeEarnings;
-        dailyDrinksEarnings = parsed.dailyDrinksEarnings || dailyDrinksEarnings;
-        drinkQuantities = parsed.drinkQuantities || drinkQuantities;
+        dailyTimeEarnings = parsed.dailyTimeEarnings || {};
+        dailyDrinksEarnings = parsed.dailyDrinksEarnings || {};
+        drinkQuantities = parsed.drinkQuantities || {};
         for (let i = 1; i <= rooms; i++) {
-          if (parsed.startTimes[i]) {
+          drinkQuantities[i] = drinkQuantities[i] || {};
+          if (parsed.startTimes && parsed.startTimes[i]) {
             startTimes[i] = new Date(parsed.startTimes[i]);
-            timePrices[i] = parsed.timePrices[i] || 0;
-            drinks[i] = parsed.drinks[i] || [];
-            drinksPrices[i] = parsed.drinksPrices[i] || 0;
+            timePrices[i] = parsed.timePrices ? parsed.timePrices[i] || 0 : 0;
+            drinks[i] = parsed.drinks ? parsed.drinks[i] || [] : [];
+            drinksPrices[i] = parsed.drinksPrices ? parsed.drinksPrices[i] || 0 : 0;
             if (startTimes[i]) {
               document.getElementById(`status${i}`).className = 'status online';
               document.getElementById(`status${i}`).textContent = 'شغالة';
@@ -1446,7 +1299,6 @@
             }
           }
         }
-        console.log('Loaded data:', parsed);
       }
     }
 
@@ -1462,6 +1314,7 @@
       }
     }
 
+    // Event listeners
     document.getElementById('password').addEventListener('keypress', function(event) {
       if (event.key === 'Enter') {
         login();
