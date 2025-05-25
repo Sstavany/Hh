@@ -307,10 +307,13 @@
       font-weight: 700;
     }
     .custom-drink-item button {
-      width: 35px;
-      height: 35px;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      width: 30px;
+      height: 30px;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
       border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .custom-drink-item .plus {
       background-color: #22c55e;
@@ -541,8 +544,8 @@
         gap: 8px;
       }
       .custom-drink-item button {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
       }
       .admin-table {
         font-size: clamp(0.6rem, 1.8vw, 0.7rem);
@@ -596,7 +599,7 @@
         <div class="buttons">
           <button class="start" id="start1" onclick="startTimer(1)"><i class="fas fa-play"></i> ابدأ</button>
           <button class="end" id="end1" onclick="endTimer(1)" disabled><i class="fas fa-stop"></i> إنهاء</button>
-          <button class="drinks" id="drinks1" onclick="openDrinksMenu(1)" disabled><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="drinks" id="drinks1" onclick="openDrinksMenu(1)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(1)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
@@ -612,7 +615,7 @@
         <div class="buttons">
           <button class="start" id="start2" onclick="startTimer(2)"><i class="fas fa-play"></i> ابدأ</button>
           <button class="end" id="end2" onclick="endTimer(2)" disabled><i class="fas fa-stop"></i> إنهاء</button>
-          <button class="drinks" id="drinks2" onclick="openDrinksMenu(2)" disabled><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="drinks" id="drinks2" onclick="openDrinksMenu(2)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(2)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
@@ -628,7 +631,7 @@
         <div class="buttons">
           <button class="start" id="start3" onclick="startTimer(3)"><i class="fas fa-play"></i> ابدأ</button>
           <button class="end" id="end3" onclick="endTimer(3)" disabled><i class="fas fa-stop"></i> إنهاء</button>
-          <button class="drinks" id="drinks3" onclick="openDrinksMenu(3)" disabled><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="drinks" id="drinks3" onclick="openDrinksMenu(3)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(3)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
@@ -644,8 +647,40 @@
         <div class="buttons">
           <button class="start" id="start4" onclick="startTimer(4)"><i class="fas fa-play"></i> ابدأ</button>
           <button class="end" id="end4" onclick="endTimer(4)" disabled><i class="fas fa-stop"></i> إنهاء</button>
-          <button class="drinks" id="drinks4" onclick="openDrinksMenu(4)" disabled><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="drinks" id="drinks4" onclick="openDrinksMenu(4)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
           <button class="print" onclick="printInvoice(4)"><i class="fas fa-print"></i> طباعة</button>
+        </div>
+      </div>
+      <div class="room-card" id="room5">
+        <div class="status offline" id="status5">متوقفة</div>
+        <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 5</h2>
+        <div class="timer-container">
+          <div class="timer" id="timer5">00:00:00</div>
+        </div>
+        <div class="price" id="price5">0.00 جنيه</div>
+        <div class="drinks-list" id="drinksList5"></div>
+        <div class="drinks-total" id="drinksTotal5">المشروبات: 0.00 جنيه</div>
+        <div class="buttons">
+          <button class="start" id="start5" onclick="startTimer(5)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="end" id="end5" onclick="endTimer(5)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+          <button class="drinks" id="drinks5" onclick="openDrinksMenu(5)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="print" onclick="printInvoice(5)"><i class="fas fa-print"></i> طباعة</button>
+        </div>
+      </div>
+      <div class="room-card" id="room6">
+        <div class="status offline" id="status6">متوقفة</div>
+        <h2 class="room-header"><i class="fas fa-door-open"></i> غرفة 6</h2>
+        <div class="timer-container">
+          <div class="timer" id="timer6">00:00:00</div>
+        </div>
+        <div class="price" id="price6">0.00 جنيه</div>
+        <div class="drinks-list" id="drinksList6"></div>
+        <div class="drinks-total" id="drinksTotal6">المشروبات: 0.00 جنيه</div>
+        <div class="buttons">
+          <button class="start" id="start6" onclick="startTimer(6)"><i class="fas fa-play"></i> ابدأ</button>
+          <button class="end" id="end6" onclick="endTimer(6)" disabled><i class="fas fa-stop"></i> إنهاء</button>
+          <button class="drinks" id="drinks6" onclick="openDrinksMenu(6)"><i class="fas fa-glass-whiskey"></i> مشروبات</button>
+          <button class="print" onclick="printInvoice(6)"><i class="fas fa-print"></i> طباعة</button>
         </div>
       </div>
     </div>
@@ -732,8 +767,8 @@
     const ADMIN_EMAIL = 'adminproantiban@playstaion.com';
     const ADMIN_PASSWORD = 'pro@123456789';
     const HOUR_RATE = 10;
-    const rooms = 4;
-    const CONTACT_PHONE = '0123456789'; // Configurable contact phone number
+    const rooms = 6; // Updated to 6 rooms
+    const CONTACT_PHONE = '0123456789';
 
     let currentRoom = 1;
     let timers = {};
@@ -742,6 +777,8 @@
     let drinks = {};
     let drinksPrices = {};
     let drinkQuantities = {};
+    let dailyTimeEarnings = {};
+    let dailyDrinksEarnings = {};
 
     for (let i = 1; i <= rooms; i++) {
       timers[i] = null;
@@ -750,6 +787,8 @@
       drinks[i] = [];
       drinksPrices[i] = 0;
       drinkQuantities[i] = {};
+      dailyTimeEarnings[i] = 0;
+      dailyDrinksEarnings[i] = 0;
     }
 
     // Generate unique code
@@ -980,7 +1019,6 @@
       document.getElementById(`status${roomNum}`).textContent = 'شغالة';
       document.getElementById(`start${roomNum}`).disabled = true;
       document.getElementById(`end${roomNum}`).disabled = false;
-      document.getElementById(`drinks${roomNum}`).disabled = false;
       startTimes[roomNum] = new Date();
       timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
       saveData();
@@ -997,7 +1035,6 @@
         document.getElementById(`status${roomNum}`).textContent = 'متوقفة';
         document.getElementById(`start${roomNum}`).disabled = false;
         document.getElementById(`end${roomNum}`).disabled = true;
-        document.getElementById(`drinks${roomNum}`).disabled = true;
         updateTimer(roomNum);
         dailyTimeEarnings[roomNum] = (dailyTimeEarnings[roomNum] || 0) + timePrices[roomNum];
         dailyDrinksEarnings[roomNum] = (dailyDrinksEarnings[roomNum] || 0) + drinksPrices[roomNum];
@@ -1041,6 +1078,7 @@
 
     // Close drinks menu
     function closeDrinksMenu() {
+      console.log('Closing drinks menu for room:', currentRoom); // Debugging line
       updateDrinksDisplay(currentRoom);
       saveData();
       document.getElementById('drinksModal').style.display = 'none';
@@ -1293,7 +1331,6 @@
               document.getElementById(`status${i}`).textContent = 'شغالة';
               document.getElementById(`start${i}`).disabled = true;
               document.getElementById(`end${i}`).disabled = false;
-              document.getElementById(`drinks${i}`).disabled = false;
               timers[i] = setInterval(() => updateTimer(i), 1000);
               updateDrinksDisplay(i);
             }
