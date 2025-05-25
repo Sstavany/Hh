@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نظام إدارة بلايستيشن ومشروبات</title>
+  <title>نظام إدارة بلايستيشن ومشروبات - الأدمن</title>
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Tajawal Font for Arabic Typography -->
@@ -41,6 +41,14 @@
       margin: 30px 0;
       text-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
       animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      color: #00d4ff;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     /* Rooms Container */
@@ -135,7 +143,6 @@
       color: #00d4ff;
       text-align: center;
       margin-bottom: 15px;
- Poppyادرسة
       user-select: none;
     }
 
@@ -147,7 +154,6 @@
       margin-bottom: 15px;
       max-height: 140px;
       overflow-y: auto;
-      scrollbar-width: thin;
       scrollbar-width: thin;
       scrollbar-color: #00d4ff rgba(0, 0, 0, 0.3);
     }
@@ -249,21 +255,21 @@
       transform: translateY(-3px);
     }
 
-    .summary-btn {
+    .summary-btn, .admin-btn {
       background-color: #00d4ff;
       color: #0f2027;
       padding: 14px 30px;
       border-radius: 14px;
       font-size: 1.1rem;
       font-weight: 800;
-      margin: 30px 0;
-      display: flex;
+      margin: 20px 10px;
+      display: inline-flex;
       align-items: center;
       gap: 12px;
       transition: all 0.3s ease;
     }
 
-    .summary-btn:hover {
+    .summary-btn:hover, .admin-btn:hover {
       background-color: #00e5ff;
       transform: translateY(-3px);
       box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
@@ -431,7 +437,6 @@
       font-size: 1.1rem;
     }
 
- égalادرسة
     .form-group input {
       width: 100%;
       padding: 14px;
@@ -447,6 +452,14 @@
       outline: none;
       border-color: #00d4ff;
       box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .error-message {
+      color: #ff4757;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
     }
 
     .login-btn {
@@ -466,6 +479,94 @@
       background: #00e5ff;
       transform: translateY(-3px);
       box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      display: none;
+      background: rgba(15, 32, 39, 0.9);
+      padding: 25px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 8px 40px rgba(0, 212, 255, 0.4);
+      border: 1px solid rgba(0, 212, 255, 0.5);
+    }
+
+    .admin-panel h2 {
+      color: #00d4ff;
+      margin-bottom: 25px;
+    }
+
+    .admin-form-group {
+      margin-bottom: 20px;
+    }
+
+    .admin-form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: #00d4ff;
+      font-weight: 700;
+    }
+
+    .admin-form-group input, .admin-form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 212, 255, 0.5);
+      background: rgba(0, 0, 0, 0.4);
+      color: #ffffff;
+      font-size: 1rem;
+    }
+
+    .admin-form-group select {
+      appearance: none;
+      background: rgba(0, 0, 0, 0.4) url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    }
+
+    .admin-form-group input:focus, .admin-form-group select:focus {
+      outline: none;
+      border-color: #00d4ff;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .add-user-btn {
+      width: 100%;
+      padding: 14px;
+      background: #00d4ff;
+      color: #0f2027;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .add-user-btn:hover {
+      background: #00e5ff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 212, 255, 0.5);
+    }
+
+    .users-list {
+      margin-top: 20px;
+    }
+
+    .user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .user-item span {
+      color: #00d4ff;
+      font-weight: 700;
     }
 
     /* Print Styles */
@@ -572,7 +673,7 @@
     }
 
     @media (max-width: 480px) {
-      .login-form {
+      .login-form, .admin-panel {
         padding: 20px;
         max-width: 90%;
       }
@@ -587,7 +688,7 @@
   <!-- Login Form -->
   <div id="loginContainer" class="login-container">
     <div class="login-form">
-      <h2><i class="fas fa-lock"></i> تسجيل الدخول</h2>
+      <h2><i class="fas fa-lock"></i> تسجيل دخول الأدمن</h2>
       <form onsubmit="event.preventDefault(); login();">
         <div class="form-group">
           <label for="email">البريد الإلكتروني</label>
@@ -597,14 +698,38 @@
           <label for="password">كلمة المرور</label>
           <input type="password" id="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password">
         </div>
+        <div id="errorMessage" class="error-message">خطأ في البريد الإلكتروني أو كلمة المرور</div>
         <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
       </form>
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- Main Content (Hidden until login) -->
   <div id="mainContent" style="display: none;">
     <h1><i class="fas fa-gamepad"></i> نظام إدارة بلايستيشن ومشروبات</h1>
+    <!-- Admin Panel (Hidden until admin login) -->
+    <div id="adminPanel" class="admin-panel">
+      <h2><i class="fas fa-user-shield"></i> لوحة تحكم الأدمن</h2>
+      <form onsubmit="event.preventDefault(); addUser();">
+        <div class="admin-form-group">
+          <label for="newEmail">بريد إلكتروني جديد</label>
+          <input type="email" id="newEmail" placeholder="أدخل البريد الإلكتروني" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="newPassword">كلمة المرور</label>
+          <input type="password" id="newPassword" placeholder="أدخل كلمة المرور" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="role">الصلاحية</label>
+          <select id="role" required>
+            <option value="admin">أدمن</option>
+            <option value="user">مستخدم</option>
+          </select>
+        </div>
+        <button type="submit" class="add-user-btn"><i class="fas fa-user-plus"></i> إضافة مستخدم</button>
+      </form>
+      <div class="users-list" id="usersList"></div>
+    </div>
     <div class="rooms-container">
       <!-- Room 1 -->
       <div class="room-card" id="room1">
@@ -675,9 +800,14 @@
         </div>
       </div>
     </div>
-    <button class="summary-btn" onclick="showDailySummary()">
-      <i class="fas fa-calculator"></i> إجمالي اليوم
-    </button>
+    <div>
+      <button class="summary-btn" onclick="showDailySummary()">
+        <i class="fas fa-calculator"></i> إجمالي اليوم
+      </button>
+      <button class="admin-btn" id="toggleAdminPanel" onclick="toggleAdminPanel()">
+        <i class="fas fa-user-shield"></i> لوحة الأدمن
+      </button>
+    </div>
     <!-- Drinks Menu Modal -->
     <div id="drinksModal" class="menu-modal">
       <div class="menu-content">
@@ -716,4 +846,178 @@
           <h3>العصائر</h3>
           <div class="menu-item" data-drink="عصير برتقال" data-price="20">
             <span>عصير برتقال</span>
-   
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير برتقال', -1)">−</button>
+              <span id="quantity-عصير برتقال">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير برتقال', 1)">+</button>
+            </div>
+            <span class="menu-item-price">20 جنيه</span>
+          </div>
+          <div class="menu-item" data-drink="عصير مانجو" data-price="25">
+            <span>عصير مانجو</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير مانجو', -1)">−</button>
+              <span id="quantity-عصير مانجو">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير مانجو', 1)">+</button>
+            </div>
+            <span class="menu-item-price">25 جنيه</span>
+          </div>
+          <div class="menu-item" data-drink="عصير فراولة" data-price="25">
+            <span>عصير فراولة</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('عصير فراولة', -1)">−</button>
+              <span id="quantity-عصير فراولة">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('عصير فراولة', 1)">+</button>
+            </div>
+            <span class="menu-item-price">25 جنيه</span>
+          </div>
+        </div>
+        <div class="menu-category">
+          <h3>المشروبات الساخنة</h3>
+          <div class="menu-item" data-drink="شاي" data-price="10">
+            <span>شاي</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('شاي', -1)">−</button>
+              <span id="quantity-شاي">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('شاي', 1)">+</button>
+            </div>
+            <span class="menu-item-price">10 جنيه</span>
+          </div>
+          <div class="menu-item" data-drink="قهوة" data-price="15">
+            <span>قهوة</span>
+            <div class="menu-item-controls">
+              <button class="minus" onclick="updateDrinkQuantity('قهوة', -1)">−</button>
+              <span id="quantity-قهوة">0</span>
+              <button class="plus" onclick="updateDrinkQuantity('قهوة', 1)">+</button>
+            </div>
+            <span class="menu-item-price">15 جنيه</span>
+          </div>
+        </div>
+        <button class="close-menu" onclick="closeDrinksMenu()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Simulated user database (for testing purposes)
+    let users = [
+      { email: "admin@playstation.com", password: "Admin123!", role: "admin" }
+    ];
+
+    // Current logged-in user
+    let currentUser = null;
+
+    // Login function
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('errorMessage');
+
+      const user = users.find(u => u.email === email && u.password === password && u.role === "admin");
+
+      if (user) {
+        currentUser = user;
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        document.getElementById('toggleAdminPanel').style.display = 'inline-flex';
+        errorMessage.style.display = 'none';
+      } else {
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    // Toggle Admin Panel
+    function toggleAdminPanel() {
+      const adminPanel = document.getElementById('adminPanel');
+      adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
+      updateUsersList();
+    }
+
+    // Add new user
+    function addUser() {
+      if (currentUser && currentUser.role === 'admin') {
+        const newEmail = document.getElementById('newEmail').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const role = document.getElementById('role').value;
+
+        if (newEmail && newPassword) {
+          if (users.find(u => u.email === newEmail)) {
+            alert('البريد الإلكتروني مستخدم بالفعل!');
+            return;
+          }
+          users.push({ email: newEmail, password: newPassword, role: role });
+          alert('تم إضافة المستخدم بنجاح!');
+          document.getElementById('newEmail').value = '';
+          document.getElementById('newPassword').value = '';
+          updateUsersList();
+        } else {
+          alert('يرجى إدخال بريد إلكتروني وكلمة مرور صالحين.');
+        }
+      } else {
+        alert('غير مصرح لك بإضافة مستخدمين!');
+      }
+    }
+
+    // Update users list in admin panel
+    function updateUsersList() {
+      const usersList = document.getElementById('usersList');
+      usersList.innerHTML = '';
+      users.forEach(user => {
+        const userItem = document.createElement('div');
+        userItem.className = 'user-item';
+        userItem.innerHTML = `
+          <span>${user.email} (${user.role === 'admin' ? 'أدمن' : 'مستخدم'})</span>
+          <button class="delete-user" onclick="deleteUser('${user.email}')"><i class="fas fa-trash"></i> حذف</button>
+        `;
+        usersList.appendChild(userItem);
+      });
+    }
+
+    // Delete user
+    function deleteUser(email) {
+      if (currentUser && currentUser.role === 'admin') {
+        if (email === currentUser.email) {
+          alert('لا يمكنك حذف حسابك الخاص!');
+          return;
+        }
+        users = users.filter(u => u.email !== email);
+        updateUsersList();
+        alert('تم حذف المستخدم بنجاح!');
+      } else {
+        alert('غير مصرح لك بحذف المستخدمين!');
+      }
+    }
+
+    // Placeholder for timer functions
+    function startTimer(roomId) {
+      // Add your timer start logic here
+    }
+
+    function endTimer(roomId) {
+      // Add your timer end logic here
+    }
+
+    // Drinks menu functions
+    function openDrinksMenu(roomId) {
+      document.getElementById('drinksModal').style.display = 'flex';
+    }
+
+    function closeDrinksMenu() {
+      document.getElementById('drinksModal').style.display = 'none';
+    }
+
+    function updateDrinkQuantity(drink, change) {
+      // Add your drink quantity update logic here
+    }
+
+    function printInvoice(roomId) {
+      // Add your print invoice logic here
+    }
+
+    function showDailySummary() {
+      // Add your daily summary logic here
+    }
+  </script>
+</body>
+</html>
