@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -56,7 +57,7 @@
       background-color: #fee2e2; /* لون أحمر فاتح عند انتهاء المدة */
     }
     .room-header {
-      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-size: clamp(1.4rem, 20px, 1.6rem);
       font-weight: 700;
       color: #0284c7;
       margin-bottom: 10px;
@@ -73,7 +74,7 @@
       margin-bottom: 10px;
     }
     .timer {
-      font-size: clamp(1.8rem, 5vw, 2rem);
+      font-size: clamp(1.8rem, 2.5rem, 2rem);
       font-weight: 700;
       color: #0284c7;
       text-align: center;
@@ -81,7 +82,7 @@
       letter-spacing: 2px;
     }
     .price {
-      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-size: clamp(1rem, 1.5rem, 1.2rem);
       font-weight: 700;
       color: #0284c7;
       text-align: center;
@@ -101,7 +102,7 @@
       align-items: center;
       padding: 6px 0;
       border-bottom: 1px solid #e2e8f0;
-      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      font-size: clamp(0.8rem, 1rem, 0.9rem);
       color: #1e293b;
     }
     .drink-item:last-child {
@@ -110,7 +111,7 @@
     .drink-item i {
       margin-left: 8px;
       color: #f59e0b;
-      font-size: clamp(1rem, 3vw, 1.1rem);
+      font-size: clamp(1rem, 1.2rem, 1.1rem);
     }
     .drink-item span.name {
       flex-grow: 1;
@@ -125,7 +126,7 @@
       font-weight: 600;
     }
     .drinks-total {
-      font-size: clamp(1rem, 3vw, 1.1rem);
+      font-size: clamp(1rem, 1.2rem, 1.1rem);
       font-weight: 700;
       color: #f59e0b;
       text-align: center;
@@ -147,7 +148,7 @@
       border-radius: 8px;
       border: 1px solid #e2e8f0;
       font-weight: 700;
-      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      font-size: clamp(0.8rem, 1rem, 0.9rem);
       cursor: pointer;
       transition: background 0.2s ease;
       display: flex;
@@ -240,7 +241,7 @@
       color: #0284c7;
       text-align: center;
       margin-bottom: 15px;
-      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-size: clamp(1.4rem, 1.6rem, 1.6rem);
     }
     .custom-drink-form {
       display: flex;
@@ -254,7 +255,7 @@
       border: 1px solid #e2e8f0;
       background: #f8fafc;
       color: #1e293b;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      font-size: clamp(0.9rem, 1rem, 1rem);
     }
     .custom-drink-form button {
       background: #22c55e;
@@ -281,7 +282,7 @@
     }
     .custom-drink-item i {
       color: #f59e0b;
-      font-size: clamp(1.2rem, 3vw, 1.3rem);
+      font-size: clamp(1.2rem, 1.3rem, 1.3rem);
       margin-left: 8px;
     }
     .custom-drink-item span.name {
@@ -298,27 +299,18 @@
       color: #f59e0b;
       font-weight: 700;
     }
-    .custom-drink-item button {
+    .custom-drink-item button.remove {
       width: 30px;
       height: 30px;
-      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      font-size: clamp(0.8rem, 0.9rem, 0.9rem);
       border-radius: 50%;
+      background-color: #ef4444;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .custom-drink-item .plus {
-      background-color: #22c55e;
-      color: #fff;
-    }
-    .custom-drink-item .plus:hover {
-      background-color: #16a34a;
-    }
-    .custom-drink-item .minus {
-      background-color: #ef4444;
-      color: #fff;
-    }
-    .custom-drink-item .minus:hover {
+    .custom-drink-item button.remove:hover {
       background-color: #dc2626;
     }
     .close-menu {
@@ -331,7 +323,7 @@
       font-weight: 700;
       cursor: pointer;
       width: 100%;
-      font-size: clamp(1rem, 3vw, 1.1rem);
+      font-size: clamp(1rem, 1.1rem, 1.1rem);
     }
     .close-menu:hover {
       background: #dc2626;
@@ -360,7 +352,7 @@
       color: #0284c7;
       text-align: center;
       margin-bottom: 20px;
-      font-size: clamp(1.4rem, 4vw, 1.6rem);
+      font-size: clamp(1.4rem, 1.6rem, 1.6rem);
     }
     .form-group {
       margin-bottom: 15px;
@@ -378,7 +370,7 @@
       border: 1px solid #e2e8f0;
       background: #f8fafc;
       color: #1e293b;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      font-size: clamp(0.9rem, 1rem, 1rem);
     }
     .login-btn {
       width: 100%;
@@ -388,7 +380,7 @@
       border: none;
       border-radius: 8px;
       font-weight: 700;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      font-size: clamp(0.9rem, 1rem, 1rem);
       cursor: pointer;
     }
     .login-btn:hover {
@@ -406,7 +398,7 @@
       border: 1px solid #e2e8f0;
       background: #f8fafc;
       color: #1e293b;
-      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      font-size: clamp(0.8rem, 0.9rem, 0.9rem);
     }
     .admin-panel-form button {
       background: #0284c7;
@@ -427,7 +419,7 @@
       padding: 8px;
       border: 1px solid #e2e8f0;
       text-align: center;
-      font-size: clamp(0.7rem, 2vw, 0.8rem);
+      font-size: clamp(0.7rem, 0.8rem, 0.8rem);
     }
     .admin-table th {
       background: #0284c7;
@@ -441,7 +433,7 @@
       padding: 5px 8px;
       margin: 0 3px;
       border-radius: 5px;
-      font-size: clamp(0.7rem, 2vw, 0.8rem);
+      font-size: clamp(0.7rem, 0.8rem, 0.8rem);
     }
     .admin-table .edit-btn {
       background: #f59e0b;
@@ -508,7 +500,7 @@
         visibility: visible !important;
         color: #1e293b !important;
       }
-      . nutrient-content {
+      .print-content {
         position: absolute;
         top: 0;
         left: 0;
@@ -540,7 +532,7 @@
         height: 30px;
       }
       .admin-table {
-        font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+        font-size: clamp(0.6rem, 0.7rem, 0.7rem);
       }
     }
   </style>
@@ -741,12 +733,12 @@
     <div id="summaryModal" class="menu-modal" style="display: none;">
       <div class="menu-content">
         <h2><i class="fas fa-coins"></i> إجمالي اليوم</h2>
-        <div id="summaryContent" style="font-size: clamp(1rem, 3vw, 1.1rem); margin-bottom: 20px; line-height: 1.5;"></div>
+        <div id="summaryContent" style="font-size: clamp(1rem, 1.1rem, 1.1rem); margin-bottom: 20px; line-height: 1.5;"></div>
         <div style="display: flex; gap: 8px;">
-          <button onclick="resetDailyEarnings()" style="background: #ef4444; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2.5vw, 1rem);">
+          <button onclick="resetDailyEarnings()" style="background: #ef4444; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 1rem, 1rem);">
             <i class="fas fa-redo"></i> إعادة تعيين اليوم
           </button>
-          <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #0284c7; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2.5vw, 1rem);">
+          <button onclick="document.getElementById('summaryModal').style.display = 'none'" style="background: #0284c7; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 1rem, 1rem);">
             <i class="fas fa-times"></i> إغلاق
           </button>
         </div>
@@ -773,7 +765,7 @@
     let drinkQuantities = {};
     let dailyTimeEarnings = {};
     let dailyDrinksEarnings = {};
-    let roomDurations = {}; // مدة كل غرفة بالميلي ثانية
+    let roomDurations = {};
 
     for (let i = 1; i <= rooms; i++) {
       timers[i] = null;
@@ -1014,9 +1006,8 @@
     function startTimer(roomNum) {
       if (timers[roomNum]) return;
       
-      // طلب إدخال المدة (بالدقائق)
       let durationMinutes = prompt(`أدخل مدة الجلسة لغرفة ${roomNum} (بالدقائق، اتركه فارغًا للتشغيل المستمر):`);
-      if (durationMinutes === null) return; // إلغاء العملية إذا أغلق المستخدم النافذة
+      if (durationMinutes === null) return;
       
       durationMinutes = parseFloat(durationMinutes);
       if (durationMinutes && durationMinutes <= 0) {
@@ -1030,7 +1021,7 @@
       startTimes[roomNum] = new Date();
       paused[roomNum] = false;
       pausedTime[roomNum] = 0;
-      roomDurations[roomNum] = durationMinutes ? durationMinutes * 60 * 1000 : null; // تحويل الدقائق إلى ميلي ثانية
+      roomDurations[roomNum] = durationMinutes ? durationMinutes * 60 * 1000 : null;
       timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
       saveData();
       playSound('start');
@@ -1040,15 +1031,13 @@
     function togglePause(roomNum) {
       if (!startTimes[roomNum]) return;
       if (paused[roomNum]) {
-        // Resume
         startTimes[roomNum] = new Date(new Date().getTime() - pausedTime[roomNum]);
         timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
         document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
         paused[roomNum] = false;
-        document.getElementById(`room${roomNum}`).style.backgroundColor = '#fff'; // إعادة تعيين لون الخلفية
+        document.getElementById(`room${roomNum}`).style.backgroundColor = '#fff';
         playSound('start');
       } else {
-        // Pause
         clearInterval(timers[roomNum]);
         timers[roomNum] = null;
         pausedTime[roomNum] = new Date().getTime() - startTimes[roomNum].getTime();
@@ -1086,7 +1075,6 @@
       const now = new Date();
       const diff = now - startTimes[roomNum];
       
-      // التحقق من المدة المحددة
       if (roomDurations[roomNum] && diff >= roomDurations[roomNum]) {
         clearInterval(timers[roomNum]);
         timers[roomNum] = null;
@@ -1095,13 +1083,10 @@
         document.getElementById(`end${roomNum}`).disabled = false;
         document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
         
-        // تنبيه مرئي: تغيير لون خلفية الغرفة
         document.getElementById(`room${roomNum}`).style.backgroundColor = '#fee2e2';
         
-        // تنبيه صوتي
         playSound('timeout');
         
-        // تنبيه نصي
         const total = timePrices[roomNum] + drinksPrices[roomNum];
         alert(`انتهت مدة غرفة ${roomNum}!\nالوقت: ${timePrices[roomNum].toFixed(2)} جنيه\nالمشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه\nالإجمالي: ${total.toFixed(2)} جنيه`);
         
@@ -1180,30 +1165,18 @@
           <span class="name">${name}</span>
           <span class="quantity">x${quantity}</span>
           <span class="price">${(price * quantity).toFixed(2)} جنيه</span>
-          <button class="plus" onclick="updateCustomDrinkQuantity('${name}', 1)">+</button>
-          <button class="minus" onclick="updateCustomDrinkQuantity('${name}', -1)">−</button>
+          <button class="remove" onclick="removeCustomDrink('${name}')">x</button>
         `;
         list.appendChild(itemDiv);
       }
       updateDrinksDisplay(currentRoom);
     }
 
-    // Update custom drink quantity
-    function updateCustomDrinkQuantity(name, change) {
-      const currentQuantity = drinkQuantities[currentRoom][name] || 0;
-      const newQuantity = Math.max(0, currentQuantity + change);
-      drinkQuantities[currentRoom][name] = newQuantity;
-
-      // Update drinks array
+    // Remove custom drink
+    function removeCustomDrink(name) {
       drinks[currentRoom] = drinks[currentRoom].filter(item => item.name !== name);
       drinksPrices[currentRoom] = drinks[currentRoom].reduce((sum, item) => sum + item.price, 0);
-      const price = drinks[currentRoom].find(item => item.name === name)?.price || 
-                    (drinks[currentRoom].length > 0 ? drinks[currentRoom][0].price : 0);
-      for (let i = 0; i < newQuantity; i++) {
-        drinks[currentRoom].push({ name, price });
-        drinksPrices[currentRoom] += price;
-      }
-
+      delete drinkQuantities[currentRoom][name];
       updateCustomDrinksDisplay();
       playSound('drink');
     }
@@ -1388,9 +1361,9 @@
         roomDurations = parsed.roomDurations || {};
         for (let i = 1; i <= rooms; i++) {
           drinkQuantities[i] = drinkQuantities[i] || {};
-          paused[i] = paused[i] || false;
-          pausedTime[i] = pausedTime[i] || 0;
-          roomDurations[i] = roomDurations[i] || null;
+          paused[i] = parsed.paused[i] || false;
+          pausedTime[i] = parsed.pausedTime[i] || 0;
+          roomDurations[i] = parsed.roomDurations[i] || null;
           if (parsed.startTimes && parsed.startTimes[i]) {
             startTimes[i] = new Date(parsed.startTimes[i]);
             timePrices[i] = parsed.timePrices ? parsed.timePrices[i] || 0 : 0;
