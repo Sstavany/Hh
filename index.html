@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> كافيه الهضبه</title>
+  <title>كافيه الهضبه</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -51,6 +51,9 @@
     }
     .room-card:hover {
       transform: translateY(-3px);
+    }
+    .room-card.timeout {
+      background-color: #fee2e2; /* لون أحمر فاتح عند انتهاء المدة */
     }
     .room-header {
       font-size: clamp(1.4rem, 4vw, 1.6rem);
@@ -505,7 +508,7 @@
         visibility: visible !important;
         color: #1e293b !important;
       }
-      .print-content {
+      . nutrient-content {
         position: absolute;
         top: 0;
         left: 0;
@@ -770,6 +773,7 @@
     let drinkQuantities = {};
     let dailyTimeEarnings = {};
     let dailyDrinksEarnings = {};
+    let roomDurations = {}; // مدة كل غرفة بالميلي ثانية
 
     for (let i = 1; i <= rooms; i++) {
       timers[i] = null;
@@ -782,6 +786,7 @@
       drinkQuantities[i] = {};
       dailyTimeEarnings[i] = 0;
       dailyDrinksEarnings[i] = 0;
+      roomDurations[i] = null;
     }
 
     // Generate unique code
@@ -1008,12 +1013,24 @@
     // Start timer
     function startTimer(roomNum) {
       if (timers[roomNum]) return;
+      
+      // طلب إدخال المدة (بالدقائق)
+      let durationMinutes = prompt(`أدخل مدة الجلسة لغرفة ${roomNum} (بالدقائق، اتركه فارغًا للتشغيل المستمر):`);
+      if (durationMinutes === null) return; // إلغاء العملية إذا أغلق المستخدم النافذة
+      
+      durationMinutes = parseFloat(durationMinutes);
+      if (durationMinutes && durationMinutes <= 0) {
+        alert('يرجى إدخال مدة صالحة أكبر من 0');
+        return;
+      }
+      
       document.getElementById(`start${roomNum}`).disabled = true;
       document.getElementById(`pause${roomNum}`).disabled = false;
       document.getElementById(`end${roomNum}`).disabled = false;
       startTimes[roomNum] = new Date();
       paused[roomNum] = false;
       pausedTime[roomNum] = 0;
+      roomDurations[roomNum] = durationMinutes ? durationMinutes * 60 * 1000 : null; // تحويل الدقائق إلى ميلي ثانية
       timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
       saveData();
       playSound('start');
@@ -1028,6 +1045,7 @@
         timers[roomNum] = setInterval(() => updateTimer(roomNum), 1000);
         document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
         paused[roomNum] = false;
+        document.getElementById(`room${roomNum}`).style.backgroundColor = '#fff'; // إعادة تعيين لون الخلفية
         playSound('start');
       } else {
         // Pause
@@ -1055,10 +1073,7 @@
         dailyTimeEarnings[roomNum] = (dailyTimeEarnings[roomNum] || 0) + timePrices[roomNum];
         dailyDrinksEarnings[roomNum] = (dailyDrinksEarnings[roomNum] || 0) + drinksPrices[roomNum];
         const total = timePrices[roomNum] + drinksPrices[roomNum];
-        alert(`إجمالي غرفة ${roomNum}:
-        الوقت: ${timePrices[roomNum].toFixed(2)} جنيه
-        المشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه
-        الإجمالي: ${total.toFixed(2)} جنيه`);
+        alert(`إجمالي غرفة ${roomNum}:\nالوقت: ${timePrices[roomNum].toFixed(2)} جنيه\nالمشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه\nالإجمالي: ${total.toFixed(2)} جنيه`);
         resetRoom(roomNum);
         saveData();
         playSound('end');
@@ -1070,6 +1085,29 @@
       if (!startTimes[roomNum] || paused[roomNum]) return;
       const now = new Date();
       const diff = now - startTimes[roomNum];
+      
+      // التحقق من المدة المحددة
+      if (roomDurations[roomNum] && diff >= roomDurations[roomNum]) {
+        clearInterval(timers[roomNum]);
+        timers[roomNum] = null;
+        document.getElementById(`start${roomNum}`).disabled = true;
+        document.getElementById(`pause${roomNum}`).disabled = true;
+        document.getElementById(`end${roomNum}`).disabled = false;
+        document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
+        
+        // تنبيه مرئي: تغيير لون خلفية الغرفة
+        document.getElementById(`room${roomNum}`).style.backgroundColor = '#fee2e2';
+        
+        // تنبيه صوتي
+        playSound('timeout');
+        
+        // تنبيه نصي
+        const total = timePrices[roomNum] + drinksPrices[roomNum];
+        alert(`انتهت مدة غرفة ${roomNum}!\nالوقت: ${timePrices[roomNum].toFixed(2)} جنيه\nالمشروبات: ${drinksPrices[roomNum].toFixed(2)} جنيه\nالإجمالي: ${total.toFixed(2)} جنيه`);
+        
+        return;
+      }
+      
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -1094,7 +1132,6 @@
 
     // Close drinks menu
     function closeDrinksMenu() {
-      console.log('Closing drinks menu for room:', currentRoom); // Debugging line
       updateDrinksDisplay(currentRoom);
       saveData();
       document.getElementById('drinksModal').style.display = 'none';
@@ -1206,6 +1243,7 @@
       drinks[roomNum] = [];
       drinksPrices[roomNum] = 0;
       drinkQuantities[roomNum] = {};
+      roomDurations[roomNum] = null;
       document.getElementById(`timer${roomNum}`).textContent = '00:00:00';
       document.getElementById(`price${roomNum}`).textContent = '0.00 جنيه';
       document.getElementById(`drinksList${roomNum}`).innerHTML = '';
@@ -1214,6 +1252,7 @@
       document.getElementById(`pause${roomNum}`).disabled = true;
       document.getElementById(`pause${roomNum}`).innerHTML = '<i class="fas fa-pause"></i> إيقاف';
       document.getElementById(`end${roomNum}`).disabled = true;
+      document.getElementById(`room${roomNum}`).style.backgroundColor = '#fff';
     }
 
     // Print invoice
@@ -1330,7 +1369,8 @@
         timePrices,
         drinks,
         drinksPrices,
-        drinkQuantities
+        drinkQuantities,
+        roomDurations
       };
       localStorage.setItem('playstationData', JSON.stringify(data));
     }
@@ -1345,10 +1385,12 @@
         drinkQuantities = parsed.drinkQuantities || {};
         paused = parsed.paused || {};
         pausedTime = parsed.pausedTime || {};
+        roomDurations = parsed.roomDurations || {};
         for (let i = 1; i <= rooms; i++) {
           drinkQuantities[i] = drinkQuantities[i] || {};
           paused[i] = paused[i] || false;
           pausedTime[i] = pausedTime[i] || 0;
+          roomDurations[i] = roomDurations[i] || null;
           if (parsed.startTimes && parsed.startTimes[i]) {
             startTimes[i] = new Date(parsed.startTimes[i]);
             timePrices[i] = parsed.timePrices ? parsed.timePrices[i] || 0 : 0;
@@ -1359,6 +1401,13 @@
               document.getElementById(`pause${i}`).disabled = false;
               document.getElementById(`end${i}`).disabled = false;
               timers[i] = setInterval(() => updateTimer(i), 1000);
+              if (roomDurations[i]) {
+                const now = new Date();
+                const diff = now - startTimes[i];
+                if (diff >= roomDurations[i]) {
+                  updateTimer(i);
+                }
+              }
             } else if (paused[i]) {
               document.getElementById(`start${i}`).disabled = true;
               document.getElementById(`pause${i}`).disabled = false;
@@ -1377,7 +1426,8 @@
       const sounds = {
         start: new Audio('https://www.soundjay.com/buttons/button-09.mp3'),
         end: new Audio('https://www.soundjay.com/buttons/button-10.mp3'),
-        drink: new Audio('https://www.soundjay.com/buttons/button-3.mp3')
+        drink: new Audio('https://www.soundjay.com/buttons/button-3.mp3'),
+        timeout: new Audio('https://www.soundjay.com/buttons/beep-01a.mp3')
       };
       if (sounds[action]) {
         sounds[action].play().catch(() => {});
