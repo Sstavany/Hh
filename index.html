@@ -54,7 +54,7 @@
       transform: translateY(-3px);
     }
     .room-card.timeout {
-      background-color: #fee2e2; /* لون أحمر فاتح عند انتهاء المدة */
+      background-color: #fee2e2;
     }
     .room-header {
       font-size: clamp(1.4rem, 20px, 1.6rem);
@@ -195,7 +195,7 @@
     button.print:hover {
       background-color: #0369a1;
     }
-    .summary-btn, .admin-btn, .logout-btn {
+    .summary-btn {
       background-color: #0284c7;
       color: #fff;
       padding: 10px 20px;
@@ -206,14 +206,8 @@
       align-items: center;
       gap: 8px;
     }
-    .summary-btn:hover, .admin-btn:hover, .logout-btn:hover {
+    .summary-btn:hover {
       background-color: #0369a1;
-    }
-    .logout-btn {
-      background-color: #ef4444;
-    }
-    .logout-btn:hover {
-      background-color: #dc2626;
     }
     .menu-modal {
       position: fixed;
@@ -328,127 +322,6 @@
     .close-menu:hover {
       background: #dc2626;
     }
-    .login-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    .login-form {
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 350px;
-      border: 1px solid #e2e8f0;
-    }
-    .login-form h2 {
-      color: #0284c7;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: clamp(1.4rem, 1.6rem, 1.6rem);
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      color: #0284c7;
-      font-weight: 700;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      color: #1e293b;
-      font-size: clamp(0.9rem, 1rem, 1rem);
-    }
-    .login-btn {
-      width: 100%;
-      padding: 10px;
-      background: #0284c7;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: clamp(0.9rem, 1rem, 1rem);
-      cursor: pointer;
-    }
-    .login-btn:hover {
-      background: #0369a1;
-    }
-    .admin-panel-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .admin-panel-form input {
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      color: #1e293b;
-      font-size: clamp(0.8rem, 0.9rem, 0.9rem);
-    }
-    .admin-panel-form button {
-      background: #0284c7;
-      color: #fff;
-      padding: 8px;
-      border-radius: 8px;
-      font-weight: 700;
-    }
-    .admin-panel-form button:hover {
-      background: #0369a1;
-    }
-    .admin-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 15px;
-    }
-    .admin-table th, .admin-table td {
-      padding: 8px;
-      border: 1px solid #e2e8f0;
-      text-align: center;
-      font-size: clamp(0.7rem, 0.8rem, 0.8rem);
-    }
-    .admin-table th {
-      background: #0284c7;
-      color: #fff;
-      font-weight: 700;
-    }
-    .admin-table td {
-      background: #f8fafc;
-    }
-    .admin-table button {
-      padding: 5px 8px;
-      margin: 0 3px;
-      border-radius: 5px;
-      font-size: clamp(0.7rem, 0.8rem, 0.8rem);
-    }
-    .admin-table .edit-btn {
-      background: #f59e0b;
-      color: #fff;
-    }
-    .admin-table .edit-btn:hover {
-      background: #d97706;
-    }
-    .admin-table .delete-btn {
-      background: #ef4444;
-      color: #fff;
-    }
-    .admin-table .delete-btn:hover {
-      background: #dc2626;
-    }
     .print-content {
       background: #fff;
       color: #1e293b;
@@ -531,43 +404,16 @@
         width: 30px;
         height: 30px;
       }
-      .admin-table {
-        font-size: clamp(0.6rem, 0.7rem, 0.7rem);
-      }
     }
   </style>
 </head>
 <body>
-  <!-- Login Form -->
-  <div id="loginContainer" class="login-container">
-    <div class="login-form">
-      <h2><i class="fas fa-lock"></i> تسجيل الدخول</h2>
-      <form onsubmit="event.preventDefault(); login();">
-        <div class="form-group">
-          <label for="email">البريد الإلكتروني</label>
-          <input type="email" id="email" placeholder="أدخل البريد الإلكتروني" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="password">كلمة المرور</label>
-          <input type="password" id="password" placeholder="أدخل كلمة المرور" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Main Content -->
-  <div id="mainContent" style="display: none;">
+  <div id="mainContent">
     <h1><i class="fas fa-gamepad"></i> كافيه الهضبه</h1>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-      <button id="adminBtn" class="admin-btn" onclick="openAdminPanel()" style="display: none;">
-        <i class="fas fa-user-shield"></i> لوحة تحكم الأدمن
-      </button>
       <button class="summary-btn" onclick="showDailySummary()">
         <i class="fas fa-calculator"></i> إجمالي اليوم
-      </button>
-      <button class="logout-btn" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
       </button>
     </div>
     <div class="rooms-container">
@@ -681,33 +527,6 @@
         <button class="close-menu" onclick="closeDrinksMenu()"><i class="fas fa-times"></i> إغلاق القائمة</button>
       </div>
     </div>
-    <!-- Admin Panel Modal -->
-    <div id="adminPanelModal" class="menu-modal" style="display: none;">
-      <div class="menu-content">
-        <h2><i class="fas fa-user-shield"></i> لوحة تحكم الأدمن</h2>
-        <div class="admin-panel-form">
-          <h3>إضافة مستخدم جديد</h3>
-          <input type="email" id="adminEmail" placeholder="البريد الإلكتروني" required>
-          <input type="password" id="adminPassword" placeholder="كلمة المرور" required>
-          <input type="number" id="adminExpiryDays" placeholder="مدة الصلاحية (أيام)" min="1" required>
-          <input type="text" id="adminCode" placeholder="الكود (اختياري)" maxlength="6">
-          <button onclick="addCredential()">إضافة مستخدم</button>
-        </div>
-        <h3>قائمة المستخدمين</h3>
-        <table class="admin-table" id="adminCredentialsTable">
-          <thead>
-            <tr>
-              <th>البريد الإلكتروني</th>
-              <th>الكود</th>
-              <th>مدة الصلاحية</th>
-              <th>الإجراءات</th>
-            </tr>
-          </thead>
-          <tbody id="adminCredentialsTableBody"></tbody>
-        </table>
-        <button class="close-menu" onclick="closeAdminModal()"><i class="fas fa-times"></i> إغلاق</button>
-      </div>
-    </div>
     <div id="printContent" class="print-content" style="display: none;">
       <div class="print-header">
         <h2><i class="fas fa-receipt"></i> فاتورة بلايستيشن ومشروبات</h2>
@@ -748,8 +567,6 @@
 
   <script>
     // Configuration
-    const ADMIN_EMAIL = 'adminproantiban@playstaion.com';
-    const ADMIN_PASSWORD = 'pro@123456789';
     const HOUR_RATE = 10;
     const rooms = 6;
     const CONTACT_PHONE = '0123456789';
@@ -779,227 +596,6 @@
       dailyTimeEarnings[i] = 0;
       dailyDrinksEarnings[i] = 0;
       roomDurations[i] = null;
-    }
-
-    // Generate unique code
-    function generateCode() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let code = '';
-      for (let i = 0; i < 6; i++) {
-        code += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return code;
-    }
-
-    // Load credentials from localStorage
-    function loadCredentials() {
-      return JSON.parse(localStorage.getItem('credentialsList') || '[]');
-    }
-
-    // Save credentials to localStorage
-    function saveCredentials(credentials) {
-      localStorage.setItem('credentialsList', JSON.stringify(credentials));
-    }
-
-    // Login function
-    function login() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const now = new Date().getTime();
-
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('loggedInEmail', email);
-        localStorage.setItem('isAdmin', 'true');
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-        document.getElementById('adminBtn').style.display = 'flex';
-        saveData();
-        return;
-      }
-
-      const credentials = loadCredentials();
-      const credential = credentials.find(
-        cred => cred.email === email && cred.password === password
-      );
-
-      if (!credential) {
-        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة');
-        return;
-      }
-
-      if (now > credential.expiry) {
-        alert('هذا الحساب منتهي الصلاحية!');
-        const updatedCredentials = credentials.filter(c => c.email !== email);
-        saveCredentials(updatedCredentials);
-        return;
-      }
-
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('loggedInEmail', email);
-      localStorage.setItem('isAdmin', 'false');
-      document.getElementById('loginContainer').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-      document.getElementById('adminBtn').style.display = 'none';
-      saveData();
-    }
-
-    // Logout function
-    function logout() {
-      if (confirm('هل تريد تسجيل الخروج؟')) {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('loggedInEmail');
-        localStorage.removeItem('isAdmin');
-        saveData();
-        document.getElementById('mainContent').style.display = 'none';
-        document.getElementById('loginContainer').style.display = 'flex';
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        alert('تم تسجيل الخروج بنجاح');
-      }
-    }
-
-    // Check login state
-    function checkLoginState() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      if (isLoggedIn === 'true') {
-        const email = localStorage.getItem('loggedInEmail');
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        const now = new Date().getTime();
-
-        if (isAdmin && email === ADMIN_EMAIL) {
-          document.getElementById('loginContainer').style.display = 'none';
-          document.getElementById('mainContent').style.display = 'block';
-          document.getElementById('adminBtn').style.display = 'flex';
-          loadData();
-          return;
-        }
-
-        const credentials = loadCredentials();
-        const credential = credentials.find(c => c.email === email);
-        if (credential && now <= credential.expiry) {
-          document.getElementById('loginContainer').style.display = 'none';
-          document.getElementById('mainContent').style.display = 'block';
-          document.getElementById('adminBtn').style.display = 'none';
-          loadData();
-        } else {
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('loggedInEmail');
-          localStorage.removeItem('isAdmin');
-        }
-      }
-    }
-
-    // Open admin panel
-    function openAdminPanel() {
-      updateCredentialsTable();
-      document.getElementById('adminPanelModal').style.display = 'flex';
-    }
-
-    // Close admin panel
-    function closeAdminModal() {
-      document.getElementById('adminPanelModal').style.display = 'none';
-    }
-
-    // Add new credential
-    function addCredential() {
-      const email = document.getElementById('adminEmail').value.trim();
-      const password = document.getElementById('adminPassword').value.trim();
-      const expiryDays = parseInt(document.getElementById('adminExpiryDays').value.trim());
-      let code = document.getElementById('adminCode').value.trim() || generateCode();
-
-      if (!email || !password || isNaN(expiryDays) || expiryDays < 1) {
-        alert('يرجى ملء جميع الحقول بشكل صحيح');
-        return;
-      }
-
-      if (email === ADMIN_EMAIL) {
-        alert('لا يمكن استخدام بريد الأدمن لإنشاء مستخدم جديد');
-        return;
-      }
-
-      const credentials = loadCredentials();
-      if (credentials.find(c => c.email === email)) {
-        alert('هذا البريد الإلكتروني مستخدم بالفعل');
-        return;
-      }
-
-      const now = new Date().getTime();
-      const expiry = now + expiryDays * 24 * 60 * 60 * 1000;
-      credentials.push({ email, password, expiry, code });
-      saveCredentials(credentials);
-
-      document.getElementById('adminEmail').value = '';
-      document.getElementById('adminPassword').value = '';
-      document.getElementById('adminExpiryDays').value = '';
-      document.getElementById('adminCode').value = '';
-      updateCredentialsTable();
-      alert('تم إضافة المستخدم بنجاح');
-    }
-
-    // Update credentials table
-    function updateCredentialsTable() {
-      const tbody = document.getElementById('adminCredentialsTableBody');
-      tbody.innerHTML = '';
-      const credentials = loadCredentials();
-      credentials.forEach((cred, index) => {
-        const expiryDate = new Date(cred.expiry).toLocaleString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${cred.email}</td>
-          <td>${cred.code}</td>
-          <td>${expiryDate}</td>
-          <td>
-            <button class="edit-btn" onclick="editCredential(${index})">تعديل</button>
-            <button class="delete-btn" onclick="deleteCredential(${index})">حذف</button>
-          </td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    // Edit credential
-    function editCredential(index) {
-      const credentials = loadCredentials();
-      const cred = credentials[index];
-      const newEmail = prompt('أدخل البريد الإلكتروني الجديد:', cred.email);
-      const newPassword = prompt('أدخل كلمة المرور الجديدة:', cred.password);
-      const newExpiryDays = prompt('أدخل مدة الصلاحية (أيام):', (cred.expiry - new Date().getTime()) / (24 * 60 * 60 * 1000));
-      const newCode = prompt('أدخل الكود الجديد:', cred.code);
-
-      if (newEmail && newPassword && newExpiryDays && !isNaN(newExpiryDays) && newExpiryDays > 0) {
-        if (newEmail === ADMIN_EMAIL) {
-          alert('لا يمكن استخدام بريد الأدمن');
-          return;
-        }
-        if (newEmail !== cred.email && credentials.find(c => c.email === newEmail)) {
-          alert('هذا البريد الإلكتروني مستخدم بالفعل');
-          return;
-        }
-        const now = new Date().getTime();
-        credentials[index] = {
-          email: newEmail,
-          password: newPassword,
-          expiry: now + parseInt(newExpiryDays) * 24 * 60 * 60 * 1000,
-          code: newCode || generateCode()
-        };
-        saveCredentials(credentials);
-        updateCredentialsTable();
-        alert('تم تعديل المستخدم بنجاح');
-      } else {
-        alert('يرجى إدخال بيانات صحيحة');
-      }
-    }
-
-    // Delete credential
-    function deleteCredential(index) {
-      if (confirm('هل تريد حذف هذا المستخدم؟')) {
-        const credentials = loadCredentials();
-        credentials.splice(index, 1);
-        saveCredentials(credentials);
-        updateCredentialsTable();
-        alert('تم حذف المستخدم');
-      }
     }
 
     // Start timer
@@ -1408,16 +1004,6 @@
     }
 
     // Event listeners
-    document.getElementById('password').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        login();
-      }
-    });
-    document.addEventListener('keydown', function(event) {
-      if (event.ctrlKey && event.key === 'l' && document.getElementById('loginContainer').style.display !== 'none') {
-        document.getElementById('email').focus();
-      }
-    });
     window.addEventListener('beforeunload', function(event) {
       saveData();
       if (Object.values(timers).some(timer => timer !== null)) {
@@ -1426,7 +1012,7 @@
       }
     });
     setInterval(saveData, 60000);
-    window.onload = checkLoginState;
+    window.onload = loadData;
   </script>
 </body>
 </html>
